@@ -1,0 +1,49 @@
+\select@language {french}
+\contentsline {part}{I\hspace {1em}Interpolation polynomiale}{3}{part.1}
+\contentsline {section}{\numberline {1}Existence et unicit\IeC {\'e}}{3}{section.1.1}
+\contentsline {section}{\numberline {2}Construction du polyn\IeC {\^o}me d'interpolation}{4}{section.1.2}
+\contentsline {subsection}{\numberline {2.1}Construction \IeC {\`a} partir de la base de Lagrange}{4}{subsection.1.2.1}
+\contentsline {paragraph}{Recherche du polyn\IeC {\^o}me : \\}{5}{section*.3}
+\contentsline {subsection}{\numberline {2.2}Construction \IeC {\`a} partir de la base de Newton}{5}{subsection.1.2.2}
+\contentsline {section}{\numberline {3}Convergence, \IeC {\'e}tude d'erreur}{8}{section.1.3}
+\contentsline {section}{\numberline {4}Splines}{9}{section.1.4}
+\contentsline {subsection}{\numberline {4.1}G\IeC {\'e}n\IeC {\'e}ralit\IeC {\'e}s}{9}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {4.2}Splines cubiques}{10}{subsection.1.4.2}
+\contentsline {part}{II\hspace {1em}Int\IeC {\'e}gration num\IeC {\'e}rique}{11}{part.2}
+\contentsline {section}{\numberline {1}Pr\IeC {\'e}liminaires}{11}{section.2.1}
+\contentsline {section}{\numberline {2}Exemples de quadrature de type Newton-Cotes}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.1}M\IeC {\'e}thode du point milieu}{12}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2}M\IeC {\'e}thode du trap\IeC {\`e}ze}{13}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}M\IeC {\'e}thode de Simpson}{14}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.4}M\IeC {\'e}thode de Newton-Cotes}{14}{subsection.2.2.4}
+\contentsline {section}{\numberline {3}Convergence et stabilit\IeC {\'e}}{14}{section.2.3}
+\contentsline {section}{\numberline {4}M\IeC {\'e}thodes composites}{15}{section.2.4}
+\contentsline {subsection}{\numberline {4.1}M\IeC {\'e}thode des trap\IeC {\`e}zes composite}{15}{subsection.2.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}D\IeC {\'e}fintion de la m\IeC {\'e}thode}{15}{subsubsection.2.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Convergence}{16}{subsubsection.2.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Stabilit\IeC {\'e}}{16}{subsubsection.2.4.1.3}
+\contentsline {subsection}{\numberline {4.2}M\IeC {\'e}thode de Simpson composite}{16}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {4.3}M\IeC {\'e}thode de Runge}{17}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {4.4}M\IeC {\'e}thode de Quadrature de Gauss}{18}{subsection.2.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}M\IeC {\'e}thode de calculs}{18}{subsubsection.2.4.4.1}
+\contentsline {part}{III\hspace {1em}Equation diff\IeC {\'e}rentielles, probl\IeC {\`e}me de Cauchy}{20}{part.3}
+\contentsline {section}{\numberline {1}M\IeC {\'e}thode \IeC {\`a} un pas}{21}{section.3.1}
+\contentsline {subsection}{\numberline {1.1}Etude de la consistance}{21}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {1.2}Etude de la stabilit\IeC {\'e}}{22}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {1.3}Convergence}{23}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {1.4}Ordre d'une m\IeC {\'e}thode}{23}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {1.5}M\IeC {\'e}thodes de Runge-Kutta}{24}{subsection.3.1.5}
+\contentsline {subsubsection}{\numberline {1.5.1}D\IeC {\'e}finition de la m\IeC {\'e}thode \IeC {\`a} un pas :}{24}{subsubsection.3.1.5.1}
+\contentsline {subsubsection}{\numberline {1.5.2}Comment calculer les it\IeC {\'e}rations interm\IeC {\'e}diaires ?}{25}{subsubsection.3.1.5.2}
+\contentsline {subsubsection}{\numberline {1.5.3}Ecriture sous forme de tableau}{25}{subsubsection.3.1.5.3}
+\contentsline {subsubsection}{\numberline {1.5.4}Propri\IeC {\'e}t\IeC {\'e}s de la m\IeC {\'e}thode}{25}{subsubsection.3.1.5.4}
+\contentsline {subsubsection}{\numberline {1.5.5}Ordre de Runge-Kutta}{25}{subsubsection.3.1.5.5}
+\contentsline {section}{\numberline {2}M\IeC {\'e}thodes \IeC {\`a} pas li\IeC {\'e}s}{26}{section.3.2}
+\contentsline {subsection}{\numberline {2.1}M\IeC {\'e}thode d'Adams}{26}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {2.2}M\IeC {\'e}thodes de pr\IeC {\'e}diction-correction}{26}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {2.3}Consistance, stabilit\IeC {\'e}, convergence, ordre}{26}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Consistance}{26}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Stabilit\IeC {\'e}}{27}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Convergence}{27}{subsubsection.3.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.4}Ordre}{28}{subsubsection.3.2.3.4}
+\contentsfinish 

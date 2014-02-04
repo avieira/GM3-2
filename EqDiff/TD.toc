@@ -1,0 +1,8 @@
+\select@language {french}
+\contentsline {paragraph}{Exercice 1 : \\}{2}{section*.2}
+\contentsline {paragraph}{Exercice 2 : \\}{2}{section*.3}
+\contentsline {paragraph}{Exercice 3 : \\}{2}{section*.4}
+\contentsline {paragraph}{Exercice 4 : \\}{2}{section*.5}
+\contentsline {paragraph}{Exercice 5 : Equation de Bernoulli \\}{2}{section*.6}
+\contentsline {paragraph}{Exercice 6 : Equation de Riccati \\}{2}{section*.7}
+\contentsfinish 

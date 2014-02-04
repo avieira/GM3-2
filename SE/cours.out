@@ -1,0 +1,15 @@
+\BOOKMARK [0][-]{part.1}{I Cours}{}% 1
+\BOOKMARK [1][-]{section.1}{Gestionnaires de paquets}{part.1}% 2
+\BOOKMARK [2][-]{subsection.1.1}{Dans la famille Debian}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.1.1}{Installation des paquets}{subsection.1.1}% 4
+\BOOKMARK [3][-]{subsubsection.1.1.2}{Suppression de paquets}{subsection.1.1}% 5
+\BOOKMARK [3][-]{subsubsection.1.1.3}{Reconfiguration des paquets}{subsection.1.1}% 6
+\BOOKMARK [3][-]{subsubsection.1.1.4}{Mise \340 jour des paquets install\351s}{subsection.1.1}% 7
+\BOOKMARK [3][-]{subsubsection.1.1.5}{Informations sur un paquet}{subsection.1.1}% 8
+\BOOKMARK [2][-]{subsection.1.2}{Dans la famille RedHat}{section.1}% 9
+\BOOKMARK [3][-]{subsubsection.1.2.1}{L'outil rpm}{subsection.1.2}% 10
+\BOOKMARK [3][-]{subsubsection.1.2.2}{L'outil yum}{subsection.1.2}% 11
+\BOOKMARK [1][-]{section.2}{Le shell}{part.1}% 12
+\BOOKMARK [0][-]{part.2}{II TD}{}% 13
+\BOOKMARK [1][-]{section.3}{Adimnistration syst\350me}{part.2}% 14
+\BOOKMARK [1][-]{section.4}{Shell bash}{part.2}% 15

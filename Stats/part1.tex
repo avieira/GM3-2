@@ -1,0 +1,181 @@
+\part{Statistiques}
+\section{Statistique inférentielle}
+
+\textbf{Principe de base :} \\
+On dispose de données $x_1,...,x_n$ issue d'une même variable aléatoire. La valeur de $x_i$ n'est pas influencée par la valeur $x_j$, $i\neq j$. 
+
+\Exemp{}{$x_i$ : résultat pile ou face ("0" ou "1") d'un jet de pièce dont on ignore si elle est truquée ou non.\\
+Si $X_i$ est la variable aléatoire égale au résultat du ième jet, alors : 
+\begin{itemize}
+	\item $X_i \Inde X_j$ dès que $i\neq j$
+	\item $\mathbb{P}(X_i=0)=p$ et $\mathbb{P}(X_i=1)=1-p$
+\end{itemize}
+En proba, p est supposé connu.
+En stat, p est inconnu et on souhait "inférer" sur cette valeur sur la base de l'observation $(x_1,...,x_n)$.}
+
+\Def{}{Soit $\mathfrak{X}$ un espace dit des observations (muni d'une certaine tribu $\mathcal{A}$ et soit P une loi de probabilité sur $\mathfrak{X}$ régissant le résultat de l'expérience aléatoire. 
+
+\bigskip
+Soit $(x_1,...,x_n)\in\mathfrak{X}^n$, on dit que $(x_1,...,x_n)$ est un échantillon (observé) de la loi P si $(x_1,...,x_n)$ est régi par la probabilité produit $P^{\otimes n}$ sur $(\mathfrak{X}^n,\mathcal{A}^n)$.}
+
+Supposons disposer d'une mesure $\mu$ sur $(\mathfrak{X},\mathcal{A})$ (avec $\mu$ $\sigma$-finie).\\
+Supposons également que $P<<\mu$ (ie $\forall A\in\mathcal{A}$, $\mu(A)=0 \Rightarrow \P(A)=0$). \\
+D'après le théorème de Radon-Nykodin, il existe une densité de la loi P par rapport à la mesure $\mu$ (ie, il existe une fonction mesurable positive f définie sur $\mathfrak{X}$ tel que 
+\[P(A)=\int_A f d\mu,\ \forall A\in\mathcal{A}\]
+
+Dans ce cas, la loi $P^{\otimes n}$ admet une densité de probabilité par rapport à $\mu^{\otimes n}$, soit \[(x_1,...,x_n) \mapsto \prod_{i=1}^, f(x_i)\]
+On dit aussi que cette densité de probabilité régit $(x_1,...,x_n)$ ou encore que $(X_1,...,X_n)$ admet cette densité comme densité jointe.
+
+\Exemp{}{Soit $(X_1,...,X_n)$ un échantillon de variable aléatoire de loi exponentielle de paramètre $\theta>0$ (ie les $(X_i)_{1\leq i\leq n}$ sont iid et $X_i \hookrightarrow \mathcal{E}(\theta)$, $\forall i\in \{1,..,n\}$) \\
+Ici, $\mathfrak{X}=\mathbb{R}^*_+$, $\mathcal{A}=\mathcal{B}(\mathbb{R}^*_+)$ et $P_{\theta}=\mathcal{E}(\theta)$ où $\theta\in\Theta$ où $\Theta=\mathbb{R}^*_+$\\
+Pour tout $\theta\in\Theta$, $\frac{dP_{\theta}}{d\lambda} (x)= \theta e^{-\theta x} 1_{\mathbb{R}^*_+}(x),\ \forall x \in \mathbb{R}$ \\
+$(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ est appelé modèle statistique. \\
+On appelle modèle statistique d'échantillonnage : 
+\[(\mathfrak{X}^n, (P_{\theta}^{\otimes n})_{\theta\in\Theta})=((\mathbb{R}^*_+)^n, (P_{\theta}^{\otimes n})_{\theta\in\mathbb{R}^*_+})\] 
+où \[L(\theta,x_1,...,x_n)=\prod_{i=1}^n \theta e^{-\theta x_i} 1_{\mathbb{R}^*_+}(x_i)=\theta^n e^{-\theta \sum_{i=1}^n x_i} \prod_{i=1}^n 1_{\mathbb{R}_+^*} (x_i)\]
+est une densité de la loi $_{\theta}^{\otimes n}$ par rapport à la mesure de Lebesgue sur $\mathbb{R}^n$. }
+
+\Def{}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique. On appelle statistique toute application mesurable définie sur l'espace des observations $\mathfrak{X}$ et ne dépendant pas du paramètre inconnu $\theta$. }
+
+\Def{Moyenne et Variance empirique}{\[\bar{X}=\frac{1}{n} \sum_{i=1}^n X_i\]
+\[S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i-\bar{X})^2\]}
+
+\Prop{}{Soit $(X_1,...,X_n)$ un échantillon de var d'une loi admettant une moyenne $\mu$ et une variance $\sigma^2$. Alors $E(\bar{X})=\mu,\ V(\bar{X})=\frac{\sigma^2}{n}$ et $E(S^2)=\sigma^2$}
+\begin{dem}
+	\[E(\bar{X})=\frac{1}{n} \sum_{i=1}^n E(X_i)=E(X_i)=\mu\]
+	\[V(\bar{X})=\frac{1}{n^2}\sum_{i=1}^n V(X_i)=\frac{\sigma^2}{n}\]
+	Reste le dernier, chiant.
+\end{dem}
+
+\Def{}{Soit X une var de fonction de répartition $F_X$. On appelle fonction génératrice des moments la fonction (si elle existe) notée $M_X$ et finie dans un voisinage de 0 de $\mathbb{R}$ par $M_X(t)=E(e^{tx})$.}
+
+\begin{rmq}
+	\begin{itemize}
+		\item Si $f_X$ est une densité de la loi de X alors $M_X(t)=\int_{\mathbb{R}} e^{tx}f_{X}(x) dx$
+		\item Si X est discrtèe, $M_X(t)=\sum_{k\in X(\Omega)} e^{tX} \mathbb{P}(X=k)$
+	\end{itemize}
+\end{rmq}
+
+\Prop{}{Soit X et Y deux variables aléatoires réelles.
+\begin{enumerate}
+	\item Si V est un voisinage de 0 tel que $M_X(t)=M_Y(t)$ pour tout $t\in V$ alors $F_X=F_Y$
+	\item $\forall k\in\mathbb{N}$, $E(X^k)=M_X^{(k)}(0)$
+\end{enumerate}}
+
+\Def{}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique dominé par une mesure $\mu$ $\sigma$-finie, ie 
+\[\forall \theta \in \Theta, P_{\theta}<<\mu\]
+On dit que la loi $P_{\theta}$ appartient à la "famille exponentielle" si une densité de probabilité de la loi $P_{\theta}$ par rapport à la dominante $\mu$ est de la forme : 
+\[\forall x\in\mathfrak{X}, \forall\theta\in\Theta, f(x,\theta)=h(x)c(\theta)\exp(\sum_{i=1}^k \omega_i(\theta) t_i(x))\]}
+
+\Theo{}{Soit $(X_1,...,X_n)$ échantillon de va d'un modèle exponentiel $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ de dominante $\mu$. \\
+Notons $f(x,\theta)=\frac{d_{\theta}}{d\mu}(x)=h(x)c(\theta)\exp(\sum_{i=1}^n \omega_i(\theta) t_i(x)$ \\
+Soient $T_1,...,T_k$ les statistiques $(x_1,...,x_n) \mapsto T_i (x_1,...,x_n) = \sum_{j=1}^n t_i(x_j)$. \\
+On suppose que les ensembles $\{(\omega_1(x),...,\omega_k(\theta)) ; \theta\in\Theta\}$ et $\{T_1(x_1,...,x_n)...,T_k(x_1,...,x_n) ; (x_1,...,x_n)\in\mathfrak{X}^n\}$
+contiennent des ouverts non vides de $\mathbb{R}^k$.\\
+Alors la loi de $T=(T_1,...,T_k)$ appartient  la famille exponentielle sous la forme : 
+\[f_T(u_1,...,u_k,\theta)=H(u_1,...,u_k) (C(\theta))^n \exp(\sum_{i=1}^n \omega_i(\theta) u_i)\]}
+
+\Theo{de Slutsky}{Soit $(X_n)_{n\geq 1}$ une suite de var qui converge en loi vers une va X et $(Y_n)_{n\geq 1}$ une suite de va qui converge en probabilité vers une constante a. \\
+$(Y_n \xrightarrow[n\to +\infty]{\mathbb{P}} a \Leftrightarrow Y_n \xrightarrow[n\to +\infty]{\mathcal{L}} a)$ \\
+On a alors $X_n+Y_n \xrightarrow[n\to +\infty]{\mathcal{L}} X+a$ et $X_nY_n \xrightarrow[n\to +\infty]{\mathcal{L}} aX$ }
+
+\Rem{}{$(X_n)_{n\geq 1}$ iid, de moyenne $\mu$ et de variance $\sigma^2>0$. D'après le TLC, on sait que : 
+\[\frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}\xrightarrow[n\to+\infty]{\mathcal{L}} N \hookrightarrow\mathcal{N}(0,1)\]
+Supposons que $\sigma$ ne soit pas connue et que $\lim_{n\to +\infty} V(S_n^2)=0$. Alors :
+\[\text{Soit } \varepsilon>0 : \mathbb{P}(|S_n^2-\sigma^2|>\varepsilon)=\mathbb{P}(|S_n^2-E(S_n^2)|>\varepsilon)\leq \frac{V(S_n^2)}{\epsilon} \xrightarrow[n\to+\infty]{} 0\]
+Ainsi, $S_n^2\xrightarrow[n\to+\infty]{\mathbb{P}} \sigma^2$\\
+On en déduit que $\frac{\sigma}{S_n}\xrightarrow[n\to+\infty]{\mathbb{P}} 1$. D'où : 
+\[\frac{\sigma}{S_n}\frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}=\frac{\sqrt{n}(\bar{X}-\mu)}{S_n}\xrightarrow[n\to+\infty]{\mathbb{P}}N\hookrightarrow\mathcal{N}(0,1)\]} 
+
+\Theo{}{Soit $(X_1,...,X_n)$ un échantillon de loi normale $\mathcal{N}(\mu,\sigma^2)$ avec $(\mu,\sigma^2)\in\mathbb{R}^+_* \times \mathbb{R}^+_*$ et soient 
+\[\bar{X}=\frac{1}{n}\sum_{i=1}^n X_i \text{ et}\]
+\[S_n^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2\]
+la moyenne et la variance empririques associées. \\
+Alors : \begin{enumerate}
+\item $X\Inde S^2$
+\item $\bar{X}\hookrightarrow \mathcal{N}(\mu,\frac{\sigma^2}{n})$
+\item $\frac{(n-1)S^2}{\sigma^2}\hookrightarrow \chi^2_{n-1}$
+\end{enumerate}}
+
+\section{Principe de réduction des données : l'exhaustivité}
+Le principe de base est le suivant : \begin{itemize}
+	\item observation $x=(x_1,...,x_n)$
+	\item chaque $x_i$ est régie par $P_{\theta}$
+	\item $\theta$ est le paramètre inconnu
+	\item On infère sur $\theta$ à partir de l'échantillon
+\end{itemize}
+
+En général, ce n'est pas $x$ qui est considéré mais un résumé de $x$; soit $\phi(x)=\phi(x_1,...,x_n)$. 
+
+\bigskip
+A priori, on perd de l'information sur $\theta$ en considérant $\phi(x)$ à la place de $x$.
+
+\begin{rap}
+	Soit P une probabilité sur un espace $(\mathfrak{X},\mathcal{A})$ et soit $\phi$ une application mesurable de $(\mathfrak{X},\mathcal{A})$ dans un espace $(\mathfrak{Y},\mathcal{B})$.\\
+	On définit, pour tout $A\in\mathcal{A}$ la probabilité conditionnelle de A sachant $\phi$ comme étant une variable aléatoire notée
+	\[P(A|\phi)=E(1_A |\phi)\]
+	et définie presque sûrement relativement à $\phi(P)$ par :
+	\[\forall B\in\mathcal{B}, P(A\cap(\phi\in B))=\int_B P(A|\phi=y) d\phi(P)(y)\]
+\end{rap}
+
+\Def{Exhaustive}{On dit qu'une statistique $\phi$ définie sur un modèle statistique $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ est exhaustive (par $\theta$) s'il existe une version de la probabilité conditionnelle de A sachant $\phi$ indépendante de $\theta$. \\
+Si tel est le cas, on note $P(\bullet|\phi)$ une telle version qui vérifie alors lorsque $(\mathfrak{Y},\mathcal{B})$ est l'espace image de $\phi$ :
+\[\forall A\in\mathcal{A},\forall B\in\mathcal{B},\forall\theta\in\Theta, P_{\theta}(A\cap(\phi\in\ B))=\int_B P(A|\phi=y)d\phi(P_{\theta})(y)\]}
+
+\begin{rmq}
+En pratique, cette définition n'est pas facile à utiliser.
+\end{rmq}
+
+\Def{Vraisemblance}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique dominé par une mesure $\sigma$-finie $\mu$.\\
+Ce modèle est caractérisé par la donnée d'une vraisemblance :
+\begin{eqnarray*}
+	L : \mathfrak{X}\times\Theta &\to& \mathbb{R}^+ \\
+	(x,\theta) &\mapsto& L(\theta,x)=\frac{dP_{\theta}}{d\mu}(x)
+\end{eqnarray*}}
+
+\Exemp{}{Soit $(X_1,...,X_n)$ un échantillon de la loi $\mathcal{N}(\theta,\sigma^2)$. Ici, le modèle statistique est $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$\\
+Ici, $\mathfrak{X}=\mathbb{R}$ et $P_{\theta}=\mathcal{N}(\theta,\sigma^2)$ et $\mu$ est la mesure de Lebesgue sur $\mathbb{R}$.
+
+\[\forall x\in\mathbb{R},\ L(\theta,x)=\frac{dP_{\theta}}{d\mu}(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x-\theta)^2}{2\sigma^2} \right)\]
+Si on considère le modèle $(\mathfrak{X}^n,P_{\theta}^{\otimes n})_{\theta\in\Theta}$, une vraisemblance est : $\forall\theta\in\mathbb{R}, \forall x=(x_1,\cdots,x_n)\in\mathbb{R}^n$ : 
+\[L(\theta,x)=\prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x_i-\theta)^2}{2\sigma^2} \right)=\left( \frac{1}{\sqrt{2\pi}\sigma}\right)^n  \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n (x_i-\theta)^2\right)\]}
+
+\Theo{de factorisation de Neymann-Fisher :}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique dominé par une mesure $\sigma$-finie $\mu$ et soit L une vraisemblance.\\
+Alors toute statistique $\phi$ à valeur dans un espace $\mathfrak{Y}$ est exhaustive si et seulement s'il existe une application 
+\[g : \mathfrak{Y}\times\Theta\to\mathbb{R}^+\]
+et une application 
+\[h:\mathfrak{X}\to\mathbb{R}^+\]
+tel que \[\forall x\in\mathfrak{X},\forall \theta\in\Theta, L(\theta,x)=g(\phi(x),\theta)h(x)\]}
+
+\Exemp{}{Soit $(X_1,...,X_n)$ un échantillon de la loi $\mathcal{N}(\theta,\sigma^2)$.
+\begin{eqnarray*}
+	L(\theta,x)&=&\left( \frac{1}{\sqrt{2\pi}\sigma}\right)^n  \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n (x_i-\theta)^2\right)\\
+		&=&\left( \frac{1}{\sqrt{2\pi}\sigma}\right)^n  \exp\left( -\frac{1}{2\sigma^2} \left(\sum_{i=1}^n (x_i-\bar{x})^2+n(\bar{x}-\theta)^2\right)\right)\\
+	 &=&\underbrace{\left( \frac{1}{\sqrt{2\pi}\sigma}\right)^n  \exp\left( -\frac{1}{2\sigma^2} \left(\sum_{i=1}^n (x_i-\bar{x})^2\right)\right)}_{h(x)} \underbrace{\exp\left(\frac{-n(\bar{x}-\theta)^2}{2\sigma^2} \right)}_{g(\phi(x),\theta)}
+\end{eqnarray*}
+D'après le théorème de Neymann-Fischer, la statistique $\phi(x)=\phi(x_1,\cdots,x_n)=\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$ est une statistique exhaustive par le paramètre $\theta$.}
+
+\Def{Famille complète}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique. On dit que la famille $(P_{\theta})_{\theta\in\Theta}$ est complète ou que le modèle statistique est complet si pour toute fonction g numérique, $P_{\theta}$ intégrable $(\theta\in\Theta)$ définie sur $\mathfrak{X}$, on a :
+\[\forall\theta\in\Theta, \int_{\mathfrak{X}} g dP_{\theta}=0 \Rightarrow \forall\theta\in\Theta, g=0\ P_{\theta}\text{-p.s.}\]}
+
+\Def{Statistique complète}{Une statistique $Y:\mathfrak{X}\to\mathfrak{Y}$ est dite complete si son modèle image est complet, ie : \\
+	Pour toute fonction $g$ définie sur $\mathfrak{Y}$, $\phi(P_{\theta})$-intégrable $(\forall\theta\in\Theta)$, on a :
+\[\forall\theta\in\Theta, \int_{\mathfrak{Y}} g d\phi(P_{\theta})=0 \Rightarrow \forall\theta\in\Theta, g=0\ \phi(P_{\theta})\text{-p.s.}\]
+ou encore :
+\[\forall\theta\in\Theta, \int_{\mathfrak{Y}} g\circ\phi dP_{\theta}=0 \Rightarrow \forall\theta\in\Theta, g\circ\phi=0\ P_{\theta}\text{-p.s.}\]}
+
+\Exemp{}{Soit $\phi$ une variable aléatoire de la loi binomiale $P_{\theta}=\mathcal{B}(n,\theta),\ \theta\in]0,1[$\\
+Soit g d'intégrale nulle par rapport à la loi $P_{\theta}$, ie : 
+\[0=\sum_{k=0}^n g(k)P_{\theta}(\phi=k)=\sum_{k=0}^n g(k)\binom{n}{k}\theta^k(1-\theta)^{n-k}=(1-\theta)^k\sum_{k=0}^ng(k)\binom{n}{k}\left(\frac{\theta}{1-\theta}\right)^k\]
+Lorsque $\theta\in]0,1[$, $\frac{\theta}{1-\theta}$ parcourt $\mathbb{R}_*^+$. Par conséquent, $\forall k\in\{1,\cdots,n\}, \binom{n}{k}g(k)=0$\\
+D'où $\forall k\in\{1,\cdots,n\}, g(k)=0$, donc $g=0\ P_{\theta}$-ps.}
+
+\Theo{}{Considérons le cas d'un modèle exponentiel de vraisemblance L donnée par :
+	\[L(x,\theta)=h(x)c(\theta)\exp(u(\theta)t(\theta))\]
+Alors la statistique $T:(x_1,...,x_n)\mapsto \sum_{i=1}^n t(x_i)$ est complète.}
+
+\Exemp{}{$P_{\theta}=\mathcal{B}(n,\theta)$ avec $\theta\in]0,1[$\\
+\[\forall x\in\{0,\cdots,n\}, L(x,\theta)=\binom{n}{x} \theta^x (1-\theta)^{n-x}=\binom{n}{x}(1-\theta)^n \exp\left( x\ln\left( \frac{\theta}{1-\theta}\right) \right)\]
+Ainsi, la statistique T définie pour tout $x=(x_1,\cdots,x_n)\in\{0,\cdots,n\}^n$ par :
+\[T(x)=\sum_{i=1}^n t(x_i)=\sum_{i=1}^n x_i\]
+est complète.}

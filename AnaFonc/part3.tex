@@ -1,0 +1,363 @@
+\part{Espaces de Hilbert}
+\section{Définition}
+Soit E evn sur $\mathbb{K}$.
+\Def{Produit scalaire}{On appelle produit scalaire (ou hermitien) une fonction \[\langle \bullet,\bullet\rangle:E\times E\to \mathbb{K}\] telle que :
+\begin{enumerate}
+	\item $\forall x,y\in E, \langle x,y\rangle=\overline{\langle y,x\rangle}$
+	\item $\forall x_1,x_2,y\in E, \langle x_1+x_2,y\rangle=\langle x_1,y\rangle+\langle x_2,y\rangle$
+	\item $\forall \lambda\in\mathbb{K}, \forall x,y \in E, \langle\lambda x,y\rangle=\lambda \langle x,y\rangle$
+	\item $\forall x\in E, \langle x,x\rangle >0$ et $\langle x,x\rangle=0 \Leftrightarrow x=0$
+\end{enumerate}
+Un espace $(E,\langle\bullet,\bullet\rangle)$ s'appelle un espace hermitien (ou préhilbertien).}
+
+\Theo{de Cauchy-Schwartz}{Si $\langle\bullet,\bullet\rangle$ est un produit scalaire associé à E, alors $\forall x,y\in E$ 
+\[|\langle x,y\rangle|^2\leq\langle x,x\rangle \times \langle y,y\rangle\]}
+
+\begin{dem}
+	Soit $q(\lambda)=\langle \lambda x+y, \lambda x+y\rangle$ avec $\lambda$ complexe.\\
+	D'après la définition du produit scalaire, $\forall \lambda\in\mathbb{C}, q(\lambda)\geq 0$\\
+	Cherchons les extrema de $q(\lambda)$. 
+	\begin{eqnarray*}
+		q(\lambda)&=&\langle\lambda x, \lambda x\rangle + \langle y, \lambda x\rangle + \langle \lambda x,y\rangle + \langle y,y\rangle \\
+			  &=&|\lambda|^2\langle x,x\rangle + 2\Re(\bar{\lambda}\langle x,y\rangle) + \langle y,y \rangle
+	\end{eqnarray*}
+
+	Ecrivons $\langle x,y\rangle=|\langle x,y\rangle| e^{i\theta}$ et prenons $\lambda$ tel que $\lambda=re^{i\theta}$.
+	\[q(re^{i\theta})=r^2\langle x,x\rangle+2r|\langle x,y\rangle|+\langle y,y\rangle\geq 0\ \forall r\in\mathbb{R}\]
+	\[\Delta=4|\langle x,y\rangle|^2-4\langle x,x\rangle\langle y,y\rangle\leq 0\]
+	D'où :
+	\[|\langle x,y\rangle|^2\leq\langle x,x\rangle\langle y,y\rangle\]
+\end{dem}
+
+\Coro{Inégalité de Minkowsky}{$\forall x,y\in E$ : \[\langle x+y,x+y\rangle \leq \left(\sqrt{\langle x,x\rangle}) + \sqrt{\langle y,y\rangle}\right)^2\]}
+
+\begin{dem}
+	$\forall x,y\in E$ :
+	\[0\leq \langle x+y,x+y\rangle = \langle x,x\rangle + 2\Re(\langle x,y\rangle) + \langle y,y\rangle\]
+	Comme $\Re \langle x,y \rangle \leq |\langle x,y\rangle|$, on a : 
+	\begin{eqnarray*}
+		0\leq \langle x+y, x+y\rangle &\leq& \langle x,x\rangle + 2 |\langle x,y\rangle|+ \langle y,y\rangle\\
+		\text{Par l'inégalité de Cauchy-Schwarz : } &\leq& \langle x,x\rangle + 2 \sqrt{\langle x,x\rangle}) \sqrt{\langle y,y\rangle}+ \langle y,y\rangle\\
+							&\leq&\left(\sqrt{\langle x,x\rangle}) + \sqrt{\langle y,y\rangle}\right)^2
+	\end{eqnarray*}
+\end{dem}
+
+\Coro{}{Un produit scallaire sur E induit une norme sur E définie par : 
+\[\forall x\in E,\ \|x\|=\sqrt{\langle x,x\rangle}\]}
+
+\textbf{Conséquence :} Chaque espace préhilbertien est un espace normé (réciproque fausse). On peut maintenant parler de convergence dans un espace hermitient E.
+
+\Def{Espace de Hilbert}{Un espace préhilbertien complet s'appelle un espace de Hilbert.}
+
+\Exemp{}{$\mathbb{R}^n$ et $\mathbb{C}^n$ sont des espaces de Hilbert (car de dimension finie) \\
+$L_2(X,\mathcal{B},\mu)$, avec $(X,\mathcal{B},\mu)$ un espace mesuré, est un espace de Hilbert associé au produit scalaire :
+\[\langle f,g\rangle = \int_X f\bar{g}d\mu\]}
+
+(PETIT DESSIN !)
+
+\section{Théorème de projection}
+Soit H un espace de Hilbert.
+
+\Def{Espace convexe}{$C\subset H$ est un convexe si $\forall x,y\in C,\ \forall \lambda\in[0,1]$ :
+\[\lambda x + (1-\lambda)y \in C\]
+(ie $[x,y]$ est entièrement contenu dans C)}
+
+\Theo{1}{Soit H un espace de Hilbert, et soit $C\subset H$ un convexe fermé, $C\neq \emptyset$. Alors $\forall f\in H, \exists!u\in C$ tel qu'on ait équivalence entre :
+\begin{itemize}
+	\item $\|f-u\| = \min_{x\in C} \|f-x\|$
+	\item u est caractérisé par : 
+	\begin{itemize} 
+		\item $u\in C$
+		\item $\Re \langle f-u, v-u\rangle \leq 0$, $\forall v\in C$
+	\end{itemize}
+\end{itemize}
+u s'appelle la projection de f sur C, et on note $u=P_C f$}
+
+\begin{dem}
+	\textbf{1. Existence}\\
+	Soit $u_n\in C$, on définit : 
+	\[d_n\|f-u_n\|,\ d_n\to d=\inf_{v\in C} \|f-v\|\]
+	Par théorème :
+	\[E \text{ espace hermitien } \Leftrightarrow \forall f,g \in E,\ \|f+g\|^2+\|f-g\|^2 = 2(\|f\|^2+\|g\|^2)\]
+
+	Montrons que $\{u_n\}$ est de Cauchy. On pose :
+	\[a=f-u_m,\ b=f-u_n\]
+
+	On a :
+	\[\|a+b\|^2=\|2f-u_n-u_m\|^2\]
+	\[\|a-b\|^2=\|u_n-u_m\|^2\]
+	\begin{eqnarray*}
+	\|a+b\|^2+\|a-b\|^2&=&2(\|f-u_n\|^2+\|f-u_m\|^2)\\
+			&=&\left\|2\left(f-\frac{u_n+u_m}{2} \right)\right\|^2 + \|u_n-u_m\|^2
+	\end{eqnarray*}
+	\[\Leftrightarrow \left\|f-\frac{u_n+u_m}{2}\right\|^2 + \left\|\frac{u_n-u_m}{2}\right\|^2 = \frac{1}{2} (d_n^2+d_m^2)\]
+	\[\Leftrightarrow \left\|\frac{u_n-u_m}{2}\right\|^2 = \frac{1}{2}(d_n^2+d_m^2)-\left\|f-\frac{u_n+u_m}{2}\right\|^2\]
+
+	Or, comme C est un convexe, $u_n$ et $u_m\in C$, alors : 
+	\[\frac{1}{2}u_n+\frac{1}{2}u_m\in C\]
+	et :
+	\[\left\| f-\frac{u_n+u_m}{2}\right\|\leq d\]
+
+	donc :
+	\[0 \leq \left\| \frac{u_n-u_m}{2}\right\|^2\leq \frac{1}{2}(d_n^2+d_m^2-2d)\to 0\]
+	Donc $u_n$ est de Cauchy. \\
+	$\exists u=\lim u_n$ (H complet) et comme C fermé, $u\in C$
+
+	\bigskip
+	\textbf{2. Équivalence}\\
+	Soit $u$ vérifiant le premier résultat. Soit $w\in C$, $\lambda\in[0,1]$, alors :
+	\[v=\lambda w + (1-\lambda)u \in C\]
+	\begin{eqnarray*}
+		\|f-u\| &\leq& \|f-v\| = \|f-\lambda w -(1-\lambda)u\|\\
+			       &\leq& \|f-u-\lambda(w-u)\|
+	\end{eqnarray*}
+
+\[\|f-u\|^2\leq \|f-u\|^2+2\lambda\Re\langle f-u,u-w\rangle + \lambda^2\|w-u\|^2\]
+\[\Rightarrow 2\Re \langle f-u, w-u\rangle \leq \lambda \|w-u\|^2\]
+
+Si $\lambda\to 0^+$, alors :
+\[2\Re \langle f-u, w-u\rangle \leq 0\]
+
+\bigskip
+Réciproquement, soit $u$ vérifiant le deuxième résultat.
+\[\forall v\in C,\ \|u-f\|^2-\|v-f\|^2=2\Re \langle f-u, v-u\rangle - \|u-v\|^2\leq 0\]
+\[\Rightarrow \forall v\in C,\ \|u-f\|^2 \leq \|v-f\|^2\]
+
+\bigskip
+\textbf{3. Unicité}
+D'après le deuxième résultat : soit $u\in C$. 
+\[\forall v\in C,\ \Re \langle f-u, v-u\rangle \leq 0\]
+
+Supposons qu'il existe $u_1$ et $u_2\in C$ tels que :
+\[\forall v\in C, \Re \langle f-u_1, v-u_1\rangle \leq 0 \text{ et } \Re \langle f-u_2, v-u_2\rangle \leq 0\]
+
+On prend $v=u_2$ dans la première inégalité et $v=u_1$ dans la deuxième :
+\begin{eqnarray*}
+	\Re (\langle f-u_1, u_2-u_1\rangle + \langle f-u_2, u_1-u_2\rangle)&=&\Re \langle f-u_1-f+u_2,u_2-u_1\rangle\\
+									&=&\|u_2-u_1\|^2\\ 
+									&\leq& 0
+\end{eqnarray*}
+
+\[\Rightarrow \|u_2-u_1\| = 0 \Leftrightarrow u_1=u_2\]
+\end{dem}
+
+\Coro{1}{Sous les mêmes hypothèses :
+\[\forall f_1,f_2\in H, \|P_Cf_1-P_Cf_2\|_H\leq \|f_1-f_2\|_H\]}
+
+\begin{dem}
+D'après le théorème, $\forall v\in C$ :
+\begin{eqnarray}
+	\Re \langle f_1-P_cf_1, v-P_Cf_1\rangle &\leq& 0\\
+	\Re \langle f_2-P_Cf_2,v-P_Cf_2\rangle &\leq& 0
+\end{eqnarray}
+
+On prend $v=P_Cf_2$ dans (1) et $v=P_Cf_1$ dans (2) :
+\begin{eqnarray*}
+	\Re \langle f_1-P_Cf_1, P_Cf_2-P_Cf_1\rangle &\leq& 0\\
+	\Re \langle P_Cf_2-f_2, P_Cf_2-P_Cf_1\rangle &\leq& 0
+\end{eqnarray*}
+
+\[(1)+(2)\Rightarrow \Re \langle f_1-f_2,P_Cf_2-P_Cf_1\rangle + \|P_cf_2-P_Cf_2\|^2\leq 0\]
+\begin{eqnarray*}
+	\|P_Cf_2-P_Cf_1\|^2 &\leq& \Re \langle f_1-f_2, P_Cf_1-P_Cf_2\rangle \\
+			&\leq&\|f_1-f_2\|\|P_Cf_1-P_Cf_2\|\\
+	\\
+	\Rightarrow \|P_Cf_2-P_Cf_1\|&\leq& \|f_1-f_2\| \text{ si } f_1\neq f_2
+\end{eqnarray*}
+\end{dem}
+
+\Theo{2 : projection dans un sous-espace fermé}{Soient $f\in H$ et $M\subset H$, un sous espace fermé de $H$. \\
+	$\Rightarrow\ u=P_M f$ vérifie :
+	\[\left\{
+			\begin{array}{c}
+				u\in M\\
+				\langle f-u, v\rangle =0\ \forall v\in M
+			\end{array}
+	\right.\]}
+
+\begin{dem}
+	M est un sous-espace fermé donc $\forall f,g\in M$, $\forall \alpha, \beta \in \mathbb{K}, \alpha f+\beta g\in M$.\\
+	$\Rightarrow M$ est un convexe fermé.
+
+
+	\bigskip
+	D'après le théorème précédent, on a :
+	\[\forall v\in M, \Re \langle f-u, v-u\rangle \leq 0\]
+
+	Comme M est un sous-espace vectoriel, si$v\in M$, alors $\forall \alpha\in \mathbb{K},\ \alpha v\in M$.
+
+	\[\forall v\in M, \forall \alpha \in \mathbb{K}, \Re \langle f-u, \alpha v-u\rangle \leq 0\]
+
+	D'où $\forall w\in M,\ w=\alpha v-u$ :
+	\[\Re \langle f-u, w\rangle \leq 0\]
+
+	De même, si $w\in M$, alors $-w\in M$, donc :
+	\[\Re \langle f-u, w\rangle \geq 0\]
+
+	Donc \[\Re \langle f-u, w\rangle =0\]
+
+	Encore une fois, si $w\in M$ alors $iw \in M$ et :
+	\[\Re \langle f-u, iw\rangle = -\Im \langle f-u, w\rangle = 0\]
+	par les mêmes arguments que pour la partie réelle.
+\end{dem}
+
+\Coro{2}{Soit M un sous-espace fermé, alors $H=M\oplus M^{\perp}$, ie  :
+\[\forall f\in H, f=P_Mf+P_{M^{\perp}}f\]}
+
+\Def{Dense}{On dit que M est dense dans H si l'adhérence de M est égal à H, ie :
+\[\{x\in H; \forall r>0, B(x,r)\cap M\neq \emptyset\}=H\]}
+
+\Def{}{On note V(E) l'ensemble des combinaisons linéaires finies de $E=\{e_i\}_{i\in I}$ : 
+\[V(E)=\{\sum_{i=1}^n \lambda_ie_i,\ \lambda_i\in\mathbb{K},\ n\in\mathbb{N}\}\]
+
+On dit que la famille $E=\{e_i\}_{i\in I}$ est totale si et seulement si $\overline{V(E)}=H$ (chaque élément de H peut-être obtenue comme une limite de $\sum \lambda_i e_i$)}
+
+\Theo{}{\begin{eqnarray*}
+		\text{E totale} &\Leftrightarrow& \not\exists x\in H, x\neq 0;\ x\perp V(E)\\
+				&\Leftrightarrow& V(E)\text{ dense dans H}
+\end{eqnarray*}}
+
+\section{Dual d'un espace de Hilbert}
+\Def{Dual}{Le dual de H est $\mathcal{L}_C(H)$, l'ensemble des opérateurs linéaires continues de H dans $\mathbb{K}$}
+
+\Theo{de Riesz-Fréchet}{Soit H' dual de H, espace de Hilbert.
+\[\forall \phi\in H',\ \exists !f\in H;\ \forall v\in H, \phi(v)=\langle f,v\rangle\]}
+
+\begin{dem}
+	\textbf{Existence :}\\
+	Si $\phi=0$ alors $f=0$\\
+	Soit $\phi\neq 0$. On a $\ker \phi \neq H$ (car $\phi \neq 0$). \\
+	$\ker \phi$ est un fermé (car image réciproque par une application continue d'un fermé, $\{0\}$)
+
+	\bigskip
+	Soit $z\not\in \ker \phi$ et soit $u=\frac{z}{\phi(z)}\in\left(\ker\phi\right)^{\perp}$\\
+	$\phi(u)=1$ car $\phi$ linéaire.\\
+	
+	\bigskip
+	Soit maintenant $v\in H$, alors :
+	\[\phi(v-\phi(v)u)=\phi(v)-\phi(v)\phi(u)=0\]
+	D'où :
+	\[v-\phi(v)u\in\ker \phi\]
+	Donc $v-\phi(v)u$ et $u$ sont orthogonaux, ie :
+	\[0=\langle v-\phi(v)u, u\rangle=\langle v,u\rangle -\phi(v)\|u\|^2\]
+	\[\Rightarrow \phi(v)=\langle v,\frac{u}{\|u\|^2}\rangle = \langle v,f\rangle\]
+	Ce qui démontre l'existence de f.
+
+	\textbf{Unicité}\\
+	Soient $f$ et $f'\in H$ tels que :
+	\[\forall v\in H, \phi(v)=\langle v,f\rangle=\langle v,f'\rangle\]
+
+	\[\Rightarrow \langle v,f-f'\rangle =0\]
+
+	Prenons $v=f-f'$ :
+	\[\langle f-f', f-f'\rangle = \|f-f'\|^2 = 0 \Rightarrow f=f'\]
+\end{dem}
+
+\section{Base hilbertienne}
+
+\Def{}{Soient H un espace de Hilbert et $E=\{e_i\}_{i\in I}\subset H$. E est une base hilbertienne de H si et seulement si :
+	\begin{enumerate}
+		\item E est orthonormée, ie $\forall i,j,\ \langle e_i, e_j\rangle = \delta_{ij}$
+		\item E est totale
+\end{enumerate}}
+
+\Theo{1}{Soit H un espace de Hilbert séparable (ie dont la base est au plus dénombrable), $\{e_i\}_{i\in I}\subset H$ base de Hilbert, alors :
+\begin{enumerate}
+	\item $\forall x\in H, x=\sum_{i=1}^{\infty}\langle x,e_i\rangle e_i$\\
+		et $\|x\|^2=\sum_{i=1}^{\infty} |\langle x,e_i\rangle|^2$ (égalité de Parseval)
+	\item Si $\{c_i\}_{i\in I}\in l_2(I)$ alors $\sum_{i=1}^n c_ie_i\xrightarrow[n\to\infty]{} x\in H$ tel que $c_i=\langle x,e_i\rangle$
+\end{enumerate}}
+
+\section{Adjoint d'un opérateur}
+Soient $H_1$ et $H_2$ des espaces de Hilbert, et $A:H_1\to H_2$ un opérateur linéaire continue.
+
+\Def{}{L'opérateur $A^*:H_2'\to H_1'$ est adjoint à A si :
+\[\forall x\in H_1,\ y\in H_2',\ \langle Ax,y\rangle=\langle x,A^*y\rangle\]
+La notion d'adjoint généralise le concept de transposé. \\
+(H' : dual de H)}
+
+D'après le théorème de Riesz-Fréchet, si H espace de Hilbert alors H est isomorphe à H'.\\
+Alors si $H_1$ et $H_2$ sont de Hilbert :
+\[\forall x\in H_1,\ \forall y\in H_2,\ \langle Ax,y\rangle_{H_2}=\langle x,A^*y\rangle_{H_1}\]
+
+\Theo{}{$A\in\mathcal{L}_C(H_1,H_2)$. On a :
+	\[\|A\|=\|A^*\|\]
+\[\exists ! A^* \text{ linéaire continue}\]}
+
+\begin{dem}
+Soit $y\in H_2$. Considérons : 
+\[\Phi(x)=\langle Ax,y\rangle\]
+qui est une forme linéaire sur $H_1$.\\
+$\Phi(x)$ est continue, en effet :
+\[\|\phi(x)\|\leq \|Ax\|\times\|y\| \leq \|A\|\times\|x\|\times\|y\|\]
+$\Phi$ bornée donc continue. \\
+Comme $\Phi$ est linéaire continue sur $H_1$, espace de Hilbert, on peut utiliser le théorème de Riesz-Fréchet.\\
+Donc $\exists!u\in H_1;\ \Phi(x)=\langle x,u\rangle$\\
+Notons-le $u=A^*y$, ce qui donne l'existence et l'unicité de $A^*$
+
+\bigskip
+Montrons que A est linéaire :
+$\forall y_1,\ y_2\in H_2,\ \forall x\in H_1$ :
+\begin{eqnarray*}
+	\langle x,A^*(y_1+y_2)\rangle&=&\langle Ax, y_1+y_2\rangle\\
+				&=&\langle Ax,y_1\rangle + \langle Ax,y_2\rangle\\
+				&=&\langle x,A^*y_1\rangle + \langle x,A^*y_2\rangle \\
+				&=&\langle x, A^*y_1+A^*y_2\rangle
+\end{eqnarray*}
+
+$\forall y\in H_2,\ \forall x\in H_1,\ \forall \lambda\in\mathbb{K}$ :
+\begin{eqnarray*}
+	\langle x, A^*(\lambda y)\rangle &=& \langle Ax, \lambda y\rangle \\
+					&=& \bar{\lambda} \langle Ax, y\rangle \\
+					&=& \bar{\lambda} \langle x, A^*y\rangle \\
+					&=& \langle x, \lambda A^*y\rangle
+\end{eqnarray*}
+
+\bigskip
+A est continue :
+\begin{eqnarray*}
+	\|Ax\|^2 &=& \langle A^*Ax,x\rangle\\
+		&=& \|A^*Ax\| \times \|x\|\\
+		&=& \|Ax\|\times\|A^*\|\times\|x\|
+\end{eqnarray*}
+
+\[\Rightarrow \|Ax\|\leq \|A^*\|\|x\|\]
+
+Donc $\|A\|\leq \|A^*\|$. De même, $\|A^*\|\leq \|A\|$ (prendre $\|A^*x\|^2$)\\
+D'où $\|A\|=\|A^*\|$ donc $A^*$ est borné (car A borné) donc continue.
+\end{dem}
+
+\Def{}{A est auto-adjoint si $A=A^*$}
+
+\Def{}{v est un vecteur propre de A si :
+\begin{itemize}
+\item $v\neq 0$
+\item $\exists \lambda\in\mathbb{R};\ Av=\lambda v$
+\end{itemize}}
+
+\Def{}{On note $\rho(A)$ l'ensemble résolvant défini par :
+\[\rho(A)=\{\lambda\in\mathbb{R}|A-\lambda I \text{ est bijectif}\}\]}
+
+\Def{}{Le spectre de A est :
+\[\sigma(A)=\mathbb{R}\textbackslash \rho(A)\]}
+
+\Rem{}{\begin{itemize}
+\item $VP(A)\subset \sigma(A)$ 
+\item Si $\dim(H)<\infty$ alors $VP(A)=\sigma(A)$.
+\end{itemize}
+
+Un exemple dans le cas infini : 
+\begin{eqnarray*}
+H=l_2(\mathbb{R}),\ A_r : l_2(\mathbb{R}) &\to& l_2(\mathbb{R}) \\
+			(x_1,x_2,...) &\mapsto& (0,x_1,x_2,...)
+\end{eqnarray*}
+$A_r$ continue linéaire. 0 n'est pas valeur propre de $A_r$ mais $0\in\sigma(A_r)$ ($A_r$ non bijectif)}
+
+\Def{}{Soit E un espace de Banach.\\
+Un espace $E_1\subset E$ est relativement compact si $\bar{E}_1$ est compact.}
+
+\Def{}{Soient E et F deux espaces de Banach.\\
+Un opérateur $T\in \mathcal{L}_C(E,F)$ est compact si $T(B_1)$ est relativement compact (où $B_1=\{x\in E; \|x\|_E\leq 1\}$)}
+
+\Theo{}{Soient H espace de Hilbert séparable et $T:H\to H$ auto-adjoint et compact.\\
+Alors il existe une base hilbertienne de H formée par les vecteurs propres de T.}

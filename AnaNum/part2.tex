@@ -1,0 +1,290 @@
+\part{Intégration numérique}
+
+$f$ est intégrable sur [a,b]. Comment peut-on calculer numériquement $\int_a^b f(x) dx$ ?\\
+On pose $I(f)=\int_a^b f(x) dx$.
+
+\bigskip
+Une formule pour calculer $I(f)$ explicitement s'appelle une formule de quadrature ou une formule d'intégration numérique.\\
+IL nous faut trouver une fonction approximant f tel que $I(f_n)=\int_a^b f_n(x) dx$ soit facile à calculer.
+\[S_n(f)=I(f_n)\approx I(f)\]
+Commet choisir $f_n$ ?\\
+On peut prendre : 
+\begin{itemize}
+	\item $f_n(x)=L_n(f,x)$ (formule d'interpolation)
+	\item Autre chose
+\end{itemize}
+
+\bigskip
+2 méthodes de quadrature :
+\begin{itemize}
+	\item Simple ($f(x)\approx L_n(f,x),x\in[a,b]$) : pas de convergence.
+	\item Composite : on sépare [a,b] en sous-intervalles. On pourra avoir convergence et stabilité.
+\end{itemize}
+
+\section{Préliminaires}
+\Lem{}{La formule \[I(f) \approx \sum_{i=0}^n f(x_i) \int_a^b l_i(x) dx\] \[l_i(x)=\prod_{\underset{j\neq i}{j=0}}^n \frac{x-x_j}{x_i-x_j}\] pour $f\in\mathcal{C}^0 [a,b]$ s'appelle la formule de quadrature de Newton-Cotes.} 
+
+On pose $E_n(f)=I(f)-S_n(f)$ \\
+On a donc $|E_n(f)|\leq(b-a)||f-f_n||_{\infty}$
+
+\bigskip
+Prenons $f_n=L_n(f,x)$.
+\begin{eqnarray*}
+	S_n(f)=I(f_n)&=&\int_a^b \sum_{i=0}^n c_i l_i(x) dx \\
+		     &=&\sum_{i=0}^n c_i \int_a^b l_i(x) dx \\
+	      	     &=&\sum_{i=}^n f(x_i) \int_a^b l_i(x) dx
+\end{eqnarray*}
+
+\Rem{}{La formule de N-C est un cas particulier. \[I(f)=\sum_{i=0}^n \alpha_i f(x_i)\]
+	$\alpha_i$ coefficient de quadrature \\
+	$x_i$ nœuds (points) de quadrature}
+
+\Def{Degré d'exactitude}{Le degré d'exactitude d'une formule de quadrature est l'entier maximal $r>0$ tel que \[S_n(f)=I(f),\ \forall f\in\mathbb{R}_r[X]\]}
+
+\Prop{}{Le degré d'exactitude d'une formule de N-C (avec $\{x_i\}_{i=0}^n$ ) est supérieur ou égal à n.}
+
+\begin{dem}
+	$\forall f\in\mathbb{R}_n[X]$, $f=L_n(f,x)$.\\
+	\[I(f)=I(L_n(f,x))=S_n(L_n(f,x))=S_n(f)\]
+\end{dem}
+
+\Rem{}{Le degré d'exactitude maximal est $2n+1$ (quadrature de Gauss)}
+
+\section{Exemples de quadrature de type Newton-Cotes}
+\subsection{Méthode du point milieu}
+
+$f(x)$ sera interpolé en un point $x_0=\frac{a+b}{2}$.
+\[f(x)\approx f\left(\frac{a+b}{2}\right),\ x\in[a,b]\]
+\[\int_a^b f(x) dx\approx (b-a)f\left(\frac{a+b}{2}\right)\]
+
+\Theo{de la moyenne}{Si G est continue et intégrable sur [a,b], $\phi(x)\geq0$, 
+\[\forall x\in[a,b], \exists \eta\in]a,b[ ; \int_a^b G(x)\phi(x) dx = G(\eta) \int_a^b \phi(x) dx\]}
+
+\Prop{Calcul de l'erreur d'interpolation}{\[\exists \eta\in]a,b[; \int_a^b f(x)dx - (b-a)f\left(\frac{a+b}{2}\right) = \frac{2}{3}\left(\frac{b-a}{2}\right)^3 f''(\eta)\]}
+
+\begin{dem}
+On utilise le développement de Taylor :
+\begin{eqnarray*}
+\int_a^b f(x) dx &=&\int_a^b f\left(\frac{a+b}{2}\right) dx + \underbrace{\int_a^b f'\left(\frac{a+b}{2}\right) \left(x-\frac{a+b}{2}\right) dx}_{=0} + \int_a^b \frac{f''(\zeta)}{2}\left(x-\frac{a+b}{2}\right)^2dx \\
+		 &=&(b-a)f\left(\frac{a+b}{2}\right) + \frac{f''(\eta)}{2}\int_a^b \left( x-\frac{a+b}{2} \right) ^2 \\
+	  &=&(b-a)f\left(\frac{a+b}{2}\right) + \frac{2}{3} \left(\frac{b-a}{2}\right)^3 f''(\eta)
+\end{eqnarray*}
+\end{dem}
+
+\Rem{}{Le degré d'exactitude de la méthode du point milieu est 1 et l'erreur : \[E_n(f)=\frac{2}{3}\left( \frac{(b-a)}{2} \right)^3 f''(\eta)\]}
+
+\subsection{Méthode du trapèze}
+On interpole f avec un polynôme de degré 1. \[x_0=a \text{ et } x_1=b\]
+Formule de quadrature : \[S_1(f)=\frac{b-a}{2}[f(a)+f(b)]\]
+Erreur de la méthode : \[E_1(f)=-\frac{(b-a)^3}{12}f''(\eta)\]
+\begin{dem}
+Si $f\in\mathcal{C}^2[a,b],\forall x,\exists\eta_x\in]a,b[$
+	\[f(x)-P_1(x)=\frac{(x-a)(x-b)}{2}f''(\eta_x)\]
+	\[E_1(f)=\int_a^b (f(x)-P_1(x))dx = \int_a^b \frac{(x-a)(x-b)}{2}f''(\eta_x)dx\]
+Par le théorème de la moyenne, $\exists\eta\in]a,b[$ tel que \[E_1(f)=\frac{f''(\eta)}{2}\int_a^b (x-a)(x-b)dx\]
+\end{dem}
+
+Le degré d'exactitude vaut 1.
+
+\subsection{Méthode de Simpson}
+On interpole f par un polynôme $P_2$ de degré 2. \[x_0=a,\ x_1=\frac{a+b}{2},\text{ et } x_2=b\]
+
+\[S_2(f)=\int_a^b P_2(x)dx=\frac{b-a}{6}\left[ f(a) + 4f\left(\frac{a+b}{2}\right)+f(b)\right]\]
+Si $f\in\mathcal{C}^4[a,b],h=\frac{b-a}{2}$ : \[E_2(f)=-\frac{h^5}{90}f^{(4)}(\eta)\]
+
+\subsection{Méthode de Newton-Cotes}
+On prend le polynôme d'interpolation de f $L_n(f,x)$, deg $L_n=n$
+\[S_n(f)=\int_a^b L_n(f,x) dx\]
+$I(f)\approx S_n(f)$ s'appelle la quadrature de Newton-Cotes d'ordre n.
+
+\Theo{}{\begin{itemize}
+		\item[$\bullet$] Si n pair, alors pour $f\in\mathcal{C}^{n+2}[a,b]$, la méthode de Newton-Cotes a un degré d'exactitude n+1 et l'erreur est d'ordre n+3
+		\item[$\bullet$] Si n impair, pour $f\in\mathcal{C}^{n+1}[a,b]$, la méthode de Newton-Cotes a un degré d'exactitude n et l'erreur est d'ordre $h^{n+2}$
+\end{itemize}}
+
+\section{Convergence et stabilité}
+\Def{}{La méthode de quadrature est convergente sur H si $\forall f\in H,\ \lim_{n\to+\infty} E_n(f)=0$}
+
+\Def{}{La méthode est dite stable si : \[\exists A>0, \forall\{\varepsilon_i\}_{i=0}^n, |\sum_{i=0}^n \alpha_i\varepsilon_i|\leq A\max_{0\leq i\leq n} (\epsilon_i)\]}
+
+\Theo{}{La méthode $I(f)\approx \sum_{j=0}^n \alpha_j^{(n)} f(x_j)$ est stable $\Leftrightarrow\ \exists C>0,\forall n,\sum_{i=0}^n|\alpha_j^{(n)}|\leq C$}
+
+\begin{dem}
+	($\Rightarrow$) Supposons que C n'existe pas. Alors $\lim_{n\to+\infty} \sum_{j=0}^n |\alpha_j^{(n)}| =+\infty$\\
+	Prenons $\varepsilon_j=\frac{\alpha_j^{(n)}}{|\alpha_j^{(n)}|}$, d'où $|\varepsilon_j|=1\ \forall j$\\
+	D'après la définition de stabilité :
+	\[\left|\sum_{j=0}^n \alpha_j^{(n)} \frac{\alpha_j^{(n)}}{|\alpha_j^{(n)}|}\right|=\sum_{j=0}^n |\alpha_j^{(n)}| \to+\infty\]
+	d'où la contradiction avec la définition de stabailité.
+
+	\bigskip
+	($\Leftarrow$) $\forall n, \forall\{\varepsilon_i\}_{i=0}^n$ : 
+	\[\left|\sum_{j=0}^n \alpha_j^{(n)} \varepsilon_j\right|\leq \max_{0\leq i\leq n} |\varepsilon_i| \sum_{j=0}^n|\alpha_j^{(n)}|\leq C\max_{0\leq i\leq n}|\varepsilon_i|\]
+\end{dem}
+
+\Rem{}{La méthode de Newton-Cotes ne converge pas toujours !}
+
+\section{Méthodes composites}
+On partitionne [a,b] et sur chaque intervalle $[x_i,x_{i+1}]$, on utilise Newton-Cotes avec un n assez petit.
+\[I(f)=\int_a^b f(x)dx = \sum_{j=0}^{n-1} \int_{x_j}^{x_{j+1}} f(x)dx \approx \sum_{j=1}^{n-1} \int_{x_j}^{x_{j+1}} L_k(x)dx\]
+
+\subsection{Méthode des trapèzes composite}
+\subsubsection{Défintion de la méthode}
+On fait la subdivision de [a,b], $a=x_0<x_1<...<x_p=b$ qui est équidistante : 
+\[h=\frac{b-a}{p}=x_{i+1}-x_i\]
+Sur chaque $[x_i,x_{i+1}]$, $\forall i$ à $p-1$, on utilise la formule du trapèze : 
+\[\int_{x_i}^{x_{i+1}} f(x) dx = \frac{h}{2}(f(x_i)+ f(x_{i+1})+E_1^{(i)}(f)\]
+avec $E_1^{(i)}(f)$ l'erreur de la méthode du trapèze. \\
+Sur [a,b], cela nous donne : 
+\begin{eqnarray*}
+	\int_a^b f(x) dx &=& \sum_{i=0}^{p-1} \int_{x_i}^{x_{i+1}} f(x) dx \\
+			 &=& \sum_{i=1}^{p-1} \frac{h}{2} [f(x_i) + f(x_{i+1})]+\sum_{i=1}^{p-1} E_1^{(i)}(f)
+\end{eqnarray*}
+D'où la méthode des trapèzes composite : 
+\[\int_a^b f(x) dx \approx \frac{h}{2} \sum_{i=1}^{p-1} [f(x_i) + f(x_{i+1})] \]
+
+\subsubsection{Convergence}
+On suppose que f est $\mathcal{C}^2$.
+D'après l'expression de l'erreur de la méthodes des trapèzes simples : 
+\[E_1^{(i)}(f)=-\frac{h^3}{12} f''(\eta_i), \eta_i\in]x_i,x_{i+1}[ \]
+
+D'où :
+\begin{eqnarray*}
+	E_{tr}(f)&=&\sum_{i=0}^{p-1} E_1^{(i)}(f) \\
+		&=& -\frac{h^3}{12} \sum_{i=0}^{p-1} f''(\eta_i)
+\end{eqnarray*}
+Comme $f''$ est continue sur [a,b], $\exists \eta\in]a,b[$ tel que :
+	\[f''(\eta) = \frac{1}{p} \sum_{i=0}^{p-1} f''(\eta_i)\]
+(d'après le théorème de la moyenne)
+
+D'où :
+\begin{eqnarray*}
+	E_{tr}(f)&=&-\frac{h^2}{12} \frac{b-a}{p} \sum_{i==0}^{p-1} f''(\eta_i) \\
+			       &=&-\frac{h^2}{12}(b-a)f''(\eta)
+\end{eqnarray*}
+On a donc $E_{tr}(f)\xrightarrow[h\to 0]{}0$. Donc la méthode des trapèzes converge $\forall f\in \mathcal{C}^2[a,b]$
+
+\subsubsection{Stabilité}
+Pour la méthode des trapèzes composites : 
+\[\sum_{i=0}^p |\alpha_i| = ph\]
+car : 
+\[\int_a^b f(x)dx \approx \frac{h}{2} \sum_{i=0}^{p-1}[f(x_i)+f(x_{i+1})]=\frac{h}{2}f(a)+\frac{h}{2}f(b)+h\sum_{i=1}^{p-1}f(x_i)\]
+Donc $\sum_{i=0}^p |\alpha_i| = ph = b-a < \infty$
+
+\subsection{Méthode de Simpson composite}
+On refait une subdivision de [a,b] équidistante : 
+\[a=x_0<x_1<...<x_{2p}=b\]
+Sur $[x_{2i},x_{2i+2}]$, on utilise la formule de Simpson.
+\[\int_{x_{2i}}^{x_{2i+2}} f(x)dx = \frac{x_{2i+2}-x_{2i}}{6}[f(x_{2i})+4f(x_{2i+1})+f(x_{2i+2})]+E_2^{(i)}(f)\]
+$h=\frac{b-a}{2p}=x_{i+1}-x_i$
+\[\Rightarrow \int_{x_{2i}}^{x_{2i+2}} f(x)dx = \frac{h}{3}[f(x_{2i})+4f(x_{2i+1})+f(x_{2i+2})]+E_2^{(i)}(f)\]
+
+D'où la méthode de Simpson composite : 
+\[\int_{a}^{b} f(x)dx = \frac{h}{3}\sum_{i=0}^{p-1}[f(x_{2i})+4f(x_{2i+1})+f(x_{2i+2})]+\sum_{i=0}^{p-1}E_2^{(i)}(f)\]
+
+La méthode de Simposon composite s'écrit donc :
+\[\int_{a}^{b} f(x)dx \approx \frac{h}{3}\sum_{i=0}^{p-1}[f(x_{2i})+4f(x_{2i+1})+f(x_{2i+2})]\]
+
+La méthode est convergente et stable (voir en TD)
+
+\subsection{Méthode de Runge}
+Utile pour : \begin{itemize}
+	\item l'estimation de l'erreur
+	\item augmenter l'ordre de la méthode
+\end{itemize}
+
+Sur chaque $[x_i,x_{i+1}]$, on utilise une méthode d'intégration numérique :
+\[I^{(i)}(f)\approx S_h^{(i)}(f) + Ch^m\]
+On affine la subdivision en prenant un pas $\frac{h}{2}$ :
+\[I^{(i)}\approx S^{(i)}(f)+C\left(\frac{h}{2}\right)^m\]
+On fait la différence entre les deux méthodes :
+\[S_h^{(i)}-S_{\frac{h}{2}}^{(i)}\approx C\left(h^m-\left(\frac{h}{2}\right)^m\right)\approx C\left(\frac{h}{2}\right)^m(2^m-1)\]
+
+D'où l'erreur : 
+\[I^{(i)}(f)-S_{\frac{h}{2}}^{(i)}(f)\approx C\left(\frac{h}{2}\right)^m \approx \frac{S_{\frac{h}{2}}^{(i)}-S_h^{(i)}}{2^m-1}\]
+
+A partir de cela :
+\begin{enumerate}
+	\item On peut estimer l'erreur (à posteriori) : On veut que $|I-S_N|<\varepsilon$. Sur chaque $[x_i,x_{i+1}]$, on applique 2 fois la méthode S, à pas $h$ puis à pas $\frac{h}{2}$, puis on applique la méthode de Runge.
+		\begin{itemize}
+			\item Soit $|I^{(i)}-S_{\frac{h}{2}}^{(i)}| <\varepsilon h$, pour tout i entre 0 et n-1, et on a ce qu'il faut
+			\item Soit il existe J tel que \[\left| \frac{S_{\frac{h}{2}}^{(J)}-S_h^{(J)}}{2^m-1}\right|>\varepsilon h\]
+				Dans ce cas, on affine encore l'intervalle $[x_J,x_{J+1}]$, et on vérifie si entre le pas $\frac{h}{2}$ et $\frac{h}{4}$, on vérifie la condition.
+		\end{itemize}
+	\item On construit une méthode d'intégration numérique d'ordre plus élevé : \\
+		Supposons que S est une méthode numérique d'ordre m. \[I(f)-S_h(f)\approx Ch^m\]
+		A partir de la méthode de Runge, on a :
+		\[I(f) - \underbrace{\left[S_{\frac{h}{2}}+\frac{S_{\frac{h}{2}}(f)-S_h(f)}{2^m-1}\right]}_{S^{(1)}(f) \text{ d'ordre } \geq m+1} \approx Ch^{m+1}\]
+		Avec la méthode du trapèze, on obtient par exemple la méthode de Simpson.
+\end{enumerate}
+
+\subsection{Méthode de Quadrature de Gauss}
+On cherche à calculer :
+\[I(f)=\int_a^b p(x)f(x)dx\]
+avec $p(x)\geq 0, x\in[a,b],\ p(x)\in L^1[a,b]$, fonction de poids.
+
+On cherche $S(f)=\sum_{i=0}^n c_if(\tilde{x}_i)$ où on peut définir les $c_i$ mais aussi les nœuds $\tilde{x}_i$.
+
+On aura donc $2(n+1)$ paramètres, donc $2(n+1)$ équations. On pourra donc définir une méthode de quadrature à degré d'exactitude 2n+1.
+
+\Theo{}{Il n'existe pas de méthode de quadrature numérique de degré d'exactiture > 2n+1}
+
+\begin{dem}
+On le démontre par l'absurde. \\
+Supposons que S(f) est exacte pour les polynômes de degré 2n+2, alors elle sera exacte pour un polynôme de la forme :
+\[P_{2n+2}(x)=\prod_{j=0}^n (x-\tilde{x}_j)^2\]
+On aura forcément $S(P_{2n+2})=0$, mais : 
+\[I(f)=\int_a^b p(x)P_{2n+2}(x)dx >0 \text{ car } p(x)P_{2n+2}(x) \geq 0\]
+La méthode n'est donc pas exacte pour un polynôme de degré 2n+2
+\end{dem}
+
+\begin{itemize}
+	\item Pour le calcul de $\tilde{x}_j$, on pourrait utiliser la méthode des cofficients indéterminés, mais avec des calculs très compliqués.
+	\item On va trouver les nœuds $\{\tilde{x}_j\}_{j=0}^n$ comme les racines d'un polynôme orthogonal à poids p
+\end{itemize}
+
+\Def{Polynômes orthogonaux}{Un système $\{\phi_j\}_{j=0}^n$ est orthogonal à poids p(x) si $\forall j,k=0..n,\ j\neq k$ :
+\[<\phi_j,\phi_k>_p=\int_a^bp(x)\phi_j(x) \phi_k(x) dx = 0\]}
+
+\Rem{}{\begin{itemize}
+		\item Si $\{\phi_j\}_{j=0}^n$ est une famille de polynômes orthogonaux, alors c'est une base de $\mathbb{R}_n[X]$
+		\item Si $\{\phi_j\}_{j=0}^n$ est une famille de polynômes orthogonaux, alors $<\phi_n,P_{n-k}>_p=0$ $\forall P_{n-k}\in\mathbb{R}_{n-1}[X]$
+\end{itemize}}
+
+\subsubsection{Méthode de calculs}
+\begin{itemize}
+	\item Orthogonalisation par la méthode de Gram-Schmidt
+	\item Définition de coefficients de $\psi_n$
+\end{itemize}
+
+En utilisant $<\phi_n,x^j>=0,\ j=0..n-1$
+
+\Def{Polynôme unitaire}{Un polynôme $p(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$ s'appelle un polynôme unitaire}
+
+\Theo{}{Un polynôme orthogonal $\psi_n(x)$, deg($\psi_n)=n$, a exactement n racines distinctes.}
+
+\Theo{}{On veut calculer \[I(f)=\int_a^b p(x)f(x)dx\] où p(x) est la fonction de poids. \\
+	Soit $\{\tilde{x}_j\}_{j=0}^n$ les racines du polynôme orthogonal construit sur [a,b], à poids $p(x)$ et de degré n+1.\\
+	On définit ensuite les coefficients $c_i$ de telle façon que la méthode soit de degré d'exactitude $\geq n$
+
+	$\Rightarrow$ La formule obtenue aura le degré d'exactitude 2n+1, avec : 
+	\[c_i=\int_a^b p(x)l_i(x) dx,\ l_i(x)=\prod_{j=0,j\neq i}^n \frac{x-\tilde x_j}{\tilde x_i-\tilde x_j}\]
+\[S(f)=\sum_{i=0}^n c_if(\tilde{x}_i)\]}
+
+\begin{dem}
+	Soit $P_{2n+1}$ un polynôme de degré 2n+1. Alors $P_{2n+1}(x)=\psi_{n+1}(x)r_n(x)+q_n(x)$ où deg($r_n$)=deq($q_n$)=$n$.
+
+	On prend la notation \[I(f)=\int_a^b p(x)f(x)dx\]
+	\begin{eqnarray*}
+		I(P_{2n+1})&=&I(\psi_{n+1}r_n + q_n) \\
+			   &=&I(\psi_{n+1}r_n) + I(q_n)
+	\end{eqnarray*}
+	Comme $\psi_{n+1}$ est un prolynôme orthogonal à poirs $p(x)$, alors il est orthogonal à tous les prolynpomes de degré au plus n, donc aussi au polynôme $r_n$.
+	\[I(\psi_{n+1}r_n)=0\]
+	Et comme $S(f)$ est une méthode d'intégration numérique de Newton-Cotes, $S(P)=I(P)$ pour P polynôme de degré inférieur ou égale à n. Et comme deg($q_n$)=$n$, on peut dire des deux remarques précédentes :
+	\[I(P_{2n+1})=I(q_n)=S(q_n)\]
+
+	De plus $S(P_{2n+1})=S(\psi_{n+1}r_n) + S(q_n)$. Or,
+	\[S(\psi_{n+1}r_n) = \sum_{i=0}^n \alpha_i \underbrace{\psi_{n+1}(\tilde{x}_i)}_{=0} r_n(\tilde{x}_i) = 0\]
+	Donc :
+	\[S(P_{2n+1})=S(q_n)=I(q_n)=I(P_{2n+1})\]
+\end{dem}

@@ -1,0 +1,150 @@
+\part{Tests d'hypothèse}
+
+\section{Introduction}
+\Exemp{}{Une pièce de monnaie est truquée. On cherche à savoir sur la base de deux lancers de cette pièce si cette dernière donne avec une probabilité $\frac{1}{4}$ "FACE" ou "PILE". 
+
+\bigskip
+On associe à cette expérience aléatoire un modèle statistique (la réussite étant d'obtenir FACE).
+\[(\{0,1\}, (P_{\theta})_{\theta\in\{\frac{1}{4},\frac{3}{4}\}}) \text{ où } P_{\theta}=\mathcal{B}(\theta)\]
+
+\bigskip
+On note $H_0 : \theta=\frac{1}{4}$ (Hypothèse nulle) \\
+et $H_1 : \theta = \frac{3}{4}$ (Hypothèse alternative).
+
+\bigskip
+On cherche une règle de décision permettant au vu des résultats de l'expérience de décider laquelle des deux hypothèses est vérfiée.\\
+Deux erreurs sont possibles :
+\begin{itemize}
+	\item Décider que $H_1$ est vraie à tort (erreur de 1ère espèce)
+	\item Décider que $H_0$ est vraie à tort (erreur de 2nde espèce)
+\end{itemize}
+
+\bigskip
+En pratique, on contrôle l'erreur de 1ère espèce qui ne soit pas dépasser un risque $\alpha\in]0,1[$ fixé à l'avance (en général, on choisit $\alpha=0,05$ ou $\alpha=0,1$).
+
+Puis parmi les règles de décisions qui respectent cette contrainte, on choisira celle qui rend l'erreur de 2nde espèce minimale.
+
+\bigskip
+Prenons $\alpha=0,1$. Considérons la règle de décision suivante :
+\begin{center} "Si on obtient deux fois FACE, on décide $H_1$" \end{center}
+
+Dans le cas contraire, on décide évidemment $H_0$. 
+
+\bigskip
+Cette règle respècte la contrainte :
+\[P_{H_0}(H_1)=P_{H_0}(F,F)=\frac{1}{16}<\alpha\]
+
+Dans ce cas :
+\[P_{H_1}(H_1)=P_{H_0}(F,F)=\frac{9}{16}\]
+
+Autre règle de décision :
+\begin{center} "Si on obtient deux fois PILE, on décide $H_0$, si on obtient deux fois FACE, on décide $H_1$, et dans les autres cas, on tire au sort la décisio ; on décide $H_1$ avec une probabilité $\gamma\in]0,1[$ indépendemment du résultat obtenu."\end{center}
+Pour satisfaire à la contrainte, il faut choisir $\gamma$ tel que :
+\[P_{H_0}(H_1)=\frac{1}{6}+\frac{6\gamma}{16}\leq 0,1\]
+Soit $\gamma\leq 0,1$. 
+
+\bigskip
+On choisit ensuite $gamma$ tel que :
+\[P_{H_1}(H_1)=\frac{9}{16} + \frac{6\gamma}{16}\]
+soit maximal. On en déduit $\gamma=0,1$. On obtient ainsi :
+\[P_{H_1}(H_1)=\frac{9,6}{16}\]
+
+\bigskip
+On remarque que cette probabilité est bien plus haute que la précédente. On dit donc que cette règle de décision est plus puissante que la première.
+
+En d'autres termes, elle a une erreur de 2nde espèce plus petite que celle de la 1ère règle de décision.}
+
+\Def{Plus généralement}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique. \\
+On fait une hypothèse sur $\theta$ et on désire savoir si l'observation $x_i$ est cohérente avec l'hypothèse ou au contraire la contredit.\\
+Formellement, on note souvent cette hypothèse $H_0$ et celle-ci est comparée à son omplémentaire, notée $H_1$. 
+
+\bigskip
+$H_0$ est dite "hypothèse nulle"\\
+$H_1$ est dit "hypothèse alternative"
+
+\bigskip
+L'espace des paramètres $\Theta$ est subdivisée en deux parties disjointes :
+\begin{itemize}
+	\item une partie $\Theta_0$ correspondant à $H_0$
+	\item une partie $\Theta_1$ correspondant à $H_1$
+\end{itemize}
+
+On note $H_0 : \theta\in\Theta_0$ et $H_1 : \theta\in\Theta_1$.}
+
+\Exemp{}{Supposons que $\theta$ désigne le changement de pression arterielle provoquée par la prise d'un médicament et que l'on souhaite tester si $H_0 : \theta=0$. Dans ce cas, $H_1 : \theta\neq 0$ traduit la présence d'un effet du médicament.}
+
+\Def{}{Une procédure de test d'hypothèse ou un test est une règle de décision qui spécifie : \begin{itemize}
+		\item la partie de l'espace $\mathfrak{X}$ des observations pour laquelle on accepte l'hypothèse nulle (région d'acceptation)
+		\item la partie de l'espace $\mathfrak{X}$ des observations pour laquelle on rejette l'hypothèse nulle (région critique)
+\end{itemize}
+Typiquement, la région d'acceptation et la région critique sont définie par l'intermédiaire d'une certaine statistique $\phi$.\\
+Souvent, la région critique est de la forme $\{\phi>a\}$ où a est une certaine constante.}
+
+\section{Test du rapport de vraisemblance}
+Soit $(\mathfrak{X}, (P_{\theta})_{\theta\in\Theta})$ un modèle statistique dominé pa une mesure $\sigma$-finie $\mu$ et soit L une vraisemblance de ce modèle par rapport à $\mu$. On souhaite tester l'hypotèhse $H_0:\theta\in\Theta_0$ contre l'hpothèse $H_1:\theta\not\in\Theta_0$
+
+\Def{}{On appelle statistique de test du rapport de vraisemblance (TRV) la statistique $\phi$ définie pour tout $x\in\mathfrak{X}$ par :
+\[\phi(x)=\frac{\sup_{\theta\in\Theta_0}L(\theta,x)}{\sup_{\theta\in\Theta}L(\theta,x)}\]
+Un test de rapport de vraisemblance est un test dont la région critique est de la forme $\{\phi\leq c\}$ où c est une constante dans [0,1].}
+
+\Exemp{}{Supposons disposer d'un échantillon $(x_1,...,x_n)$ de la loi $\mathcal{N}(\theta,1)$ et que l'on souhaite tester l'hypothèse $H_0:\theta=\theta_0$ contre $H_1:\theta\neq\theta_0$ où $\theta_0$ est fixé.
+
+La statistque du TRV est : 
+\[\phi(x)=\frac{L(\theta_0,x)}{\sup_{\theta\in\Theta}L(\theta,x)} = \frac{L(\theta_0,x)}{L(\bar{x},x)}\]
+Car $\bar{X}$ est l'EMV pour $\theta$.
+
+\[\Rightarrow \phi(x)=\exp\left( \frac{1}{2}\left( -\sum_{i=1}^n (x_i-\theta_0)^2+\sum_{i=1}^n(x_i-\bar{x}^2)\right)\right)\]
+Or, $\sum_{i=1}^n (x_i-\theta_0)^2 = \sum_{i=1}^n (x_i-\bar{x}^2 + n(\bar{x}-\theta_0)^2$, d'où :
+\[\phi(x)=\exp\left(-\frac{1}{2} n(\bar{x}-\theta_0)^2\right)\]
+
+Un TRV est un test qui rejette $h_0$ pour de "petites valeurs" de $\phi(x)$. Autrement dit, un test de région critique : 
+\[R=\{x\in\mathbb{R}^n ;\ |\bar{x}-\theta_0|\geq \left( -\frac{2}{n}\log c\right)^{\frac{1}{2}}\}\]
+}
+\subsection{Probabilité d'erreur et fonction puissance}
+On teste $H_0 : \theta\in\Theta_0$ contre $H_1:\theta\in\Theta_1$. Notons R la région critique du test.\\
+
+\begin{tabular}{c|c|c}
+	 & On accèpte $H_0$ & On accèpte $H_1$ \\
+	\hline
+	$H_0$ est vraie & Décision correcte & Erreur de première espèce : $P_{\theta}(R)$ avec $\theta\in\Theta_0$ \\
+	\hline
+	$H_0$ est fausse & Erreur de 2nde espèce : $P_{\theta}(R)$ avec $\theta\in\Theta_1$ & Decision correcte
+\end{tabular}
+
+\Def{}{On appelle fonction puissance d'un teste de région critique R la fonction $\beta$ définie pour tout $\theta\in\Theta$ par :
+\[\beta(\theta)=\left\{\begin{array}{l} \text{Proba de 1ère espèce si } \theta\in\Theta_0 \\ 1-\text{(proba de 2ème espèce) si } \theta\in\Theta_1 \end{array}\right.\]}
+
+\Rem{}{L'idéal serait que $\beta$ soit nulle sur $\theta_0$ e maximal sur $\theta_1$.
+
+\bigskip
+Un "bon" test apprcherait cet idéal : 
+\begin{enumerate}
+	\item $\beta$ proche de 0 sur $\theta_0$
+	\item $\beta$ proche de 1 sur $\theta_1$
+\end{enumerate}
+En général, il est impossible de minimiser simultanément la probabilité des erreur de 1ère et de 2nde espèce.\\
+Classiquement, on choisit de borner l'erreur de 1ère espèce et de minimiser l'erreur de 2nde espèce.}
+
+\Def{}{Pour tout $\alpha\in[0,1]$, un test de fonction puissance $\beta$ est dit de niveau (respectivement de seuil) $\alpha$ si :
+\[\sup_{\theta\in\Theta_0} \beta(\theta)=\alpha \text{ (respectivement :} \sup_{\theta\in\Theta_0} \beta(\theta)\leq \alpha) \]}
+
+\Def{}{Un test de fonction puissance $\beta$ est dit sans biais si :
+\[\forall \theta'\in\Theta_1, \forall \theta''\in\Theta_0, \beta(\theta')\geq \beta(\theta'')\]}
+
+\section{Tests les plus puissants}
+
+\Def{}{Soit $\tau$ une classe de tests de $H_0:\theta\in\Theta_0$ contre $H_1:\theta\in\Theta_1$.\\
+Un test (dans $\tau$) de fonction puissance $\beta$ est dit uniformément le plus puissant (UPP) dans la classe $\tau$ si, quelque soit le test H dans $\tau$ de fonction puissance $\beta'$, on a :
+\[\forall \theta\in\Theta_0^c, \beta'(\theta)\leq \beta(\theta)\]}
+
+\Rem{}{"UPP" est une exigence forte !\\
+Dans le cas d'un test d'hypothèse simple contre une alternative simple, on dispose d'une caractérisation.}
+
+\Lem{de Neymann-Pearson}{Supposons que $\theta=\{\theta_0,\theta_1\}$ et que l'on souhaite tester $H_0:\theta=\theta_0$ conte $h_1:\theta=\theta_1$.\\
+Soit L une vraisemblance du modèle. Pour $k>0$ fixé, considérons le reste de région critique R vérifiant :
+\begin{enumerate}
+	\item $x\in R$ si $L(\theta,x)>kL(\theta_0,x)$
+	\item $x\not\in R$ si $L(\theta,x)<kL(\theta_0,x)$
+	\item $P_{\theta_0}(R)=\alpha$
+\end{enumerate}
+alors ce test est UPP de niveau $\alpha$}

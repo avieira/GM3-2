@@ -1,0 +1,98 @@
+\part{Systèmes hamiltoniens}
+
+\Def{}{Un système hamiltonien dans $\mathbb{R}^{2n}$ muni des coordonnées $(q_1,...,q_n, p_1,...,p_n)$ est :
+	\begin{eqnarray*}
+		\dot{q}_i &=&\frac{\partial H}{\partial p_i} \\
+		\dot{p}_i &=&-\frac{\partial H}{\partial q_i}
+	\end{eqnarray*}
+$\forall 1\leq i\leq n$ où $H:\mathbb{R}^{2n}\to\mathbb{R},\ \mathcal{C}^1$ est appellé l'hamiltonien.}
+
+\Def{}{$I:\mathfrak{X}\to \mathbb{R}$ est une intégrale première de $\dot{x}=f(x)$ si $I(x(t,x_0))=c\ \forall t$}
+
+\Prop{}{I est une intégrale première si et seulement si $L_f I=0$}
+
+\begin{dem}
+	I intégrale première si et seulement si $I(x(t,x_0))=c$ donc si et seulement si $\frac{d}{dt} I(x(t,x_0))=0$.\\
+	\[\Leftrightarrow \sum_{i=1}^n \frac{\partial I}{\partial x_i}(x(t,x_0)) f_i(t,x,x_0)=0 \ \forall x_0 \Leftrightarrow L_f I=0\]
+\end{dem}
+
+\Prop{}{H est une intégrale première de son système hamiltonien.}
+
+\begin{dem}
+	On doit montrer que $L_f H=0$.
+
+	\[L_f H = \sum_{i=1}^n \frac{\partial H}{\partial q_i} \frac{\partial H}{\partial p_i} + \sum_{i=1}^n \frac{\partial H}{\partial p_i}\left( -\frac{\partial H}{\partial q_i}\right)=0\]
+\end{dem}
+
+Soit $(q_e,p_e)=x_e$ un point d'équilibre. On peut supposer que $(q_e,p_e)=(0,0)$. \\
+Supposons que $H(0,0)=(0,0)$ (sinon, on pose $\tilde{H}=H-H(0,0)$ et le système d'équations hamiltoniennes ne change pas).
+
+\Propo{}{\begin{itemize}
+		\item Si dans un voisinage de (0,0), H est définie positive alors le système est stable en (0,0)
+		\item Si dans unn voisinage de (0,0), H est définie négative, alors le système est stable en (0,0)
+\end{itemize}
+(dans les deux cas : pas de stabilité asymptotique !)}
+
+\begin{dem}
+	Il suffit de poser dans le premier cas $V=H$ et dans le deuxième cas $V=-H$. 
+\end{dem}
+
+\Propo{}{$(q,p)\in\mathbb{R}^2$, avec $H=\frac{1}{2}p^2 + \phi(q)$
+\begin{enumerate}
+	\item $(q_e,p_e)$ est un point d'équilibre du système hamiltonien si et seulement si $p_e=0$ et $\phi'(q_e)=0$
+	\item Si $\phi''(q_e)>0\ \Rightarrow\ q_e$ stable\\
+		Si $\phi''(q_e)<0\ \Rightarrow\ q_e$ instable
+\end{enumerate}}
+
+\begin{dem}
+	\[\dot{q}=\frac{\partial H}{\partial p} = \frac{p}{m} =0 \Leftrightarrow p=0\]
+	\[\dot{p}=-\frac{\partial H}{\partial q}=-\phi'(q)=0 \Leftrightarrow \phi'(q)=0\]
+
+	Supposons $q_e=0$. On peut aussi supposer que $\phi(q_e)=\phi(0)=0$ (Sinon, on pose $\tilde{\phi}=\phi-\phi(q_e)$)
+	
+	\bigskip
+	Autour de $q_e=0$, on a :
+	\begin{eqnarray*}
+		\phi(q)&=&\phi(0)+\phi'(0)q+\frac{1}{2}\phi'''(0)q^2+o(q^3)\\
+		       &=& \frac{1}{2}q^2+o(q^3)\\
+		       &=& \frac{1}{2}(b+o(q))
+	\end{eqnarray*}
+
+	Si b>0 :\\
+	On pose $\tilde{q}=q(b+o(q))^{\frac{1}{2}}$. Ainsi, $\phi(q)=\frac{1}{2}\tilde{q}^2$\\
+	On coordonnées $(\tilde{q},p)$, on a :
+	\[H=\frac{1}{2m}p^2 + \frac{1}{2}\tilde{q}^2\]
+	qui est une intégrale première. donc \[H(x(t))=H\left(\binom{\tilde{q}(t)}{p(t)} \right)=cste\]
+	En traçant cela, on obtient des ellipses. La stabilité est immédiate.
+
+	Si b<0 :\\
+	\[\phi(q)=-\frac{1}{2}q^2(-b+o(q))=-\frac{1}{2}\tilde{q}^2\]
+	avec $\tilde{q}=q(-b+o(q))^{\frac{1}{2}}$\\
+
+	En coordonnées $(\tilde{q}, p)$, on a 
+	\[H(x(t))=\frac{1}{2m}p^2-\frac{1}{2}\tilde{q}^2=cste\] 
+	car c'est une intégrale première. On retrouve des hyperboles, d'où le fait que ce soit instable.
+\end{dem}
+
+\Coro{}{\begin{enumerate}
+	\item Le système : \[\left\{ \begin{array}{c c c} \dot{x}&=&y \\ \dot{y}&=&f(x)\end{array}\right.\] est hamiltonien.
+		\item $(x_e,y_e)$ point d'équilibre si et seulement si $y_e=0$, $f(x_e)=0$
+		\item Si $f'(x_e)>0 \Rightarrow\ (x_e,0)$ instable\\
+			Si $f'(x_e)<0 \Rightarrow\ (x_e,0)$ stable
+	\end{enumerate}}
+
+\begin{dem}
+	\[H(x,y)=\frac{1}{2}y^2-\int_0^x f(x)dx\]
+	Et on utilise le théorème précédent !
+	Pour le troisième point, on pose $\phi'(x_e)=-f(x_e)$
+\end{dem}
+
+\Theo{}{Pour le système mécanique général \[H=\frac{1}{2}\sum_{i=0}^n \frac{p_i^2}{m_i} + \phi(q),\ \phi(q)=\phi(q_0,...,q_n)\]
+on a :
+\begin{enumerate}
+	\item $(q_e,p_e)$ point d'équilibre si et seulement si $p_e=0$ et $\forall 0\leq i\leq n,\ \frac{\partial \phi}{\partial q_i}(q_e)=0$
+	\item Si $\phi$ possède en $q_e$ un minimum strict local alors le système est stable en $q_e$
+	\item Soient $q_ee=0$, $\phi(0)=0$ et
+		\[\phi(q)=-\sum_{i=0}^n a_iq_i^{2k} + O\left(|q|^{2k+1}\right)\]
+		telle qu'en $q=0$, $\phi$ admet un maximum. Alors le système n'est pas stable.
+\end{enumerate}}

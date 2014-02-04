@@ -1,0 +1,168 @@
+\part{Espaces normés}
+Soit L un espace vectoriel sur un corps $\mathbb{K}$. ($\mathbb{R}$ ou $\mathbb{C}$).
+\Def{Norme}{Une fonctionnelle $N:L\to \mathbb{R}^+$ est une norme si et seulement si :
+	\begin{enumerate}
+		\item $\forall x\in L, N(x)\geq 0$ et $x=0\Leftrightarrow N(x)=0$
+		\item $\forall \alpha\in\mathbb{K}, \forall x\in L, N(\alpha x)=|\alpha|N(x)$
+		\item $\forall x,y\in L, N(x+y)\leq N(x)+N(y)$
+	\end{enumerate}
+}
+
+\Def{}{Un espace vectoriel L muni d'une norme N s'apelle un espace normé (L,N)}
+
+\Rem{}{\begin{itemize}
+	\item Si la dimension de L est finie, toutes les normes sont équivalentes
+	\item Ceci n'est plus vrai en dimension infinie
+\end{itemize}}
+
+\Def{Application linéaire}{$A:L\to E$, L et E espaces vectoriels. A est linéaire si et seulement si : 
+\[\forall \alpha,\beta\in\mathbb{K},\forall x,y\in L,A(\alpha x+\beta y) = \alpha A(x)+\beta A(y)\]}
+
+\Def{}{Une application linéaire est continue si pour tout voisinage $V(y_0)$, $y_0=A(x_0)$, il existe un voisinage $V(x_0)$ tel que, pour tout $x\in V(x_0)\cap \mathcal{D}_f$, $A(x)\in V(y_0)$
+
+Si L et E sont normés, définition de continue en $x_0$ :
+\[\forall\varepsilon>0, \exists \delta_{\varepsilon}>0, \forall x_1\in \mathcal{D}_A, ||x_1-x_0||<\delta_{\varepsilon} \Rightarrow ||A(x_1)-A(x_0)||<\varepsilon\]}
+
+\Def{}{$x_n \xrightarrow[n\to+\infty]{} x$ dans $(L,||\bullet||)$ si et seulement si $||x_n-x||\xrightarrow[n\to+\infty]{}0$}
+
+\Def{}{Une application linéaire A est bornée si $\exists C>0; \forall x\in L, ||A(x)||_E \leq C\|x\|_L$}
+
+\Theo{}{Soit $A:L\to E$ linéaire, L et E normés. es 4 points sont équivalents :
+\begin{enumerate}
+	\item A est continue
+	\item A est continue en $0_L$
+	\item $\sup_{||x||_L <1} ||Ax||_E <+\infty$
+	\item A est bornée
+\end{enumerate}}
+
+\begin{dem}
+$1\Rightarrow 2$ : évident.
+$2\Rightarrow 3$ : A est continue en $0_L$ : \[\forall \varepsilon >0, \exists \delta, \forall x\in L, ||x||_L<\delta \Rightarrow ||Ax||_E <\varepsilon\]
+Soit $\varepsilon=1$. $\exists \delta>0, \forall x\in L, ||x||_L<\delta \Rightarrow ||Ax||_E <1$ \\
+Si on prend $\tilde{x}$ tel que $||\tilde{x}||_L<1$ :
+\[||\delta \tilde{x}||_L = |\delta|\times||\tilde{x}||_L \leq |\delta|\]
+$\Rightarrow ||A(\delta \tilde{x})||_E \leq 1$. Mais comme A linéaire : 
+\[||A(\tilde{x})||_E \leq \frac{1}{\delta} < \infty\]
+et ce $\forall \tilde{x}; ||\tilde{x}||_L \leq 1$
+\[\Rightarrow \sup_{||x||_L\leq 1} ||Ax||_E<\infty\]
+
+\bigskip
+$3\Rightarrow 4$ : Si $x=0$, c'est évident.\\
+Si $x\neq 0$, alors $\left|\left| \frac{x}{||x||_L}\right|\right|_L=1$ et : 
+\[\left|\left| A\left(\frac{x}{||x||_L}\right) \right|\right|_E=\frac{1}{||x||_L} ||Ax||_E \leq \sup_{||x||_L \leq 1} ||Ax||_E = C\]
+\[\Rightarrow ||Ax||_E \leq C||x||_L, \forall x\in L\]
+
+\bigskip
+$4\Rightarrow 1$ : On prend $\delta=\frac{1}{C}$ dans la définition de la continuité, et c'est fini !
+\end{dem}
+
+\Coro{}{$\mathcal{L}_C(L,E)=\{A:L\to E$ linéaire continue\} est muni d'une norme : 
+\[||A||_{L,E}=\sup_{||x||_L\leq 1} ||Ax||_E\]}
+
+\subsection*{Propriétés de $||\bullet||_{L,E}$}
+\Theo{}{$\forall x\in L, ||Ax||_E \leq ||A||_{L,E}\times ||x|_L$}
+
+\begin{dem}
+	Soit $x\neq 0$. $\left|\left|\frac{x}{||x||_L}\right|\right|=1$
+	\[\left|\left| A \frac{x}{||x||_L} \right|\right| \leq ||A||_{L,E} \Rightarrow ||Ax||_E \leq ||A||_{L,E} \times ||x||_L\]
+\end{dem}
+
+\Theo{}{$||A||_{L,E}=\inf\{C>0, \forall x\in L, ||Ax||_E \leq C||x||_L\}$}
+
+\begin{dem}
+	Via le théorème précédent : \[||A||_{L,E} \geq \inf\{C>0, \forall x\in L, ||Ax||_E \leq C||x||_L\}\]
+
+	Problème avec la suite, à reprendre.
+\end{dem}
+
+\Theo{}{Soient $A:E_2\to E_3$ et $B:E_1\to E_2$, deux applications linéaires continues, $E_i$ étant des espaces normés.
+L'application $A\circ B:E_1\to E_3$ est linéaire, continue et \[||A\circ B||\leq ||A||\times ||B||\]}
+
+\begin{dem}
+-Linéaire : évident.
+- Si on démontre que $A\circ B$ est bornée, vu qu'elle est linéaire, elle sera continue.\\
+Soit $x\in E_1$.
+\[||A(B(x))||_{E_3}\leq ||A||\times ||Bx||_{E_2} \leq ||A|| \times ||B|| \times ||x||_{E_1}\]
+D'où, dès que $||x||_{E_1}\leq 1$ : 
+\[\underbrace{\sup_{||x||\leq 1} ||A(B(x))||}_{||A\circ B||}\leq ||A||\times ||B||\]
+\end{dem}
+
+\Def{}{Une application $A:L\to E$ est inversible si $\forall y\in Im(A)$ ($Im(A)=\{y\in E; \exists x\in L; A(x)=y\}$), $\exists! x\in L; A(x)=y$
+L'application $A^{-1} : E\to L$ s'appelle l'application inverse de A}
+
+\Theo{}{Soit $A:L\to E$ une application linéaire. Alors $A^{-1}$ est linéaire.}
+
+\begin{dem}
+	$\forall \alpha_1,\alpha_2\in\mathbb{K}, \forall y_1,y_2\in Im(A)$ :
+	\[\exists x_1,x_2\in L; A(x_1)=y_1 \Leftrightarrow x_1=A^{-1}(y_1) \text{ et } A(x_2)=y_2 \Leftrightarrow x_2=A^{-1}(y_2)\]
+	Comme A est linéaire : 
+	\begin{eqnarray*}
+		\alpha_1x_1 + \alpha_2x_2&=&\alpha_1A^{-1}(y_1)+\alpha_2A^{-1}(y_2)\\
+					&=&A^{-1}(A(\alpha_1x_1+\alpha_2x_2))\\
+		   			&=&A^{-1}(\alpha_1A(x_1)+\alpha_2A(x_2))\\
+					&=&A^{-1}(\alpha_1y_1+\alpha_2y_2)
+	\end{eqnarray*}
+	D'où $A^{-1}(\alpha_1y_1 + \alpha_2y_2)=\alpha_1A^{-1}(y_1)+\alpha_2A^{-1}(y_2)$
+\end{dem}
+
+\Rem{}{On vera que si L et E sont complets, alors si A est linéaire continue alors $A^{-1}$ est linéaire continue}
+
+\newpage
+\part{Espaces compacts}
+Soit M un espace métrique.
+
+\Def{}{Un espace métrique M est compact si pour chaque suite $\{x_n\}_{n\in\mathbb{N}}\subset M$, on peut extraire une sous-suite $\{x_{\phi_n}\}_{\phi(n)\in\mathbb{N}}$
+tel que $x_{\phi(n)}\xrightarrow[n\to+\infty]{}\bar{x}\in M$}
+
+\Exemp{}{Tout fermé borné de $\mathbb{R}^n$ est un compact}
+
+\begin{dem}
+	Soit $\{x_n\}_{n\in \mathbb{N}}\subset B$\\
+	Comme $(x_n)_n$ est borné, elle admet au moins une valeur d'adhérence (Théorème de Bolzanno-Weierstrass). Comme B est fermé, toute suite convergente converge dans B.
+\end{dem}
+
+\Theo{}{Si X est compact ($X\subset M$), alors X est borné.}
+
+\begin{dem}
+	On va démontrer que si X est compact alors $\forall\varepsilon>0$, il existe $N<\infty$ tel que $X\subset\bigcup_{i=1}^N B(x_i,\varepsilon)$\\
+	(Donc on peut trouver un recouvrement ouvert fini de X).
+
+	\bigskip
+	Démontrons cela par l'absurde.\\
+	On suppose qu'il existe $\varepsilon>0$ tel qu'il n'existe pas de $N<\infty$ tel que $X\subset \bigcup_{i=1}^N B(x_i,\varepsilon)$.
+
+	Pour un $\varepsilon>0$, $\forall x_1\in X, \exists x_2\in X\textbackslash{} B(x_1,\varepsilon)$\\
+	De même, $\exists x_3\in X\textbackslash{}(B(x_1,\varepsilon)\cup B(x_2,\varepsilon))$\\
+	Et ainsi de suite, on construit $\{x_n\}_n$ tel que
+	\[x_n\in X\textbackslash{}\left( \bigcup_{i=1}^{n-1}B(x_i,\varepsilon)\right)\]
+	$\{x_n\}_n$ n'admet pas de valeur d'adhérence, car entre $x_{n+1}$ et $x_n$, il aura toujours $d(x_n,x_{n+k})>\varepsilon\ \forall k$. Or, on est dans un espace compact, donc toute suite devrait avoir au moins une valeur d'adhérence.\\
+	On a donc une contradiction.
+\end{dem}
+
+\Rem{}{Il existe des parties bornées mais qui n'ont pas de recouvrement ouvert fini.\\
+Par exemple : on prend $l_2(\mathbb{N})$ l'ensemble des suites muni de la norme 2. On prend $S=\{x\in l_2(\mathbb{N}); ||x||_2=1\}$
+
+S est bornée, mais elle n'a pas de recouvrement ouvert. Si on reprend : $e_n=0\cdots0\underbrace{1}_{n}0\cdots$, on a :
+\[d(e_n,e_m)=\sqrt{2} \text{ si } n\neq m\]}
+
+\Theo{}{Si X est compact, $f:X\to\mathbb{R}$ est continue, alors f(X) est compact}
+
+\begin{dem}
+$f$ continue en a : 
+\[\forall \varepsilon>0, \exists \delta; \forall x\in X, d(x,a)<\delta \Rightarrow |f(x)-f(a)|<\varepsilon\]
+Comme X est compact, $\forall\{x_n\}_n\subset X$, on peut extraire une sous-suite convergente :
+\[\forall \varepsilon_1 >0, \exists N\in\mathbb{N}; \forall j>N, d(x_{n_j},a)<\varepsilon_1\]
+Considérons $f(x_{n_j})\to f(a)$.
+\[\forall \varepsilon>0, \exists \delta(=\varepsilon_1), \exists N\in\mathbb{N}; \forall j>N; |f(x_{n_j})-f(a)|<\varepsilon\]
+	(On se fait chier pour rien. On dit que chaque sous-suite inclu dans X converge, et vu que f est continu, l'image sera aussi convergente. En gros, c'est ce qu'on dit au-dessus, mais en plus moche)
+\end{dem}
+
+\Theo{}{Si X est compact, $f:X\to \mathbb{R}$ continue, alors $f$ est bornée et elle attient son minimum et son maximum.}
+
+\begin{dem}
+	X compact $\Rightarrow$ $f(X)$ est également compact. Mais comme $f(X)\subset\mathbb{R}$, par théorème, $f(X)$ est borné et fermé.
+	Comme $f(X)$ est fermé, si on prend une suite qui tend vers le minimum ou le maximum, ils devront être inclus dans $f(X)$. Donc $f$ atteint son minimum ou son maximum.
+\end{dem}
+
+\Rem{}{X fermé borné dans $\mathbb{R}^n$ $\Leftrightarrow$ X est compact.\\
+Mais pour les espaces à dimension infinie, cela n'est plus vrai.}

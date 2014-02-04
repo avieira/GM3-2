@@ -1,0 +1,205 @@
+\section{Estimation ponctuelle}
+Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique. Sur la base d'une observation $x$ dans $\mathfrak{X}$, on souhaite donner une "estimation" de la valeur inconnue du maramètre $\theta$. Si on note $\phi(x)$ une telle estimation, ce procédé conduit à la détermination d'une fonction $\phi$ qui par nature est indépendante de $\theta$, qui sera appelé "estimateur".
+
+\Def{}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique. On appelle estimateur tout statistique $\phi$ à valeur dans $\Theta$.}
+
+\subsection{Méthodes de construction}
+\subsubsection{Méthode des moments}
+Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique, où $\Theta$ est une partie de $\mathbb{R}^k\ (k\in\mathbb{N}^*)$ et $\mathfrak{X}$ une partie de $\mathbb{R}$. On suppose que pour tout $\theta=(\theta_1,\cdots,\theta_n)\in\Theta\subset\mathbb{R}^k$, la loi $P_{\theta}$ admet un moment d'ordre k, noté :
+\[\mu_k=\int_{\mathbb{R}} x^kdP_{\theta}(x)<\infty\]
+
+Ainsi, pour tout $1\leq j\leq k$, le moment d'ordre j de $P_{\theta}$ existe et est une fonction $\mu_j$ de $\theta$. Soit $\mu_j(\theta_1,...,\theta_k)$. 
+
+Soit $(x_1,...,x_n)$ une échantillon de la loi $P_{\theta}$. La méthode des moments consiste à fournir comme estimation de $\theta=(\theta_1,...,\theta_k)$ le k-uplet
+\[\phi(x_1,...,x_n)=(\hat{\theta}_1,...,\hat{\theta}_n)\]
+solution du système d'équations : 
+\[
+	\left\{
+		\begin{array}{c c c c c c c}
+			m_1 &\stackrel{def}{=}& \frac{1}{n}\sum_{i=1}^n x_i &=& \mu_1(\theta_1,...,\theta_k)&\stackrel{def}{=}&\mu_1\\
+			\vdots\\
+			m_k &\stackrel{def}{=}& \frac{1}{n}\sum_{i=1}^n x_i^k &=& \mu_k(\theta_1,...,\theta_k)&\stackrel{def}{=}&\mu_k\\
+		\end{array}
+	\right.
+\]
+Solution en $\theta_1,...,\theta_k$
+
+\Exemp{}{Supposons que $\Theta=\mathbb{R}\times \mathbb{R}^+_*$ et $P_{\theta}=\mathcal{N}(\lambda,\sigma^2)$ (ie $\theta=(\theta_1,\theta_2)=(\lambda,\sigma^2)$)\\
+\ul{Mod\`{e}le statistique :} $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})=\mathbb{R}(,(\mathcal{N}(\lambda,\mu))_{(\lambda,\mu)\in\mathbb{R}\times\mathbb{R}^+_*})$
+Soit $(X_1,...,X_n)$ un échantillon de la loi $P_{\theta}$. Construisons un estimateur de $\theta=(\lambda,\sigma^2)$ via la méthode des moments.
+\[\left\{ \begin{array}{c c c}
+		\frac{1}{n} \sum_{i=1}^n X_i &=& E_{\theta}(X_i)\\
+		\frac{1}{n}\sum_{i=1}^n X_i^2 &=& E_{\theta}(X_1)^2
+	\end{array}\right.
+\Leftrightarrow \left\{ \begin{array}{c c c}
+		\bar{X} &=& \lambda\\
+		\frac{1}{n}\sum_{i=1}^n X_i^2 &=& \sigma^2+\lambda^2
+	\end{array}\right.
+\Leftrightarrow \left\{ \begin{array}{c c c}
+		\bar{X} &=& \lambda\\
+		\sigma^2 &=& \frac{1}{n} \sum_{i=1}^n (X_i-\bar{X})^2
+	\end{array}\right.
+\]
+La méthode des moments nous donne $\bar{X}$ comme estimateur de $\lambda$ et $\frac{1}{n} \sum_{i=1}^n (X_i-\bar{X})^2$ comme estimateur de $\sigma^2$.\\
+On remarque que $\bar{X}$ est l'estimateur "naturel" sans biais pour $\lambda$ mais $\frac{1}{n} \sum_{i=1}^n (X_i-\bar{X})^2$ n'est pas l'estimateur sans biais "habituel" pour $\sigma^2$.}
+
+\subsubsection{Méthode du maximum de vraisemblance}
+\Def{}{Soit ($\mathfrak{X},P_{\theta})_{\theta\in\Theta}$) un modèle statistique dominé, de vraisemblace $L:\Theta\times\mathfrak{X}\to\mathbb{R}^+$.\\
+Un estimateur du maximum de vraisemblance (EMV) de $\theta$ est une statistique $\hat{\theta}:\mathfrak{X}\to\Theta$ tel que : 
+\[\forall x\in\mathfrak{X}, L(\hat{\theta}(x),x)=\sup_{\theta\in\Theta} L(\theta,x)\]}
+
+\begin{rmq}
+On écrit aussi : 
+\[\forall x\in\mathfrak{X}, \hat{\theta}(x)=\mathrm{argmax}_{\theta\in\Theta} L(\theta,x)\]
+\end{rmq}
+
+\Exemp{}{Soit $x=(x_1,...,x_n)$ un échantillon observé de lal oi $\mathcal{N}(\theta,1)$. La vraisemblance du modèle est définie pour tout $x=(x_1,...,x_n)\in\mathbb{R}^n$ par :
+	\[\forall \theta\in\mathbb{R}, L(\theta,x)=\prod_{i=1}^n f(\theta,x_i) \text{ où } f(\theta,x_i)=\frac{1}{\sqrt{2\pi}} e^{-\frac{(x_i-\theta)^2}{2}}\]
+	\[L(\theta,x)=\frac{1}{(2\pi)^{\frac{n}{2}}} \exp\left(-\frac{1}{2} \sum_{i=1}^n (x_i-\theta)^2\right)\]
+	Pour x fixé, il faut étudier $\theta\mapsto L(\theta,x)$. En fait, il suffit d'étudier $\theta\mapsto \log L(\theta,x)$.
+
+	Or, $\log L(\theta,x)=-\frac{n}{2} \log(2\pi) - \frac{1}{2} \sum_{i=1}^n (x_i-\theta)^2$, donc :
+	\[\frac{\partial}{\partial \theta}\log L(\theta,x)=\sum_{i=1}^n (x_i-\theta)=0 \Leftrightarrow \theta=\bar{x}\]
+	Comme ${\frac{\partial^2}{\partial\theta^2} \log L(\theta,x)}_{|_{\theta=\bar{x}}}=-n<0$, donc il s'agit bien d'un maximum.
+
+	\bigskip
+	\begin{bf}Technique plus directe :\end{bf}
+	\[\min_{a\in\mathbb{R}} \sum_{i=1}^n (x_i-a)^2 =\sum_{i=1}^n (x_i-\bar{x})^2\]
+	Ainsi :
+	\[\exp\left(-\frac{1}{2}\sum_{i=1}^n (x_i-\theta)^2\right)\leq \exp\left(-\frac{1}{2} \sum_{i=1}^n(x_i-\bar{x})^2 \right)\]
+	avec égalité \ul{si et seulement si} $\theta=\bar{x}$.\\
+	Donc $\hat{\theta}(x)=\bar{x}$ est l'EMV pour $\theta$
+}
+
+\subsection{Méthodes d'évalutation des estimateurs}
+Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique où $\Theta$ est une partie de $\mathbb{R}$. On désigne par $E_{\theta}$ l'espérance par rapport à $P_{\theta}$ pour tout $\theta\in\Theta$.
+
+\Def{}{On appelle erreur quadratique moyenne (ou risque quadratique) d'un estimateur $w$ de $\theta$ la fonction
+\[R_w:\theta\mapsto E_{\theta}\left((w-\theta)^2\right)\]}
+
+\Rem{}{$R_w(\theta)=V_{\theta}(w)+b_w^2(\theta)$ où $b_w(\theta)=|E(w)-\theta|$ est le biais de $w$.}
+
+Dans toute la suite, on va se restreindre aux estimateurs sans biais d'ordre 2 (ie les estimateurs pour lesquels l'EQM existe) de $g(\theta)$ où g est une fonction arbitraire.
+
+\Def{UVMSB}{Un estimateur sans biais $w^*$ de $g(\theta)$ est dit meilleur estimateur si pour tout autre estimateur $w$ sans biais de $g(\theta)$ on a :
+\[\forall \theta\in\Theta,\ V_{\theta}(w^*)\leq V_{\theta}(w)\]
+On dit aussi que $w^*$ est uniformément de variance minimale parmi les estimateurs sans biais de $g(\theta)$ (UVMSB)}
+
+Un tel estimateur exists-t-il ? Comment en déterminer un ?
+\Prop{}{Il existe une borne inférieure pour la variance des estimateurs sans biais. Si cette borne est atteinte, on a trouvé l'estimateur UVMSB.}
+
+\Rem{}{\begin{enumerate}
+		\item Cette borne inférieure existe toujours !
+		\item Mais elle n'est pas toujours atteinte !
+\end{enumerate}}
+
+D'après l'inégalité de Cauchy-Schwarz : 
+\[\text{cov}(X,Y)\leq \sqrt{V(X)}\sqrt{V(Y)}\]
+\[\Rightarrow V(X)\geq \frac{\text{cov}^2(X,Y)}{V(Y)}\ (\text{si } V(Y)>0)\]
+
+SUpposons que $\Theta$ soit un ouvert de $\mathbb{R}$ et appliquons cette inégalité à une quantité ne dépendant que du modèle statistique : la log-vraisemblance.
+
+\bigskip
+Supposons que $\frac{\partial}{\partial\theta}\log L(\theta,x)$ existe pour tout $\theta\in\Theta$ et pour $P_{\theta}$-presque tout $x\in\mathfrak{X}$.
+
+\bigskip
+De plus, on suppose une ondition de régularité qui permet de dériver sous le signe d'intégration. C'est raisonnable puisque les modèles exponentiels le vérifient. (cf TD)
+
+Fixons $\theta\in\Theta$ et calculons $E_{\theta}\left(\frac{\partial}{\partial\theta}\log L(\theta,X)\right)$ où $X\hookrightarrow P_{\theta}$.
+\begin{eqnarray*}
+	E_{\theta}\left(\frac{\partial}{\partial\theta}\log L(\theta,X)\right)&=&E_{\theta}\left(\frac{\frac{\partial}{\partial\theta}L(\theta,X)}{L(\theta,X)}\right)\\
+	&=&\int_{\mathfrak{X}} \frac{\frac{\partial}{\partial\theta}L(\theta,x)}{L(\theta,x)} dP_{\theta}(x)\\
+	&=&\int_{\mathfrak{X}} \frac{\frac{\partial}{\partial\theta}L(\theta,x)}{L(\theta,x)} L(\theta,x) d\mu(x)\ \mu \text{ étant la domniante du modèle statistique } (\mathfrak{X}, (P_{\theta})_{\theta\in\Theta})\\
+	&=& \int_{\mathfrak{X}} \frac{\partial}{\partial\theta} L(\theta,x) d\mu(x) \\
+	&=& \frac{d}{d\theta} \int_{\mathfrak{X}} L(\theta,x)d\mu(x)\\
+	&=& \frac{d}{d\theta} \underbrace{\int_{\mathfrak{X}} dP_{\theta}(x)}_{=1}\\
+	&=&0
+\end{eqnarray*}
+
+Ainsi, $\frac{\partial}{\partial\theta}\log L(\theta,X)$ est $P_{\theta}$-centrée. Donc :
+\begin{eqnarray*}
+	\text{cov}\left(W,\frac{\partial}{\partial\theta}\log L(\theta,X)\right)&=&E\left(W\times\frac{\partial}{\partial\theta}\log L(\theta,X)\right)\\
+	&=&E\left(W\times\frac{\frac{\partial}{\partial\theta}L(\theta,X)}{L(\theta,X)} \right)\\
+	&=&\int_{\mathfrak{X}} W(x)\frac{\frac{\partial}{\partial\theta}L(\theta,x)}{L(\theta,x)} dP_{\theta}(x) \\
+	&=&\int_{\mathfrak{X}} W(x) \frac{\partial}{\partial\theta} L(\theta,x) d\mu(x) \\
+	&=&\frac{d}{d\theta} \int_{\mathfrak{X}} W(x) L(\theta,x) d\mu(x)\\
+	&=&\frac{d}{d\theta} \int_{\mathfrak{X}} W(x) dP_{\theta}(x) \\
+	&=&\frac{d}{d\theta} E_{\theta}(W)
+\end{eqnarray*}
+
+De plus, comme $E\left(\frac{\partial}{\partial\theta}\log L(\theta,X)\right)=0$, on a :
+\[V_{\theta}\left( \frac{\partial}{\partial\theta}\log L(\theta,X)\right) = E_{\theta}\left(\left(\frac{\partial}{\partial\theta} \log(\theta,X)\right)^2\right)\]
+
+L'inégalité de Cauchy-Schwarz appliquée ) $W$ et $\frac{\partial}{\partial\theta} \log L(\theta,X)$ donne :
+\[V_{\theta}(W)\geq \frac{\left( \frac{d}{d\theta}E_{\theta}(W)\right)^2}{E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,X)\right)^2\right)}\]
+
+\Theo{de la borne de Carmer-Rao}{Soit $(\mathfrak{X},(P_{\theta})_{\theta\in\Theta})$ un modèle statistique dominé par une mesure $\sigma$-finie $\mu$ et de vraisemblance L où $\Theta$ est un ouvert de $\mathbb{R}$. Supposons que, pour toute fonction $(P_{\theta})_{\theta\in\Theta}$-intégrable h, nous ayons la propriété :
+\[\frac{d}{d\theta}\int_{\mathfrak{X}}h(x)L(\theta,x)d\mu(x)=\int_{\mathfrak{X}}h(x)\frac{\partial}{\partial\theta}L(\theta,x) d\mu(x)\]
+Alors pour tout estimateur W, la fonction $\theta\mapsto E_{\theta}(W)$ est dérivable sur $\Theta$ et de plus, 
+\[\forall\theta\in\Theta, V_{\theta}(W)\geq \frac{\left( \frac{d}{d\theta}E_{\theta}(W)\right)^2}{E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,X)\right)^2\right)}\]
+En particulier, si $W$ est un estimateur sans biais de $g(\theta)$, alors : 
+\[V_{\theta}(W)\geq \frac{\left( \frac{d}{d\theta}g(\theta)\right)^2}{E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)}\]}
+
+\Def{}{$\frac{\partial}{\partial\theta} \log L(\theta,\bullet)$ est appellé le "score" du modèle statistique et $E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)$ l'information de Fischer du modèle en $\theta$, qu'on note $I(\theta)$}
+
+\Lem{technique}{Si la vraisemblance L du modèle statistique vérifie :
+	\[\frac{\partial}{\partial\theta} E_{\theta}\left(\frac{\partial}{\partial\theta} \log L(\theta,\bullet)\right)=\int_{\mathfrak{X}} \frac{\partial^2}{\partial\theta^2} \log L(\theta,x) d\mu(x)\]
+	alors \[E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)=-E_{\theta}\left(\frac{\partial^2}{\partial\theta^2} \log L(\theta,\bullet)\right)\]}
+
+\begin{dem}
+\begin{eqnarray*}
+	E_{\theta}\left(\frac{\partial^2}{\partial\theta^2} \log L(\theta,\bullet)\right)&=&E_{\theta}\left( \frac{\partial}{\partial\theta}\left( \frac{\frac{\partial}{\partial\theta)L(\theta,\bullet)}}{L(\theta,\bullet)}\right)\right)\\
+&=&E_{\theta}\left(\frac{\left(\frac{\partial^2}{\partial\theta^2}L(\theta,\bullet)\right)L(\theta,\bullet)-\left(\frac{\partial}{\partial\theta}L(\theta,\bullet)\right)^2}{(L(\theta,\bullet))^2} \right)\\
+&=&E_{\theta}\left(\frac{\frac{\partial^2}{\partial\theta^2}L(\theta,\bullet)}{L(\theta,\bullet)}\right)-E_{\theta}\left(\left(\frac{\frac{\partial}{\partial\theta}L(\theta,\bullet)}{L(\theta,\bullet)}\right)^2\right)\\
+\end{eqnarray*}
+\begin{eqnarray*}
+\text{Or, } E_{\theta}\left(\frac{\frac{\partial^2}{\partial\theta^2}L(\theta,\bullet)}{L(\theta,\bullet)}\right)&=&\int_{\mathfrak{X}}\frac{\frac{\partial^2}{\partial\theta^2}L(\theta,x)}{L(\theta,x)}dP_{\theta}(x)\\
+&=&\int_{\mathfrak{X}} \frac{\partial^2}{\partial\theta^2} L(\theta,x) d\mu(x)\\
+&=& \frac{d}{d\theta} \int_{\mathfrak{X}} \frac{\partial}{\partial\theta} L(\theta,x) d\mu(x) \\
+&=& \frac{d}{d\theta} \int_{\mathfrak{X}} \frac{\partial}{\partial\theta} \log L(\theta,x) dP_{\theta}(x)\\
+&=& \frac{d}{d\theta} \underbrace{E_{\theta}\left(\frac{\partial}{\partial\theta} \log L(\theta,x)\right)}_{=0} \\
+&=& 0
+\end{eqnarray*}
+\[\text{D'autre part } E_{\theta}\left(\left(\frac{\frac{\partial}{\partial\theta}L(\theta,\bullet)}{L(\theta,\bullet)}\right)^2\right) = E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)\]
+\[\text{D'où } E_{\theta}\left(\frac{\partial^2}{\partial\theta^2} \log L(\theta,\bullet)\right)=-E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)\]
+\end{dem}
+
+\Lem{}{Suppsons que pour tout $\theta\in\Theta$ et tout $x=(x_1,...,x_n)\in\mathfrak{X}^n$, on ait $L(\theta,x)=\prod_{i=1}^n f(\theta,x_i)$. alors :
+\[I(\theta)=E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)=-nE_{\theta}\left(\frac{\partial^2}{\partial\theta^2}\log f(\theta,\bullet) \right)\]}
+
+\begin{dem}
+\begin{eqnarray*}
+E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log L(\theta,\bullet)\right)^2\right)&=&E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log\prod_{i=1}^n f(\theta,X_i)\right)^2\right)\\
+&=& E_{\theta}\left(\left(\sum_{i=1}^n \frac{\partial}{\partial\theta}\log f(\theta,X_i)\right)^2\right)\\
+&=& \sum_{i=1}^n E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log f(\theta,X_i)\right)^2\right) + 2\sum_{1\leq i\leq j\leq n} \underbrace{E_{\theta}\left(\left(\frac{\partial}{\partial\theta}\log f(\theta,X_i)\right)\left(\frac{\partial}{\partial\theta} \log f(\theta,X_j)\right)\right)}_{E_{\theta}\left(\frac{\partial}{\partial\theta} \log f(\theta,X_i) \right) E_{\theta}\left( \frac{\partial}{\partial\theta} \log f(\theta,X_j)\right) = 0}\\
+&=& nE_{\theta}\left(\left(\frac{\partial}{\partial\theta} \log f(\theta,\bullet)\right)^2\right)\\
+&=&-nE_{\theta}\left(\frac{\partial^2}{\partial\theta^2}\log f(\theta,\bullet)\right)
+\end{eqnarray*}
+\end{dem}
+
+\Exemp{}{A REPRENDRE}
+
+\Def{Estimateur efficace}{Un estimateur sans biais du paramètre $g(\theta)$ qui atteint la borne de Cramer-Rao est dit efficace.}
+
+\Theo{}{Sans les conditions du théorème précédnt, si W est un estimateur sans biais de $g(\theta)$ alors W atteint la borne de Cramer-Rao si et seulement s'il existe une fonction a de $\theta$ tel que :
+\[\frac{\partial}{\partial\theta}\log L(\theta,\bullet)=a(\theta)(W-g(\theta))\ P_{\theta}\text{-ps}\]}
+
+\Prop{}{Soient X et Y deux variables aléatoires réelles de arré intégrable. On a :
+\begin{enumerate}
+	\item E(X)=E(E(X|Y))
+	\item V(X)=V(E(X|Y))+E(V(X|Y)) où V(X|Y)=$E\left((X-E(X))^2|Y\right)$ = E($X^2$|Y)+$(E(X|Y))^2$
+\end{enumerate}}
+
+\Theo{de Rao-Blackwell}{Soit W un estimateur sans biais de $g(\theta)$ et soit T une statistique exhaustive pour $\theta$. Alors $E(W|T)$ est un estimateur sans biais de $g(\theta)$ de variance inférieure ou égale à celle de W.}
+
+\textbf{Conséquence} Pour obtenir un extimateur UVMSB pour $g(\theta)$, il faut considérer les estimateur fonction d'une statstique exhaustive.
+
+\bigskip
+\Theo{}{Si W est UVMSB alors il est unique.}
+
+\Theo{}{Soit T une statistique exhaustive et complète pour le paramètre $\theta$. \\
+Alors toute statistique $\phi(T)$ fondée sur T constitue l'unique estimateur UVMSB de son espérance ($E(W|T)=\phi(T)$)}
+
+\Rem{}{Si W est un estimateur sans biais pour le paramètre $g(\theta)$ et si T est une statistique exhaustive et complète, alors l'améliorée de Rao-Blackwell $E(W|T)$ est l'unique estimateur UVMSB pour $g(\theta)$.}
+
+\Exemp{}{A reprendre}

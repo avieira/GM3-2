@@ -1,0 +1,356 @@
+\part{Introduction}
+\begin{eqnarray*}
+(E):\dot{x(t)}=f(t,x(t))\\
+x=(x_1,...,x_n)^T
+\end{eqnarray*}
+
+$f:U\rightarrow \mathbb{R}$
+On a $U\subset \mathbb{R}\times\mathbb{R}^n$. On cherche x(t), et f est toujours donné.
+
+\Def{Solution de (E)}{Une fonction $x:I\rightarrow \mathbb{R}^n$ est dite une solution de (E) si : 
+\begin{enumerate}
+\item $(t,x(t))\in U$
+\item $x(t)$ satisfait (E)
+\end{enumerate}}
+
+\paragraph{Cas particulier}
+$x^{(n)}(t)=g(t,x(t),\dot{x(t)},...,x^{(n-1)}(t))$ \\
+On pose $x_1=x$, $x_2=\dot{x}$, ..., $x_n=x^{(n-1)}$. Donc :
+\[
+\left\{
+\begin{array}{r c l}
+\dot{x}_n &=& g(t,x_1,...,x_n)\\
+\dot{x_1} &=& x_2\\
+&\vdots&\\
+\dot{x_{n-1}} &=& x_n
+\end{array}
+\right.
+\]
+
+On passe d'une équation d'ordre n à un système d'équations d'ordre 1.
+
+\bigskip
+\Def{Problème de Cauchy}{Étant donné $(t_0,x_0)\in U$, on peut trouver une solution $x(t)$ tel que $t_0\in I$ et $x(t_0)=x_0$.}
+
+\paragraph{Interprétation de l'équation : \\}
+\begin{enumerate}
+\item t peut être vu comme le temps
+\item $x=(x_1,...,x_n)^T$ l'état du système à un temps donné.
+\item $\dot{x}=f(x,t)$ la loi d'évolution.
+\item $(t_0,x_0)$ les données initiales
+\item Résoudre le problème de Cauchy : prévoir l'évolution en sachant que $x(t_0)=x_0$
+\item Résoudre (E) : connaître toutes les solutions possibles.
+\end{enumerate}
+
+\bigskip
+\Exemp{Le pendule}{\[\ddot{\theta}=-\frac{g}{l}\sin \theta\]
+On pose $x_1=\theta$ et $x_2=\dot{\theta}$ . On a donc : 
+\[
+\left\{
+\begin{array}{r c l}
+\dot{x}_2 &=& -\frac{g}{l} \sin x_1\\
+\dot{x_1} &=& x_2
+\end{array}
+\right.
+\]
+}
+
+Pour $\theta=x_1$ petit, $\sin x_1 \approx x_1$. On prend l=g.
+\[
+\left\{
+\begin{array}{r c l}
+\dot{x}_2 &=& x_1\\
+\dot{x_1} &=& x_2
+\end{array}
+\right.
+\Rightarrow
+\left\{
+\begin{array}{r c l}
+x_1(t) &=& A\sin t + B\cos t \text{  }= \text{  } x_{2_0}\sin t + x_{1_0} \cos t\\
+x_2(t) &=& A\cos t - B\sin t \text{  }= \text{  } x_{2_0}\cos t - x_{1_0} \sin t
+\end{array}
+\right.
+\]
+
+D'où :
+\[
+\left(
+\begin{array}{c}
+x_1(t)\\
+x_2(t)
+\end{array}
+\right)
+= \left(
+\begin{array}{c c c}
+\cos t & & \sin t\\
+-\sin t & & \cos t
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+x_{1_0}(t)\\
+x_{2_0}(t)
+\end{array}
+\right)
+\]
+
+En traçant cela, on trouve une courbe appelée le portrait de phase.
+
+\newpage
+\part{Existence, unicité, régularité}
+\section{Réécriture du problème de Cauchy}
+On supposera $f\in \mathcal{C}^0(U)$
+
+\bigskip
+\Propo{Equivalence à (C)}{Soit $x(t)$ continue. Alors x(t) résoud \[(C):\dot{x}=f(t,x), x(t_0)=x_0\]
+si et seulement si $x(t)$ est solution de \[x(t)=x_0+\int_{t_0}^t f(\tau,x(\tau)) d\tau\]}
+
+\begin{dem}
+\begin{eqnarray*}
+(\Leftarrow) x(t) \text{ continue } &\Rightarrow& f(\tau,x(\tau)) \text{ continue } \\
+    &\Rightarrow& \int_{t_0}^t f(\tau, x(\tau)) d\tau \text{ est dérivable } \\
+    &\Rightarrow& x(t) \text{ est dérivable }
+\end{eqnarray*}
+On dérive l'égalité, et on trouve : 
+\[\dot{x(t)}=f(t,x(t)) \text{ et } x(t_0)=x_0\]
+
+\begin{eqnarray*}
+(\Rightarrow) x(t) \text{ continue } &\Rightarrow& f(t,x)\text{ continue} \\
+   &\Rightarrow& \dot{x} \text{ continue}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+\int_{t_0}^t \dot{x(\tau)} d\tau &=& \int_{t_0}^t f(\tau, x(\tau)) d\tau \\
+x(t)-x(t_0)&=&\int_{t_0}^t f(\tau, x(\tau)) d\tau
+\end{eqnarray*}
+\end{dem}
+
+\section{Existence et unicité}
+Soit $x\in\mathbb{R}^n$ $||x||=\left(\sum_{i=1}^n x_i^2\right)^{\frac{1}{2}}$
+
+\[U=\underbrace{J}_{\subset \mathbb{R}} \times \underbrace{\mathbb{X}}_{\subset \mathbb{R}^n}\]
+
+\Def{Lipschitzienne}{$f:U\to \mathbb{R}^n$ est lipschitzienne par rapport à $x$ s'il existe L>0 tel que : 
+\[||f(t,x)-f(t,\tilde{x})||\leq L||x-\tilde{x}||\]
+}
+
+\Lem{CS de lipschitzienne}{$\forall 1\leq i,\ j\leq n$ $\frac{\partial f_i}{\partial x_j}(t,x)$ existent dans U et sont bornées, ie 
+\[\forall \xi \in U,\ \left| \frac{\partial f_i}{\partial x_j}(\xi) \right| \leq k\]
+alors f est lipschitzienne par rapport à $x$ (dans U)}
+
+\begin{dem}
+\begin{eqnarray*}
+||f(t,x)-f(t,\tilde{x})||&=&\left(\sum_{i=1}^n (\underbrace{f_i(t,x)-f_i(t,\tilde{x})}_{=\sum_{j=1}^n \frac{\partial f_i}{\partial x_j}(t,x^*)(x_j-\tilde{x}_j)})^2 \right)^{\frac{1}{2}} \\
+	&\leq& \left( \sum_{i=1}^n \sum_{j=1}^n k^2 (x_j-\tilde{x}_j)^2 \right)^{\frac{1}{2}} \\
+	&\leq& \underbrace{\sqrt{n} k}_{L} ||x-\tilde{x}||
+\end{eqnarray*}
+\end{dem}
+
+\Coro{Avec la compacité}{Si $f\in \mathcal{C}^1(U)$ alors $\forall V\subset U$, V compact, $f$ est lipschitzienne sur V.}
+
+\begin{dem}
+\begin{eqnarray*}
+f\in \mathcal{C}^1(U) &\Rightarrow& \frac{\partial f_i}{\partial x_j} \in \mathcal{C}^0(U) \\
+	&\Rightarrow& \forall \xi \in V,\ \left|\frac{\partial f_i}{\partial x_j} (\xi) \right| \leq k
+\end{eqnarray*}
+\end{dem}
+
+ \Theo{de Picard-Lindelöf ou Cauchy-Lipschitz}{Considérons $\dot{x}=f(t,x),\ f:U\to \mathbb{R}^n$ est supposée :
+\begin{enumerate}
+\item $f\in \mathcal{C}^0(U)$
+\item $f$-lipschitzienne par rapport à $x$ (dans U)
+\end{enumerate}
+alors $\exists \delta; \exists x:[t_0 -\delta; t_0+\delta]\to \mathbb{R}^n$ tel que :
+\begin{enumerate}
+\item $x(t)$ est solution du problème de Cauchy
+\item $x(t)$ est unique
+\item $x^m(t)=x_0+\int_{t_0}^t f(\tau,x^{m-1}(\tau)) d\tau$ converge vers la solution x(t).
+\end{enumerate}
+}
+
+\begin{dem}
+\[\exists \rho; V_{\rho}=\{(t,x)|\ |t-t_0|\leq \rho,\ ||x-x_0||\leq \rho\}\subset U\]
+\[\exists M;\ \forall(t,x)\in V_{\rho},\ ||f(t,x)||\leq M\]
+Posons $\delta=\min\{\rho,\frac{\rho}{M}\}$
+\[V_{\delta}=\{(t,x)|\ |t-t_0|\leq \delta \text{ et } ||x-x_0||\leq \rho\}\]
+Posons $x^0(t)=x_0$ et $x^n(t)=x_0+\int_{t_0}^t f(\tau,x^{n-1}(\tau)) d\tau$ 
+
+On va prouver que $\forall m\geq0, \forall t\in[t_0-\delta,t_0+\delta]$, on a : \[(t,x^n(t))\in V_{\delta}\]
+Si $m=0$, on a $||x^m(t)-x_0||=||x_0-x_0||=0\leq \rho$.\\
+Supposons que $\forall 0\leq j\leq m-1,\ x^j(t)$ satisfait $(t,x^j(t)) \in V_{\delta}$.
+
+\begin{eqnarray*}
+||x^m(t)-x_0||&=&\left|\left|\int_{t_0}^t f(\tau,x^{m-1}(\tau)) d\tau\right|\right|\\
+&\leq& \int_{t_0}^t ||f(\tau,x^{m-1}(\tau)|| d\tau \\
+&\leq& \underbrace{|t-t_0|}_{\leq \delta} M \\
+&\leq& \rho
+\end{eqnarray*}
+
+On va montrer par récurrence :
+\[||x^m(t)-x^{m-1}(t)|| \leq ML^{m-1} \frac{|t-t_0|^m}{m!}\]
+
+\begin{eqnarray*}
+m=1\ :\ ||x^1(t)-x_0||&=&\left|\left|\int_{t_0}^t f(\tau,x^0(\tau) d\tau \right|\right| \\
+	&\leq& \int_{t_0}^t ||f(\tau,x^0(\tau)|| d\tau \\
+	&\leq& M|t-t_0|
+\end{eqnarray*}
+
+Supposons $||x^{m-1}(t)-x^{m-2}(t)||\leq ML^{m-2}\frac{|t-t_0|^{m-1}}{(m-1)!}$
+
+\begin{eqnarray*}
+||x^m(t)-x^{m-1}(t)|| &=& \left|\left|\int_{t_0}^t f(\tau,x^{m-1}(\tau))-f(\tau,x^{m-2}(\tau)) d\tau \right|\right| \\
+&\leq& \int_{t_0}^t ||f(\tau,x^{m-1}(\tau)) - f(\tau,x^{m-2}(\tau))|| d\tau \\
+&\leq& \int_{t_0}^t L||x^{m-1}(\tau)-x^{m-2}(\tau)|| d\tau \\
+\text{Par récurrence : } &\leq& \int_{t_0}^t LML^{m-2}\frac{|\tau-t_0|^{m-1}}{(m-1)!} d\tau \\
+&\leq& M L^{m-1} \frac{|t-t_0|^m}{m!}
+\end{eqnarray*}
+
+On pose $S(t)=x_0+\sum_{j=1}^{\infty}(x^j(t)-x^{j-1}(t)) = \lim_{n\to +\infty} x^n(t)$
+Or, $\|x^m(t)-x^{m-1}(t)\| \leq \frac{ML^{m-1}\delta^m}{m!}=a_m$ ($\delta$ dû au cylindre)
+\[\frac{a_{m+1}}{a_m}=\frac{\delta L}{m+1} \xrightarrow[m\to +\infty]{} 0<1\]
+$\Rightarrow \sum_m a_m$ converge $\Rightarrow S(t)$ converge $\Rightarrow x^n(t)$ converge vers $x(t)$.
+
+\bigskip
+Prouvons à présent le deuxième point :\\
+\Lem{de Gronwall}{Soit $u:[a,b]\to\mathbb{R}$, $u\geq0$, tel que $u\in\mathcal{C}^0[a,b]$.
+\[\exists \alpha,\beta ; u(t)\leq \alpha+\beta\int_{t_0}^t u(\tau)d\tau \Rightarrow u(t)\leq \alpha\exp(\beta(t-t_0)) \]}
+
+\begin{dem}
+	$u(t)\leq\alpha + \beta\int_{t_0}^t u(\tau) d\tau = v(t)$.\\
+	\[\frac{dv}{dt}=\beta u \leq \beta v\ (\dot{v}-\beta v \leq 0)\]
+	\[\frac{d}{dt}\left( e^{-\beta t} v\right) = \beta e^{-\beta t} v + e^{-\beta t} \dot{v} = e^{-\beta t}(\dot{v}-\beta v) \leq 0\]
+	D'où $e^{-\beta t}v$ décroissante, ie pour $t>t_0$ : 
+	\begin{eqnarray*}
+		e^{-\beta t} v &\leq& e^{-\beta t_0} \alpha \\
+		u \leq v &\leq& \alpha e^{\beta(t-t_0)}
+	\end{eqnarray*}
+	(Si $t_0>t$, on obtient $u\leq \alpha e^{|\beta(t-t_0)|}$)
+\end{dem}
+
+On reprend la démonstration : \\
+Supposons $x(t)$ et $\hat{x}(t)$ deux solutions.
+\begin{eqnarray*}
+	||x(t)-\hat{x}(t)||&=&||x_0 + \int_{t_0}^t f(\tau,x(\tau)) d\tau - x_0 - \int_{t_0}^t f(\tau,\hat{x}(\tau)) d\tau ||\\
+			   &=&||\int_{t_0}^t f(\tau,x(\tau)) - f(\tau,\hat{x}(\tau)) d\tau ||\\
+			&\leq&\int_{t_0}^t \underbrace{||f(\tau,x(\tau)) - f(\tau,\hat{x}(\tau))||}_{\leq L||x(\tau)-\hat{x}(\tau)||} d\tau \\
+		        &\leq&0+L\int_{t_0}^t ||x(\tau)-\hat{x}(\tau)|| d\tau
+\end{eqnarray*}
+
+D'après le théorème de Gronwall, on a :
+\[||x(\tau)-\hat{x}(\tau)||\leq 0 \Rightarrow x(t) = \hat{x}(t)\]
+\end{dem}
+
+\Theo{de Banach du point fixe}{Soit (X,d) un espace métrique complet. Soit T une contraction. Alors $T:X\to X$ possède un unique point fixe $x^*$, ie $T(x^*)=x^*$\\
+De plus, $X^m \xrightarrow[m\to +\infty]{} X^*$, quelque soit $X^0$ arbitraire, avec $X^m=T(x^{m-1})$}
+
+\begin{dem}[du théorème de Picard-Lindelof, avec le théorème du point fixe]
+$V_{\rho}=\{(t,x); |t-t_0|\leq \rho, ||x-x_0|| < t\} \subset \mathbb{U}$\\ 
+On pose $M=\max_{(t,x)\in V_{\rho}} ||f(t,x)||$ et $\delta=\min \{\rho, \frac{b}{M}, \frac{q}{L}\}$, avec $0<q<1$ arbitraire. 
+
+\bigskip
+$V_{\delta}=\{(t,x) ; |t-t_0|\leq \delta, ||x-x_0|| < t \}$\\
+$\mathcal{C}=\{g : [t_0-\delta,t_0+\delta] \to \mathbb{X} \text{ continues }; ||g(t)-x_0||\leq b\}$ \\
+Pour $g\in\mathcal{C}$, $||g||_{\mathcal{C}}=\max_{t\in I} ||g(t)||_2$. \\
+Pour $g,h\in\mathcal{C}$, on pose $d(g,h)=||g-h||_{\mathcal{C}}$.
+
+\bigskip
+$(\mathcal{C},d)$ est un espace complet. Posons, pour $x\in\mathcal{C}$, 
+\[\mathcal{L}(x)(t)=x_0 + \int_{t_0}^t f(\tau,x(\tau)) d\tau\]
+$\mathcal{L}$ est : \begin{enumerate}
+	\item $\mathcal{L}:\mathcal{C}\to\mathcal{C}$
+	\item $\mathcal{L}$ est une contraction.
+\end{enumerate}
+
+Pour montrer 1 : \\
+\[||\mathcal{L}(x)(t) - x_0|| = ||\int_{t_0}^t f(\tau,x(\tau)) d\tau ||\]
+D'où :
+\[||\mathcal{L}(x)(t) - x_0|| \leq \int_{t_0}^t ||f(\tau,x(\tau))|| d\tau \leq M\underbrace{|t-t_0|}_{\leq \delta \leq \frac{b}{M}}\leq b\]
+
+Pour montrer 2 : \\
+\begin{eqnarray*}
+	d(\mathcal{L}(x),\mathcal{L}(x'))&=&||\int_{t_0}^t f(\tau,x(\tau)) d\tau - \int_{t_0}^t f(\tau,x'(\tau)) d\tau||\\
+				      &\leq&\int_{t_0}^t \underbrace{||f(\tau,x(\tau)) - f(\tau,x'(\tau))||}_{\leq L||x-x'||} d\tau \\
+			              &\leq&q \max_{t\in I}||x-x'|| \\
+				      &\leq&q ||x-x'||_{\mathcal{C}} \\
+				      &\leq&q\times d(x,x')
+\end{eqnarray*}
+
+\noindent $\Rightarrow\ \exists!$ point fixe; $x(t)=x_0 + \int_{t_0}^t f(\tau,x(\tau)) d\tau$ \\
+$\Leftrightarrow\ \dot{x}=f(t,x)$ avec $x(t_0)=x_0$ 
+\end{dem}
+
+Soit $U=J\times\mathbb{X}$ (en particulier, $U=\mathbb{R}\times\mathbb{R}^n$). 
+
+\Def{}{$X(t,x_0)$ définie sur $I_{x_0}$ est dite maximale si $\forall \tilde{X}(t,x_0)$, une autre solution, $t\in\tilde{I}_{x_0}$, on a \[\tilde{I}_{x_0} \subset I_{x_0}\]
+$X(t,x_0)$ est dite globale si $I_{x_0}=J$ (en particulier, $I_{x_0}=\mathbb{R}$)}
+
+\Prop{}{Si $X(t,x_0)$ est globale, alors elle est maximale.}
+
+\section{Régularité des solutions}
+Soit $x(t):=x(t,t_0,x_0)$ une solution du problème de Cauchy.
+\Prop{}{Si $f\in\mathcal{C}^k(U)$ alors $x(t)$ est $\mathcal{C}^{k+1}$ par rapport à t.}
+\begin{dem}
+	Pour k=0, on a \[\dot{x}(t)=f(t,x(t))\]
+	et alors x(t) est dérivable par rapport à t. $\Rightarrow$ $x(t)$ est $\mathcal{C}^0$. \\
+	Donc $f(t,x(t))$ est $\mathcal{C}^0$ par rapport à t, donc $\dot{x}(t)$ est $\mathcal{C}^0$ par rapport à t, et donc $x(t)$ est $\mathcal{C}^1$ par rapport à t.
+
+	\bigskip
+	Supposons $x(t)\ \mathcal{C}^l$ par rapport à t, $l\leq k$. On a $f\in\mathcal{C}^l$. Alors, $x(t)$ est $\mathcal{C}^{l+1}.$
+\end{dem}
+
+Posons $Z(t,x_0)=\frac{\partial X(t,t_0,x_0)}{\partial x_0} \in\mathcal{M}_n$ (matrice jacobienne).
+
+\Theo{}{Soit $f\in\mathcal{C}^2(U)$. \begin{enumerate}
+	\item $X(t,t_0,x_0)$ est $\mathcal{C}^1$ par rapport à $x_0$
+	\item $Z(t,x_0)=Z(t)$ satisfait l'équation différentielle $\dot{Z}=A(t)Z$, où $z(t_0)=Id$ et $A(t)=\frac{\partial f(t,X(t))}{\partial x}$
+	\item Si $f\in\mathcal{C}^k(U)$ alors $X(t,t_0,x_0)$ est $\mathcal{C}^{k-1}$ par rapport à $X_0$
+\end{enumerate}}
+
+\begin{dem}
+	$\dot{x}=f(t,x)$, $x(t_0)=x_0$. \\
+	$\dot{z}=\frac{\partial f}{\partial x} (t,x)z,\ z(t_0)=Id$.
+
+	\bigskip
+	D'après le théorème de Picard-Linderlöf, il existe $(x(t),z(t))$ solution et 
+	\[x^m(t)=x_0+\int_{t_0}^t f(\tau,x^{m-1}(\tau)) d\tau \xrightarrow[m\to+\infty]{} x(t)\]
+	\[z^m(t)=x_0+\int_{t_0}^t \frac{\partial f}{\partial x}(\tau,x^{m-1}(\tau)) z^{m-1}(\tau) d\tau \xrightarrow[m\to+\infty]{} z(t)\]
+
+	On veut démontrer que $\frac{\partial x^m(t)}{\partial x_0}=z^m(t)$ par récurrence.\\
+	Pour m=0, $x^0(t)=x_0,\ z^0=Id$ et $\frac{\partial x^0}{\partial x_0}=Id=z^0$
+
+	\bigskip
+	Supposons $\frac{\partial x^{m-1}}{\partial x_0}=z^{m-1}(t)$.
+
+	\bigskip
+	\begin{eqnarray*}
+		\frac{\partial x^m(t)}{\partial x_0}&=&\frac{\partial}{\partial x_0} \left( x_0 + \int_{t_0}^t f(\tau,x^{m-1}(\tau)) d\tau \right) \\
+						    &=&Id + \int_{t_0}^t \frac{\partial f(\tau,x^{m-1}(\tau))}{\partial x_0} d\tau\\
+					     &=&Id + \int_{t_0}^t \frac{\partial}{\partial x}(f(\tau,x^{m-1}(\tau))) \frac{\partial x^{m-1}(\tau)}{\partial x_0} d\tau \\
+					     &=&Id + \int_{t_0}^t \frac{\partial}{\partial x}(f(\tau,x^{m-1}(\tau))) z^{m-1}(\tau) d\tau \\
+					     &=&z^{m}(t)
+	\end{eqnarray*}
+	On fait tendre m vers plus infini, et on trouve : 
+	\[\frac{\partial x(t)}{\partial x_0}=z(t)\]
+\end{dem}
+
+On pose à présent $\dot{x}=f(t,x,\lambda)$, avec $(t,\lambda)\in U$ et $\lambda\in\Lambda \subset \mathbb{R}^p$ (p paramètres).
+
+\Theo{}{Soit $f\in\mathcal{C}^2(U\times \Lambda)$. Alors \begin{enumerate}
+\item $X(t,t_0,X_0,\lambda)$ est $\mathcal{C}^1$ par rapport à $\lambda$
+\item $Z(t,x_0,\lambda)=Z(t)$ satisfait l'équation différentielle \[\dot{Z}=A(t)Z + B(t)\]
+où $A(t)=\frac{\partial f(t,x(t),\lambda)}{\partial x}$, $B(t)=\frac{\partial f(t,x(t),\lambda)}{\partial \lambda}$ et $z(t_0)=0_{\mathcal{M}_{m\times p}}$
+\end{enumerate}}
+
+\section{Transformations}
+$\dot{x}=f(x),\ x\in\mathbb{X}$\\
+Supposons que $\forall x_0$, la solution $x(t,x_0)$ existe $\forall t\in\mathbb{R}$. 
+
+\bigskip
+Posons $\gamma_t(x_0)=x(t,x_0)$. 
+\Prop{}{$\gamma_t$ satisfait : \begin{enumerate}
+		\item $\gamma_0(x_0)=x_0$
+		\item $\gamma_s(\gamma_t(x_0))=\gamma_{s+t}(x_0) = \gamma_{t+s}(x_0)$
+		\item $\gamma_{-t}(\gamma_t(x_0))=x_0 \Rightarrow (\gamma_t)^{-1}=\gamma_{-t}$
+\end{enumerate}}
+
+$\{\gamma_t,\ t\in\mathbb{R}\}$ forment un groupe à 1 paramètre de transformation de $\mathbb{X}$. On appelle $\gamma_t(x_0)$ le flot de $\dot{x}=f(x)$.

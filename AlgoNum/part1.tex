@@ -1,0 +1,27 @@
+\part{Problème bien posé}
+
+On appelle problème bien posé un problème dont la solution : 
+\begin{itemize}
+\item existe
+\item est unique
+\item est stable par rapport aux perturbations
+\end{itemize}
+
+\paragraph*{Note sur l'instabilité : \\}
+Si la précision sur les solutions est inférieure à la précision qu'on peut avoir tel que le problème est posé, on peut avoir un problème. 
+
+\part{Calcul numérique sur calculateur}
+"Approchée" peut venir dedeux facteurs :
+\begin{itemize}
+	\item Le nombre d'opération à faire est infini, mais on est obligé d'en faire uniquement un nombre fini
+	\item Un réel n'a pas de partie finie, et donc, on ne pourra le calculer exactement
+\end{itemize}
+
+\bigskip
+Représentation d'un réel en machine : \\
+$(-1)^s\times f\times 2^e$ avec 
+\begin{itemize}
+	\item $s=b_{31}$
+	\item $e=b_{30}2^7+b_{29}2^6+...+b_{24}2^1+b_{23}-\underbrace{127}_{biais}$
+	\item $m=1+b_{22}2^{-1}+b_{21}2^{-2}+...+b_02^{-23}$
+\end{itemize}

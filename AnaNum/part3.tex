@@ -1,0 +1,293 @@
+\part{Equation différentielles, problème de Cauchy}
+Soit $[a,b]\subset \mathbb{R}$ fermé borné. On fixe $x_0\in[a,b]$.
+\Def{Problème de Cauchy}{Trouver une fonction $y\in\mathcal{C}^1[a,b]$ tel que :
+	\[
+		\left\{
+			\begin{array}{r c l}
+				y'(x) &=& f(x,y(x))\\
+				y(x_0) &=& y_0
+			\end{array}
+			\right.
+	\]
+étant donné $f$ définie et continue. $y$ s'apelle la solution au problème de Cauchy.}
+
+\Theo{}{Si $f$ est continue alors f est intégrable sur [a,b] (fermé borné alors compact) au sens de Riemann. Le système devient alors : 
+	\[y(x)=y(x_0)+\int_{x_0}^x f(t,y(t)) dt\]
+La réciproque est vraie}
+
+\Theo{de Cauchy Lipschitz}{Si $f$ est définie et continue sur $[a,b]\times\mathbb{R}$, et si $f$ vérifie la condition de Lipschitz (aka lipschitzienne) en y, alors la solution au problème de Cauchy existe et est unique.}
+
+\Theo{Version locale du dernier théorème}{On suppose que f suit la condition de Lipschitz localement : \\
+	$\exists V(x_0)$ voisinage de $x_0$ de longueur $r_{x_0}$\\
+	$\exists V(y_0)$ voisinage de $y_0$ de longueur $r_{y_0}$, tel que : 
+	\[\exists k>0, \forall x\in V(x_0), \forall y_1, y_2 \in V(y_0), ||f(x,y_1)-f(x,y_2)||\leq k||y_1-y_2||\]
+
+	Le problème de Cauchy admet alors une solution unique dans le domaine :
+	\[\left\{x;|x-x_0|<r, r<\max \left\{r_{x_0}, \frac{1}{2k}, \frac{r_{y_0}}{M} \right\} \right\}\]
+avec $M=\max_{x\in V(x_0), y\in V(y_0)} |f(x,y)|$}
+
+On supposera toujours que $f$ vérifie la condition de Lipschitz en y.
+
+\paragraph*{Réalisation de la méthode :}
+On fixe $0<T<+\infty$. On prend $[a,b]=[x_0,x_0+T]$. On cherche à approximer $y(x)$ aux points $x_j=x_{j-1}+h_j$, $j=0..N_h$, avec $h_j>0$, $x_{N_h}\leq x_0+T$.\\
+$y_j$ seront les valeurs approchées de $y(x_j)$
+\Def{}{La méthode est dite à un pas si le calcul de $y_{n+1}$ ne dépend que de $y_n$ (et pas de $y_{n-1}$, etc)\\
+Sinon, il s'agit d'une méthode à pas liés}
+
+\Def{}{La méthode est dite explicite si $y_{n+1}$ est définie explicitement. Sinon, la méthode est implicite.}
+
+\section{Méthode à un pas}
+La méthode à un pas s'écrit dans la forme suivante :
+\[\left\{ \begin{array}{c c c}
+	y_{j+1}&=&y_j+h_j\Phi(x_j,y_j,h_j)\\
+	    y_0&=&y(x_0)
+\end{array}\right.\]
+
+avec $h_j=x_{j+1}-x_j$ et $\Phi$ la fonction d'incrément.
+
+On doit étudier consistance, stabilité et convergence de cette méthode.
+
+\subsection{Etude de la consistance}
+\Def{Erreur de quadrature}{Soit $y(x)$ la solution au problème de Cauchy.\\
+	L'erreur de quadrature s'exprime comme :
+	\[\varepsilon_{j+1}=y(x_{j+1})-y(x_j)-h_j\Phi(x_j,y_j,h_j)\]
+}
+
+\Def{Consistance}{On dit que la méthode est consistante si :
+\[\lim_{h\to 0} \sum_{j=0}^n |\varepsilon_{j+1}|=0\]
+avec $h=\max_j h_j$}
+
+On suppose que $\Phi$ est une application continue sur $[a,b]\times\mathbb{R}\times[0,h^*]$ où $h^*<b-a$.
+\Theo{}{La méthode est consistante $\Leftrightarrow$ $\forall x\in[a,b], \phi(x,y(x),0)=f(x,y(x))$}
+
+\begin{dem}
+A reprendre
+\end{dem}
+
+\subsection{Etude de la stabilité}
+\Def{Stabilité}{Soient deux méthodes :
+	\[\left\{\begin{array}{c c c}
+		y_{j+1}&=&y_j+h_j\Phi(x_j,y_j,h_j)\\
+		y(x_0)&=&y_0
+		\end{array}\right.\]
+	\[\left\{\begin{array}{c c c}
+		z_{j+1}&=&z_j+h_j\Phi(x_j,z_j,h_j)+\tilde{\varepsilon}_j\\
+		z(x_0)&=&z_0
+	\end{array}\right.\]
+
+	On dit que la méthode est stable si $\exists C>0$ tel que :
+	\[\max_{0\leq j\leq n} |y_j-z_j|\leq C\left(|y_0-z_0| + \sum_{i=0}^{n-1}|\tilde{\varepsilon}_i|\right)\]
+}
+
+\Theo{}{Si $\Phi$ est lipschitzienne par rapport à $y$, alors la méthode est stable.}
+
+\begin{dem}
+	\begin{eqnarray*}
+		|y_{i+1}-z_{i+1}|&\leq& |y_i-z_i|+h_i|\Phi(x_i,y_i,h_i)-\Phi(x_i, y_i, h_i)|+|\tilde{\varepsilon}_i|\\
+				&\leq& (1+h_iM)|y_i-z_i| + |\tilde{\varepsilon}_i|\\
+				&\leq& (1+h_iM)(1+h_{i-1}M)|y_{i-1}-z_{i-1}| + (1+h_iM)|\tilde{\varepsilon}_{i-1}|+|\tilde{\varepsilon}_i|\\
+				&\leq& \prod_{j=0}^i(1+h_jM)|y_0-z_0| + \sum_{k=0}^i \prod_{j=k+1}^i (1+h_jM)|\tilde{\varepsilon}_k|
+	\end{eqnarray*}
+	On utilise le fait que :
+	\[1+h_jM \leq e^{h_jM}\]
+	\begin{eqnarray*}
+		\prod_{j=k+1}^i (1+h_jM) &\leq& \prod_{j=k+1}^i e^{h_jM}\\
+					&\leq& e^{M(x_{i+1}-x_{k+1})}\\
+					&\leq& e^{M(b-a)}
+	\end{eqnarray*}
+
+	De même, $\prod_{j=0}^i (1+h_jM)\leq e^{M(b-a)}$
+
+	Alors \[|y_{i+1}-z_{i+1}|\leq e^{M(b-a)}\left(|y_0-z_0|+\sum_{k=0}^i|\tilde{\varepsilon}_k|\right)\]
+\end{dem}
+
+\subsection{Convergence}
+\Def{Convergence}{La méthode est convergente si :
+\[\lim_{h\to 0} \max_{0\leq j\leq n} |y(x_j)-y_j|=0,\ h=\max_{0\leq j\leq n} h_j\]}
+
+\Theo{}{Si la méthode est stable et consistante, alors elle est convergente.}
+
+\begin{dem}
+	\[\tilde{z}_k=y(x_k)\]
+	\[\tilde{z}_{k+1}=\tilde{z}_k + h_k\Phi(x_k,\tilde{z}_k,h_k)++\tilde{\varepsilon}_{k-1}\]
+
+	avec :
+	\[\tilde{\varepsilon}_k=y(x_{k+1}) -y(x_k)-h_k\Phi(x_k,y(x_k),h_k)=\varepsilon_k\]
+	qui est bien l'erreur de troncature.
+
+	\bigskip
+	Comme le schéma est stable :
+	\[\exists C>0; |y_{k+1}-\tilde{z}_{k+1}|\leq C\left(|y_0-\tilde{z}_0|+\sum_{j=1}^n|\varepsilon_j|\right)\]
+
+	Or $\tilde{z}_0=y(x_0)=y_0$, donc $|y_0-\tilde{z}_0|=0$. De plus, par la notion de consistance, on a :
+	\[\lim_{h\to 0} \max_{0\leq k\leq n} \sum_{j=0}^k |\tilde{\varepsilon}_j|=0\]
+	Donc :
+	\[\lim_{h\to 0} \max_{0\leq i\leq n} |y_i-\tilde{z}_i|=0\]
+\end{dem}
+
+\subsection{Ordre d'une méthode}
+\Def{Ordre}{La méthode (A) est d'ordre p si $\exists C>0$ ne dépendant que de $y$ et de $\Phi$ tel que :
+\[|\varepsilon_k|\leq Ch^{p+1},\ h=\max_{0\leq j\leq k} h_j\]
+ou :
+\[\left| \frac{y(x_{k+1})-y(x_k)}{h_k}-\Phi(x_k,y(x_k),h_k)\right|\leq Ch^p\]
+En gros, on retrouve le taux d'acccroissement, et l'erreur entre l'approximation de $y'$ et le vrai $y'$ sera inférieur à $Ch^p$.}
+
+\Theo{}{Si la méthode est consistante, elle est au moins d'ordre 1.}
+
+\begin{dem}
+	\[|\varepsilon_j|\leq |y(x_j+h_j)-y(x_j)-h_j\Phi(x_j, y(x_j), h_j)|\]
+	\[y(x_j+h_j)=y(x_j)+h_jy'(x_j)+O(h_j^2)\]
+	\[\Phi(x_j,y(x_j),h_j)=\Phi(x_j, y_j,0)+O(h_j)=f(x_j, y_j)+O(h_j) \text{ car consistante}\]
+	\begin{eqnarray*}
+		|\varepsilon_j|&=&|h_jy'(x_j)-h_jf(x_j,y_j)+O(h_j^2)|\\
+				&=& |h_jy'(x_j)-h_jy'(x_j)+O(h_j^2)|\\
+				&=& O(h_j^2)
+	\end{eqnarray*}
+\end{dem}
+
+\subsection{Méthodes de Runge-Kutta}
+Soit $\{x_k\}_k$ les points de subdivision. On définit en plus des points intermédiaires :
+\[x_{k,j}=x_k+\theta_j h,\ x_{k,j}\in[x_k,x_{k+1}],\ 0\leq \theta_j\leq 1\]
+
+\begin{eqnarray*}
+	y(x_{k,j})-y(x_k)&=&\int_{x_k}^{x_{k,j}} y'(t)dt \\
+			&=& \int_{x_k}^{x_{k,j}} f(t,y(t)) dr\\
+			&\approx& h\sum_{i=1}^r a_{j,i} f(x_{k,i},y(x_{k,i}))
+\end{eqnarray*}
+
+\begin{eqnarray*}
+	y(x_{k+1})-y(x_k)&=&\int_{x_k}^{x_{k+1}} f(t,x(t)) dt \\
+			&\approx& h\sum_{i=1}^r c_i f(x_{k,i},y(x_{k,i}))
+\end{eqnarray*}
+
+\[\Rightarrow y_{k,j}=y_k+h\sum_{i=1}^r a_{j,i}f(x_{k,i},y_{k,i})\ (1^*)\]
+\[\Rightarrow y_{k+1}=y_k+h\sum_{i=1}^r c_i f(x_{k,i}, y_{k,i})\]
+
+Pour trouver $y_{k+1}$, il est nécessaire de résoudre le système $r\times r$ $(1^*)$
+
+\subsubsection{Définition de la méthode à un pas :}
+\[y_{k+1}=y_k+h\Phi(x_k,y_k,h)\]
+avec :
+\[\Phi(x,y,h)=\sum_{i=1}^r c_i f(x+\theta_i h, \hat{y}_i)\]
+\[\hat{y}_i=y+h\sum_{l=1}^r a_{i,l}f(x+\theta_l h, \hat{y}_l)\]
+
+\subsubsection{Comment calculer les itérations intermédiaires ?}
+\begin{enumerate}
+	\item Si $a_{i,j}=0,\ i\leq j$, alors :
+		\[y_{k,j}=y_k+h\sum_{i=1}^{j-1} a_{j,i}f(x_{k,i},y_{k,i})\]
+		Méthode explicite
+
+	\item Si $a_{i,j}=0,\ i<j$, alors :
+		\[y_{k,j}=y_k+h\sum_{i=1}^j a_{j,i}f(x_{k,i},y_{k,i})\]
+		Méthode semi-implicite
+
+	\item Si $a_{i,j}\neq0$ méthode implicite. On a r équations non linéaires à r inconnues.
+\end{enumerate}
+
+\subsubsection{Ecriture sous forme de tableau}
+\begin{center}\begin{tabular}{c|c c c}
+	$\theta_1$ & $a_{11}$ & $\cdots$ & $a_{1,r}$ \\
+	$\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+	$\theta_r$ & $a_{r1}$ & $\cdots$ & $a_{rr}$ \\
+	\hline
+	           & $c_1$ & $\cdots$ & $c_r$ 
+\end{tabular}\end{center}
+
+\subsubsection{Propriétés de la méthode}
+\Theo{}{La méthode de Runge-Kutta est consistante si et seulement si $\sum_{i=1}^r c_i = 1$}
+
+\begin{dem}
+
+\end{dem}
+
+\Theo{}{Notons $A=\begin{pmatrix} a_{11} & \cdots & a_{1r} \\ \vdots & \ddots & \vdots \\ a_{r1} & \cdots & a_{rr} \end{pmatrix}$, $\rho(A)$ le rayon spectral de A et L la constante de Lipschitz de $f$.
+\begin{itemize}
+	\item Si $h\rho(A)L<1$, alors le calcul de $y_k$ par Runge-Kutta est possible
+	\item Si $h^*\rho(A)L<1$, alors $\forall 0<h\leq h^*$, la méthode de Runge-Kutta est stable
+\end{itemize}}
+
+\subsubsection{Ordre de Runge-Kutta}
+Une méthode de Runge-Kutta est d'ordre 1 si et seulement si elle est consistante, soit $\sum_{i=1}^r c_i =1$
+
+LONGUE DEMONSTRATION
+
+\[\text{Méthode d'ordre 2 } \Leftrightarrow \left\{ \begin{array}{c c c}
+			\sum_{j=1}^r c_j &=& 1 \\
+			\\
+			\sum_{j=1}^r c_j \theta_j &=& \frac{1}{2} \\
+			\\
+			\sum_{j=1}^r \sum_{i=1}^r c_j a_{ji} &=& \frac{1}{2}
+	\end{array}\right.\]
+
+\section{Méthodes à pas liés}
+
+Une méthode à pas liés s'écrit :
+\[\sum_{i=0}^s \alpha_i y_{n+1-i}=h\sum_{i=0}^s \beta_i f_{n+1-i}\ (1)\]
+où $f_{n+1-i}=f-x_{n+1-i}, y_{n+1-i}$ et $\alpha_0\neq 0$\\
+
+(1) est implicite si $\beta_0=0$ Sinon, la méthode est implicite.
+
+\Rem{}{Pour calculer $y_{n+1}$, il faut connaître $y_{n+1-s},...,y_n$. Il faut alors une méthode à un pas pour l'initialiser. Faire attention à l'ordre de la méthode pour l'initialiser à chaque fois.}
+
+\subsection{Méthode d'Adams}
+
+\[y(x_{n+1})=y(x_n)+\int_{x_n}^{x_{n+1}} f(x,y(x))dx\]
+
+On interpole l fonction f pour obenir les méthodes.
+\begin{itemize}
+	\item Si on interpole f aux points $x_{n+1-s},...,x_n$, on obtient une méthode explicite ($\beta_0=0$) $\Rightarrow$ Adams-Bashforth
+	\item Si on interpole f aux points $x_{n+1-s},...,x_{n+1}$, on obtient une méthode implicite $\Rightarrow$ Adams-Moulton
+\end{itemize}
+
+\bigskip
+Pour Adams-Bashforth, la méthode est d'ordre s. Pour Adams-Moulton, la méthode est d'ordre s+1.
+
+\subsection{Méthodes de prédiction-correction}
+
+On commence par la prédiction, par une méthode explicite d'ordre q pour calculer $y_{n+1}^*$\\
+Ensuite, on fait une correction, avec une méthode implicite d'ordre q+1. Cela consiste à remplacer $f(x_{n+1},y_{n+1})$ par $f(x_{n+1},y_{n+1}^*)$, d'où :
+\[\alpha_0 y_{n+1}+\sum_{i=1}^q \alpha_i y_{n+1-i}=h\sum_{i=1}^q \beta_i f(x_{n+1-i},y_{n+1-i}) +h\beta_0 f(x_{n+1},y_{n+1}^*)\]
+La méthode devient donc explicite et est d'ordre q+1.\\
+On utilisera pour le calcul des autres itérations la valeur de $y_{n+1}$ trouvée.
+
+\subsection{Consistance, stabilité, convergence, ordre}
+\subsubsection{Consistance}
+\Def{Consistante}{Une méthode à pas liés est consistante avec l'équation différentielle si et seulement si :
+\[\lim_{h\to 0} |\varepsilon(h)| = \lim_{h\to 0} \max_n \left| \frac{1}{h} \left( \sum_{i=0}^s \alpha_i y(x_{n+1-i}) - h\sum_{i=°}^s \beta_i f(x_{n+1-i},y(x_{n+1-i}))\right)\right|=0\]}
+
+\Theo{}{Une méthode à pas liés est consistante si et seulement si \[\sum_{j=0}^s \alpha_j=0\] et \[\sum_{j=0}^s j\alpha_j + \beta_j = 0\]}
+
+\begin{dem}
+	Plus tard.
+\end{dem}
+
+\subsubsection{Stabilité}
+\Def{Stabilité}{Soient deux méthodes :
+	\[\left\{\begin{array}{c}
+		\sum_{i=0}^s \alpha_i y_{n+1-i}=h\sum_{i=0}^s \beta_i f_{n+1-i}\\
+		y_0,...,y_{s-1} \text{ sont donnés}
+		\end{array}\right.\]
+	\[\left\{\begin{array}{c c c}
+		\sum_{i=0}^s \alpha_i z_{n+1-i}=h\left(\sum_{i=0}^s \beta_i f(x_{n+1-i},z_{n+1_i})+\tilde{\varepsilon}_n\right)\\
+		z_0,...,z_{s-1} \text{ sont donnés}
+	\end{array}\right.\]
+
+	On dit que la méthode est stable si $\exists C_1,C_2>0$ tels que :
+	\[\max_n |y_n-z_n|\leq C_1 \max_{0\leq k<s}|y_k-z_k| + C_2 \max_n |\tilde{\varepsilon}_n|\]
+}
+
+\Theo{}{Une méthode à pas liés est stable si et seulement si le polynôme $\alpha(t)=\sum_{j=0}^s \alpha_j t^{s-j}$ est stable, ie si toutes les racines sont inférieures ou égales à 1 en valeur absolue ou les racines de module 1 sont simples.}
+
+\subsubsection{Convergence}
+\Def{Convergente}{Une méthode à pas liés est convergente si et seulement si :
+\[\lim_{h\to 0} \max_n |y(x_n)-y_n|=0 \text{ si } \lim_{h\to 0} y_i=y_0,\ i=0,...,s-1\]}
+
+\Theo{}{Une méthode à pas liés est convergente si et seulement si elle est consistante et stable.}
+
+\begin{dem}
+A faire plus tard.
+\end{dem}
+
+\subsubsection{Ordre}
+\Def{}{Une méthode à pas liés est dite d'ordre p si :
+\[\max_n \left| \frac{1}{h} \left( \sum_{i=0}^s \alpha_i y(x_{n+1-i})-h\sum_{i=0}^s \beta_i f(x_{n+1-ii})\right)\right|=O(h^p)\]}

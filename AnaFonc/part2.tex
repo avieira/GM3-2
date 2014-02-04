@@ -1,0 +1,185 @@
+\part{Espaces de Banach}
+Soit E un espace vectoriel normé.
+\Def{}{Un espace E normé est complet si chaque suite de Cauchy $\{u_n\}_{n\in\mathbb{N}}\subset E$ :
+\[\forall \varepsilon >0, \exists N\in\mathbb{N}; \forall m>N, \forall k>N, ||u_m-u_k||<\varepsilon\]
+converge dans E.}
+
+\Def{}{Un espace vectoriel normé E est dit de Banach s'il est complet.}
+
+\Exemp{}{Tous les espaces vectoriel de dimension finie sont de Banach (demonstration basé sur l'équivalence des normes)}
+
+\Def{}{Soit $\{u_n\}_n\subset E$, avec E espace de Banach.\\
+La série $\sum_n u_n$ converge normalement si et seulement si $\sum_n ||u_n|| <\infty$}
+
+\Theo{}{Si $\sum_n u_n$ converge normalement alors $\sum_n u_n$ converge dans E, espace de Banach.}
+
+\begin{dem}
+	Il suffit de montrer que $\{\sum_{k=0}^n u_k\}_n$ est une suite de Cauchy.
+	\begin{eqnarray*}
+		\left\| \sum_{k=0}^{N_1} u_k - \sum_{k=0}^{N_2} u_k \right\| &=& \left\| \sum_{k=N_1+1}^{N_2} u_k \right\| \\
+									  &\leq& \sum_{k=N_1+1}^{N_2} \| u_k \| \text{ convergente par hypothèse}
+	\end{eqnarray*}
+\end{dem}
+
+\Theo{}{Soit X un expace métrique, E un espace de Banach. On définit : 
+\[\mathcal{C}_{\infty}^b(X,E)=\{f:X\to E; f\in\mathcal{C}(X),\ f \text{ bornée}\}\]
+Alors $\mathcal{C}_{\infty}^b(X,E)$ est un espace de Banach muni de la norme : 
+\[||f||_{\infty}=\sup_{x\in X} ||f(x)||_E\]}
+
+\begin{dem}
+Démonstration à reprendre.
+\end{dem}
+
+\Theo{}{$L^p(X,\mathcal{B},\mu)$ où $(X,\mathcal{B},\mu)$ est un espace mesuré, $1\leq p < +\infty$ est un espace de Banach.}
+
+\begin{dem}
+Soit $\{f_n\}$ une suite de Cauchy dans $L^p$.
+\begin{enumerate}
+\item On va extraire une sous-suite de $\{f_n\}$ - notée $\{{f_n}_k\}$ - qui converge $\mu$pp.\\
+On prend la sous-suite $\{{f_n}_k\}$ tel que :
+\[\forall k, \|{f_n}_{k+1}-{f_n}_k\| \leq \frac{1}{2^{k+1}}\]
+Pour construire $\{{f_n}_k\}$ : \\
+$\{f_n\}$ est de Cauchy :
+\[\forall \varepsilon>0, \exists N; \forall m,n\geq N, \|f_n-f_m\|<\varepsilon\]
+
+Prenons $\varepsilon=\frac{1}{2}$, alors :
+\[\exists N_{\frac{1}{2}}; \forall m,n\geq N, \|f_n-f_m\|_p<\varepsilon\]
+
+\bigskip
+Prenons $n_0=N_{\frac{1}{2}}$ ($\forall m\geq n_0, \|f_m-f_{n_0}\|$).\\
+Ensuite, soit $\varepsilon=\frac{1}{4}$, alors 
+\[\exists N_{\frac{1}{4}}; \forall m,n\geq N_{\frac{1}{4}}; \|f_m-f_n\|_p < \frac{1}{4}\]
+Prenons $n_1=N_{\frac{1}{4}}$, et ainsi de suite. A la fin, on a $\{{f_n}_k\}$.
+
+\bigskip
+\item Démontrons que $\{{f_n}_k\}$ converge $\mu$pp.\\
+Notons :
+\[f_N(x)=f_{n_0}+\sum_{k=0}^{N-1} (f_{n_{k+1}}(x)-f_{n_k}(x))\]
+\[h_N(x)=|f_{n_0}|+\sum_{k=0}^{N-1} |f_{n_{k+1}}(x)-f_{n_k}(x)|\]
+
+On note $f(x)$ et $h(x)$ la limite de ces deux suites de fonction.
+
+\bigskip
+Pour $h_N(x)$, par l'inégalité triangulaire, on a :
+\begin{eqnarray*}
+	\|h_N\|_p&\leq& \|f_{n_0}\|_p + \sum_{k=0}^{N-1} \|f_{n_{k+1}}-f_{n_k}\|_p\\
+		&\leq& \|f_{n_0}\|_p + \sum_{k=0}^{N-1} \frac{1}{2^{k+1}} \text{ par définition de } \{f_{n_k}\} \\
+	 	&\leq& \|f_{n_0}\| + 2
+\end{eqnarray*}
+En utilisant le théorème de Beppo-Levi, on obtient que $h_N(x)\xrightarrow{\mu pp}h(x)\ \Rightarrow\ h(x)\in L^p(X,\mathcal{B},\mu)$
+
+\bigskip
+Comme $h_N$ est positive et croissante, $h_N$ converge normalement.\\
+Donc $f_N(x)\xrightarrow{\mu pp} f(x)$ et $f(x)\in L^p(X,\mathcal{B},\mu)$ (car $\|f\|_p\leq \|h\|_p$).
+
+\bigskip
+\item $f_N(x)=f_{n_N}(x)$ (par définition de $f_N(x)$), donc la sous-suite $f_{n_k}$ converge $\mu$pp.
+
+\bigskip
+Considérons :
+\begin{eqnarray*}
+	|f-f_N|^p&\leq& 2^p \max \{|f_N(x)|^p,\ |f(x)|^p\} (|f-f_N|\leq 2\max\{|f_N|,|f|\})\\
+			       &\leq& 2^p (|f_N(x)|^p + |f(x)|^p)\\
+				&\leq& 2^{p+1} |h(x)|^p\in L^p
+\end{eqnarray*}
+car $|f_N(x)|\leq h(x)$ et $|f(x)|\leq h(x)$
+
+alors par le théorème de la convergence dominée de Lebesgue :
+\[f_N\to f \text{ dans } L^p\]
+
+\bigskip
+\item Démontrons que si $\{{f_n}_k\}$ converge dans $L^p(X,\mathcal{B},\mu)$ alors $\{f_n\}$ converge dans $L^p(X,\mathcal{B},\mu)$.
+\[\|f-f_n\|_p\leq \|f-f_{n_k}\|_p + \|f_{n_k}-f_n\|_p\]
+Comme $\{f_n\}$ est de Cauchy :
+\[\forall \varepsilon>0; \exists N_{\varepsilon}; \forall n,m \geq N_{\varepsilon}, \|f_m-f_n\|<\varepsilon\]
+Comme $f_n\to f$ dans $L^p$, alors $\forall \varepsilon>0, \exists M_{\varepsilon}; \forall n_k>M_{\varepsilon}$ :
+\[\|f_{n_k}-f\|_p<\varepsilon\]
+Si maintenant, $n_k>\max\{N_{\varepsilon}, M_{\varepsilon}\},\ n>N_{\varepsilon}$, on a :
+\[\|f-f_n\|_p \leq 2\varepsilon\]
+\end{enumerate}
+\end{dem}
+
+\Rem{}{$L^{\infty}(X,\mathcal{B},\mu)$ est aussi un espace de Banach.}
+
+\Theo{de Banach-Steinhaus}{Soient L et E deux espaces de Banach et $\{T_n\}_{i\in I}$ une suite d'applications linéaires continues, $T_n:L\to E$. On suppose que $\forall x\in L, \sup_{i\in I} |T_i(x)|_E <+\infty$. Alors :
+\[\sup_{i\in I} \|T_i\|_{L,E}<+\infty\]
+(ie $\exists C>0; \forall x\in L, \forall i\in I, \|T_i(x)\|_E\leq C\|x\|_L$)}
+
+\Rem{}{Ce théorème nous permet d'obtenir des estimations uniformes à partir d'estimations ponctuelles.}
+
+\Lem{de Baire}{Soit X un espace métrique complet. Soit $\{X_n\}_{n\in\mathbb{N}}$ une suite de fermés dans X, et $\mathring{X_n}$.
+\[\Rightarrow \overset{\circ}{\widehat{\bigcup_{n\in\mathbb{N}} X_n}}=\varnothing\]}
+
+\begin{dem}
+On définit $X_n=\{x\in L; \forall i\in I, \|T_(x)\|_E\leq n\}$
+\begin{itemize}
+	\item Il est clair que $X_n$ est un fermé.
+	\item $\bigcup_{n=1}^{\infty} X_n=L$ car, $\forall x\in L,\ \sup_i \|T_i(x)\|< \infty$
+\end{itemize}
+Par le lemme de Baire, comme $\overset{\circ}{\widehat{\bigcup_{n\in\mathbb{N}} X_n}}=\mathring{L}\neq \varnothing$, alors $\exists n_0; \mathring{X_{n_0}}\neq \varnothing$
+$\Rightarrow \exists x_0\in L; \exists r>0; B(x_0,r)\subset X_{n_0}$
+
+Par définition de $X_{n_0}$, on a :
+\[\|T_i(x_0+rz)\|\leq n_0,\ \forall i\in I,\ \forall z\in B(0,1)\]
+
+Comme $T_i$ linéaire et par l'inégalité triangulaire :
+\[r\|T_i(z)\|-\|T_i(x_0)\|\leq \|T_i(x_0+rz)\|\leq n_0\]
+
+D'où :
+\[\|T_i(z)\|\leq \frac{n_0+\|T_i(x_0)\|}{r}\]
+\[\|T_i(z)\|\leq C \text{ pour } z\in B(0,1)\]
+\end{dem}
+
+\Coro{}{Soient L et E deux espaces de Banach. Soit $\{T_i\}$ une suite d'opérations linéaires continues, tel que \[T_i(x)\xrightarrow{i\to+\infty}T(x),\ \forall x\in L\]
+Alors :
+\begin{itemize}
+	\item $\sup \|T_i\| <+\infty$
+	\item $T\in\mathcal{L}_c(L,E)$
+	\item $\|T\|\leq\lim \inf \|T_i\|$
+\end{itemize}}
+
+\begin{dem}
+\begin{enumerate}
+\item Vient directement du théorème
+\item $\exists C>0; \|T_i(x)\|_E\leq X\|x\|_L; \forall i, \forall x\in L$
+On passe à la limite :
+\[\|T(x)\|_E\leq X\|x\|_L, \forall x\in L\]
+
+Il est évident que T est linéaire $\Rightarrow\ T\in \mathcal{L}_C(L,E)$ et $\|T\|_{\mathcal{L}_C(L,E)}\leq \lim \inf \|T_i\|$
+\end{enumerate}
+\end{dem}
+
+\Coro{}{Soient L et E des espaces de Banach, alors $L_c(L,E)$ est de Banach (muni d'une norme $\|\bullet\|_{L_C(L,E)}$)}
+
+\begin{dem}
+Soit $\{T_i\}$ une suite de Cauchy
+\[\forall \varepsilon>0, \exists N_{\varepsilon}\in\mathbb{N}; \forall n,m\geq N_{\varepsilon}, \|T_n-T_m\|\leq \varepsilon\]
+
+Alors la suite $\{T_n(x)\}$ est aussi de Cauchy $\forall x\in L$, car :
+\[\|T_n(x)-T_m(x)\|_E\leq \|T_n-T_m\|\times \|x\|_L\leq \varepsilon \|x\|_L\]
+
+Donc $\{T_n(x)\}$ converge ponctuellement vers une limite qu'on note $T(x)$. Donc, d'après le corollaire précédent, $T\in \mathcal{L}_C(L,E)$, ce qu'il fallait démontrer.
+\end{dem}
+
+\Coro{sur l'interpolation}{Soit $\{T^{(n)}\}$ une suite de subdivisions. $\exists f\in \mathcal{C}[0,1]$ telle que $\{L_n(f)\}_n$ (construit sur $\{T^{(n)}\}$) ne converge pas uniformément vers f.}
+
+\begin{dem}
+\[L_n(f,x)=\sum_{i=0}^n f(x_i)l_i(x)\]
+avec \[l_i(x)=\prod_{j=0,j\neq i}^n \frac{x-x_j}{x_i-x_j}\]
+
+Notons $\lambda_n(x)=\sum_{i=0}^n |l_i(x)|$ et $\lambda_n=\max_{x\in[0,1]} \lambda_n(x)$, appelée la constante de Lebesgue.\\
+On a $L_n\in\mathcal{L}_C(\mathcal{C}[0,1],\mathcal{C}[0,1])$.
+\[|L_n(f,x)\leq \|f\|_{\infty} \lambda_n\Rightarrow \|L_n\|\leq \lambda_n\]
+On peut prouver que $\|L_n\|=\lambda_n$.
+
+\bigskip
+Pour la subdivision de Tchebychev :
+\[\lambda_n > \frac{\ln(n)}{8\sqrt{\pi}}\]
+Comme $\|L_n\|=\lambda_n>\frac{\ln(n)}{8\sqrt{\pi}}\xrightarrow[n\to+\infty]{}+\infty$, $\exists f\in\mathcal{C}[0,1]$ telle que le polynôme ne converge pas uniformément vers f.\\
+(car si cela était le cas, on aurait une contradiction avec le premier corollaire).
+
+\bigskip
+Mais comme cette subdivision est optimale au sens de la norme uniforme, ceci est vrai pour toutes les subdivisions.
+\end{dem}
+
+\newpage

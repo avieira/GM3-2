@@ -1,0 +1,81 @@
+du : estimer taille d'un dossier.
+	-s : donne seulement un total pour chaque argument
+	-h : données lisible pour un humain
+	-k : affiche taille en kilo octets
+
+$PATH : Emplacement des exéctuables
+
+Lien symbolique : raccourci vers un fichier. Si le fichier disparait, le lien est mort.
+Lien physique : Deux noms différent pour un même dossier. Si on supprime l'un des deux, le fichier existe toujours via l'autre. Si on modifie le fichier via l'un des deux fichiers, l'autre s'en retrouve impacté également.
+ln : lien physique / -s : lien symbolique
+
+NFS : Network File System, protocole qui permet à un ordinateur d'accéder à des fichiers via un réseau.
+
+pgrep : avoir le PID d'un programme
+
+Distribution Linux : noyau Linux associé à un ensemble de logiciels. Le noyau fait le lien entre le matériel et l'utilisateur, gère la mémoire virtuelle et les processus.
+
+BIOS : Basic Input Output System : gère initialisation et vérification de l'intégrité des composants. Indique emplacement du BootLoader (GRUB)
+
+Bootloader : logiciel permettant de lancer un ou plusieurs systèmes d'exploitation.
+MBR : MasterBootRecorder. Premier secteur adressable d'un disque dur. Charge le BootLoader.
+
+/etc/passwd et /etc/shadow
+
+Système de fichier : déterminer la manière dont le système va organiser les données sur le disque. ext4
+
+mount -t{Type_system_fichier] quoi où
+
+init 0 : shutdown / 6 : reboot
+
+ps : processus. Pour tous les voir : -ef
+
+ifconfig : configure une interface réseau. Affiche l'état des interfaces actuellement définies si seul.
+
+Penser à la description du démarrage
+Fonction et qualités d'un système d'exploitation.
+
+chmod : 
+	4, 2 ou 1
+	W, R ou X (Write, Read, eXecute)
+	User(u), Group(g), Others(o)
+	+ : Ajouter droit / - : Enlever droit / = : Affecter droit
+
+grep -R "chaine" *
+
+partitionner : Définir espace réservées sur le disque
+formater : préparer la partition à recevoir les données
+
+Tous les répertoires dans /dev/PPLN :
+	PP : type de bus
+		- hd pour IDE / sc pour SCSI / sd pour SATA
+	L : lettre du périphérique
+	N : numéro de partition conernée (1 à 4 pour partition principale ou étendue, >4 pour logique)
+
+Constituants d'un disque dur :
+- Boitier
+- Des plateaux séparés les uns des autres
+- Tête de lecture/ecriture montés sur des bras
+- Un moteur faisant tourner les plateaux (via un noyau)
+
+Dessin : placer piste, secteur, bloc
+
+Formule de capacité d'un disque : nbCylindre x nbSecteur/piste x nbOctet/secteur x nbTête
+
+Formule temps d'accès : Tps Deplacement Moyen + Temps de latence + Temps de lecture d'un secteur
+	Temps de latence = 60/(NbTourMinute*2)
+	TempsLectureSecteur = 60/(NbTourMinute*nbSecteurParPiste)
+	nbSecteurParPiste = 63 en général
+
+Taille d'espace libre : df
+
+
+Processus : Programme s'exécutant séquentiellement sur un processeur virtuel
+Quatre modes d'éxécution :
+	- Synchrone : Père se duplique pour créer fuls puis attend fin de l'exécution de son fils avant de revenir au premier plan
+	- Asynchrone : Père se dupliqu pour créer le fils, qui va s'éxécuter en tâche de fond. Le père repasse directement au premier plan.
+	- Différé : "at" pour préciser heure et date d'exécution. "batch" pour mettre le processus dans une file d'attente.
+	- cyclique : "crontab" pour éxécuter cycliquement un processus
+
+Père / fils / fork : page 11-13
+

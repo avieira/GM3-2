@@ -1,0 +1,30 @@
+\documentclass{article}
+\input{../../preambule}
+
+\hypersetup{colorlinks=true, urlcolor=bleu, linkcolor=red}
+
+%Def = Definition
+%Theo = Théorème
+%Prop = Propriété
+%Coro = Corollaire
+%Lem = Lemme
+
+\begin{document}
+
+A est bornée $\Rightarrow$ A est continue
+
+A est bornée, donc : \[\exists C; \forall x_1, x_2 \in E, \|A(x_2-x_1)\| = \|Ax_2 -Ax_1\| \leq C\|x_2 - x_1\|\]
+
+On cherche à montrer que :
+\[\forall x_1\in E,\ \forall \varepsilon >0,\ \exists \delta>0;\ \forall x_2\in E;\ \|x_2-x_1\|\leq \delta \Rightarrow \|Ax_2 - Ax_1\| \leq \varepsilon \]
+
+Prenons $\delta=\frac{\varepsilon}{C}$. Ainsi :
+\[\|x_2-x_1\|\leq \frac{\varepsilon}{C} \Leftrightarrow C\|x_2-x_1\|\leq \varepsilon\]
+
+Or :
+\[\forall x_1, x_2 \in E, \|A(x_2-x_1)\| = \|Ax_2 -Ax_1\| \leq C\|x_2 - x_1\|\]
+
+D'où :
+\[\|x_2-x_1\|\leq \delta \Rightarrow \|Ax_2 - Ax_1\| \leq \varepsilon\]
+
+\end{document}

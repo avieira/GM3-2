@@ -1,0 +1,108 @@
+\section{Notations}
+\begin{itemize}
+\item Pour créer un objet <o> de la classe <c> d'attributs $<x_1>$,...,$<x_n>$, on écrit : 
+\[<o>\leftarrow <c>(x_1=<arg_1>,...,x_n=<arg_n>)\]
+\item Pour accéder à la variable d'instance <v> de l'objet <o> : <o>.<v>
+\item Envoi du message m($arg_1$,...,$arg_n$) à <o>, on note : <o>.m($arg_1$,...,$arg_n$). Lors de cet envoi, les variables d'instance utilisées dans le corps de m réferent 
+dynamiquement aux valeurs distinctes de <o>.
+\end{itemize}
+
+\section{Java}
+\subsection{Généralités}
+\begin{itemize}
+\item Définir une classe : class <nom> (extends <nom$_2$>)\{<a$_1$>,...,<a$_n$>\}
+\item Penser à faire des constructeurs (méthodes d'initialisation des objets, du même nom que sa classe)
+\item Création d'un objet : new <classe>(arg$_1$,...,arg$_n$)
+\item Compilation : javac <nom\_fichier.java> : création d'un fichier nom\_fichier.class \\
+java <nom\_fichier> ; lance la méthode main()
+\end{itemize}
+
+\subsection{Public - privé}
+\begin{itemize}
+	\item Une variable static a une valeur unique commune à toutes les instances.
+	\item Une méthode static permet d'être appelée indépendemment des instances de sa classe. Par exemple : \\ System.out.println()
+\end{itemize}
+
+\bigskip
+\begin{itemize}
+	\item Classe String : permet de créer des chaînes de caractères constantes. \\
+		Classe StringBuffer : créer des chaînes évolutives.
+	\item Ces classes contiennent, entre autre, les méthodes "length()" et "charAt(int)"
+\end{itemize}
+
+\bigskip
+\begin{itemize}
+	\item Spécifier un paquetage : Package <NomPaquetage>
+	\item NomPaquetage peut être vu comme un préfixe précédent tous les symboles du fichier.
+	\item Inclure les classes d'un paquetage : import. Exemple : \\
+		import java.applet.Applet //importe la classe Applet \\
+		import java.applet.* //importe toutes les classes
+\end{itemize}
+
+\bigskip
+\begin{itemize}
+	\item Différents niveaux de protection : public, protected, private.
+	\item "public classe <NomClasse> \{...\}" permet à la classe d'être importé d'un autre paquetage. Sinon, elle n'est visible que dans le même paquetage.
+	\item protected : accessible uniquement dans la classe et ses sous classes et les autres clases du même paquetage
+	\item private : uniquement dans sa propre classe.
+	\item Si aucune déclaration, les membres ne sont accessibles qu'aux membres du paquetage.
+	\item Si le membre appartient à l'interface avec les utilisateurs : public.
+\end{itemize}
+
+\subsection{Héritage}
+\begin{itemize}
+	\item Permet la construction et l'extension des applications
+	\item Permet la réutilisation des programmes plus facilement
+	\item Dans le cas d'un héritage multiple, on prend la classe la plus spécifique (ie sous-classe) en premier.
+	\item Existence d'une classe mère : Object
+\end{itemize}
+
+\subsection{Polymorphisme}
+\begin{itemize}
+	\item Méthodes de même noms dans différentes classes. Servent pour des comportements analogues (affichier, décrire...), mais diffèrent selon les classes.
+	\item L'ativation d'un message dépend donc du receveur et des liens d'héritage
+	\item Les variables d'instance et les méthodes de la classe sont prioritaires à celles des surclasses.
+\end{itemize}
+
+\subsection{Interfaces}
+\begin{itemize}
+	\item Méthodes abstraites : elles ne sont définies que dans les sous-classes
+	\item Classe abstraite : qui a une méthode abstraite. Elle ne peut être instanciée.
+	\item abstract class ClasseAbstraite\{ \\
+		abstract void methodeAbstraite(); \}
+	\item Interface : classe dont toutes les méthodes sont abstraites
+	\item pour remédier à l'héritage simple : utilisation de implements, avec classe abstraite.
+	\item class NomClasse implements ClasseAbstraite
+\end{itemize}
+
+\subsection{Collections}
+\begin{itemize}
+	\item Collection : groupe d'objets, ordonnés ou non, avec plusieurs occurences ou non.
+	\item 3 sous collections : List, Set, Map, qui héritent de Collection
+	\item Tableau $\neq$ Collection : on fait la déclaration d'un tableau comme en C : int[10]
+\end{itemize}
+
+\subsubsection{List}
+\begin{itemize}
+	\item Deux sous classes importantes : LinkedList et ArrayList
+	\item LinkedList : implémentation des listes chaînées.
+		\begin{itemize}
+			\item[$\bullet$] add(int index, Object o) : ajoute o à l'index spécifié
+			\item[$\bullet$] addFirst(Object o) : ajoute o en début de liste
+			\item[$\bullet$]  addLast(Object o) : de même en fin de liste
+			\item[$\bullet$]  getFirst() et getLast() : renvoie le premier ou le dernier élément de la liste. Penser au cast, car renvoie toujours un Object
+			\item[$\bullet$]  removeFirst() et removeLast() : parle d'eux-même
+			\item[$\bullet$]  contains(Object o) : renvoie un booléen, si présent dans la liste ou non
+			\item[$\bullet$]  clear() : vide la liste
+			\item[$\bullet$]  size() : renvoie la taille de la liste
+		\end{itemize}
+	\item ArrayList : tableaux se redimensionnant automatiquement
+		\begin{itemize}
+			\item[$\bullet$]  add(int index, Object o), clear() et size() restent les mêmes
+			\item[$\bullet$]  get(int index) : renvoie l'Object à l'index spécifié. Exception si dépassement.
+		\end{itemize}
+	\item Pour éviter le cast à chaque fois, on utilise les Generics. A la création de la collection, on précise son type.
+	\item ArrayList<Type> monArrayList = new ArrayList<Type>();
+\end{itemize}
+
+

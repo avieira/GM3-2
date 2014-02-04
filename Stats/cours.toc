@@ -1,0 +1,15 @@
+\select@language {french}
+\contentsline {part}{I\hspace {1em}Statistiques}{2}{part.1}
+\contentsline {section}{\numberline {1}Statistique inf\IeC {\'e}rentielle}{2}{section.1.1}
+\contentsline {section}{\numberline {2}Principe de r\IeC {\'e}duction des donn\IeC {\'e}es : l'exhaustivit\IeC {\'e}}{5}{section.1.2}
+\contentsline {section}{\numberline {3}Estimation ponctuelle}{9}{section.1.3}
+\contentsline {subsection}{\numberline {3.1}M\IeC {\'e}thodes de construction}{9}{subsection.1.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}M\IeC {\'e}thode des moments}{9}{subsubsection.1.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}M\IeC {\'e}thode du maximum de vraisemblance}{9}{subsubsection.1.3.1.2}
+\contentsline {subsection}{\numberline {3.2}M\IeC {\'e}thodes d'\IeC {\'e}valutation des estimateurs}{10}{subsection.1.3.2}
+\contentsline {part}{II\hspace {1em}Tests d'hypoth\IeC {\`e}se}{17}{part.2}
+\contentsline {section}{\numberline {1}Introduction}{17}{section.2.1}
+\contentsline {section}{\numberline {2}Test du rapport de vraisemblance}{18}{section.2.2}
+\contentsline {subsection}{\numberline {2.1}Probabilit\IeC {\'e} d'erreur et fonction puissance}{19}{subsection.2.2.1}
+\contentsline {section}{\numberline {3}Tests les plus puissants}{20}{section.2.3}
+\contentsfinish 

@@ -1,0 +1,143 @@
+\part{Stabilité des équations linéaires}
+$\dot{x}=Ax;\ x\in\mathbb{R}^n,\ x(t,x_0)=e^{At}x_0$\\
+$0=x_0$, un point d'équilibre.
+
+\Lem{}{Soit $\omega>\Lambda$, avec $\Lambda=\max_{\lambda_i\in\sigma(A)} \Re(\lambda_i)$. Alors $\exists M; \|x(t,x_0)\|\leq e^{\omega t}\|x_0\|$}
+
+\begin{dem}
+A reprendre.
+\end{dem}
+
+\Theo{}{Les conditions suivantes sont équivalentes :
+\begin{enumerate}
+	\item $x(t,x_0)\xrightarrow[t\to+\infty]{} 0,\ \forall x_0\in\mathbb{R}^n$ (stabilité asymptotique)
+	\item $\exists M>0,\ \exists K>0;\ \|x(t,x_0)\|\leq Me^{-kt}\|x_0\|,\ \forall x_0\in\mathbb{R}^n$
+	\item $\Lambda<0$, où $\Lambda=\max_{\lambda_i\in\sigma(A)} \Re(\lambda_i)$
+\end{enumerate}
+$x$ est dit asymptotiquement stable si et seulement si A est asymptotiquement stable.}
+
+\begin{dem}
+A reprendre
+\end{dem}
+
+\Def{Point d'équilibre}{$x_e\in\mathbb{R}^n$ est un point d'équilibre (ou point stationnaire) si $\forall t, f(t,x_e)=0$.}
+
+\bigskip
+\Prop{Solution passant par un point d'équilibre}{Soit $x(t,t_0,x_0)$ la solution de $\dot{x}=f(t,x)$ passant par $x_0$ en $t_0$.\\
+La solution $x(t)=x(t,t_0,x_0)$ passant par un point d'équilibre $x_e$ est $\forall t, x(t)=x_e$}
+
+\begin{dem}
+	On a $\frac{dx(t)}{dt}=\frac{d}{dt} x_e=0$ et de l'autre côté, $f(t,x(t))=f(t,x_e)=0$, donc $x(t)$ passe par $x_e$
+\end{dem}
+
+\Def{Stabilité}{Un point d'équilibre $x_e\in\mathbb{R}^n$ est dit stable si \[\forall\varepsilon>0, \exists\delta=\delta(x_0,t_0), \forall t>t_0,\|x_0-x_e\|<\delta \Rightarrow  \|x(t,t_0,x_0)-x_e\|<\varepsilon\]}
+
+\Def{Asymptotiquement stable}{Le point d'équilibre $x_e$ est dit asymptotiquement stable si :
+	\begin{itemize}
+		\item $x_e$ est stable
+		\item $\|x(t,t_0,x_0)-x_e\|\xrightarrow[t\to+\infty]{} 0, \forall x_0$ tel que $\|x_0-x_e\|<\delta=\delta(t_0)$
+	\end{itemize}}
+
+$\dot{x}=f(t,x)$, $x_e$ point d'équilibre. On peut supposer $x_e=0$ (sinon, on pose $\tilde{x}=x-x_e$ et on a $\tilde{x}_e=0$).\\
+Considérons $\dot{x}=f(t,x)$ et $x_e=0$ un point d'équilibre. On a $\dot{x}=f(t,x)=Ax+B(t)x+g(t,x)$. 
+
+\Theo{de Liapounov}{Supposons que $\|B(t)\|\xrightarrow[t\to+\infty]{}0$ et $\frac{\|g(t,x)\|}{\|x\|}\xrightarrow[\|x\|\to0]{}0$\\
+Soit $\Re(\lambda_i)<0, \forall \lambda_i\in\sigma(A)$. Alors :
+\[\exists M,k>0; \forall t \text{ suffisament grand; } \forall \|x_0\|<\delta, \|x(t,x_0)\|\leq Me^{-k(t-t_0)}\|x_0\|\]
+(en particulier, $x_e$=0 est localement asymptotiquement stable)\\
+\texttt{(Revoir le résultat du théorème)}}
+
+\begin{dem}
+	\[\frac{\|g(t,x)\|}{\|x\|}\xrightarrow[\|x\|\to0]{}0 \Rightarrow \|g(t,x)\|\leq b(\delta)\|x\|, \forall \|x\|<\delta \text{ et } b(\delta)\xrightarrow[\delta\to 0]{}0\]
+	\[\|B(t)\|\xrightarrow[t\to+\infty]{}0 \Rightarrow \|B(t)\|<b(\delta), \forall t\geq t_0 \text{ suffisament grand}\]
+	\[x=e^{A(t-t_0)}z \Leftrightarrow z=e^{A(t_0-t)}x\]
+	\begin{eqnarray*}
+		\dot{x}&=&\underbrace{Ae^{A(t-t_0)}z}_{=0}+e^{A(t-t_0)}\dot{z}\\
+			&=&f(t,x)=Ax+B(t)x + g(t,x)
+	\end{eqnarray*}
+	\begin{eqnarray*}
+		\dot{z}&=&e^{A(t_0-t)}(B(t)x+g(t,x))\\
+		z(t)-z(t_0)&=&\int_{t_0}^t e^{A(t_0-\tau)}(B(\tau)x+g(\tau,x))d\tau\\
+		x(t)&=&e^{A(t-t_0)}+\int_{t_0}^t e^{A(t_0-\tau)}(B(\tau)x+g(\tau,x))d\tau
+	\end{eqnarray*}
+	Or, $\Re(\lambda_i)<0 \Rightarrow \exists M, \tilde{k}>0; \|e^{At}\|\leq Me^{-\tilde{k}t}$
+	\begin{eqnarray*}
+		\|x(t)\|&\leq&Me^{-\tilde{k}(t-t_0)}\|x_0\| + \int_{t_0}^t Me^{-\tilde{k}(t_0-\tau)}(\|B(\tau)\|\|x\|+\|g(\tau,x))\|d\tau\\
+		\|x(t)\|e^{\tilde{k}(t-t_0)}&\leq&M\|x_0\| + \int_{t_0}^t e^{A(t_0-\tau)}2b(\delta)\|x(\tau)\|d\tau
+	\end{eqnarray*}
+	On applique le lemme de Gronwall sur $\|x(t)\|e^{\tilde{k}(t-t_0)}$ :
+	\[\alpha=M\|x_0\|, u(t)=\|x(t)\|e^{\tilde{k}(t-t_0)}, \beta=2Mb(\delta)\]
+	\[\|x(t)\|e^{\tilde{k}(t-t_0)}\leq M\|x_0\|e^{2Mb(\delta)(t-t_0)}\]
+	\[\|x(t)\|\leq M\|x_0\|e^{(2Mb-\tilde{k})(t-t_0)}\]
+	Si $\delta$ suffisament petit, $b\to 0$. Ainsi, si on est assez proche de x, $2Mb\delta-\tilde{k}<0$
+\end{dem}
+
+\Theo{}{Sous les mêmes hypothèses, \[\exists \lambda_j;\ \Re(\lambda_j)>0 \Rightarrow x_e=0 \text{ non stable}\].}
+
+\Def{}{$V:\mathfrak{X}(\subset \mathbb{R}^n)\to \mathbb{R}$, $V(0)=0$ est la fonction de Liapounov.\\
+V définie positive si $V(x)>0 \forall x\in\mathfrak{X}*$.\\
+V définie négative si $V(x)<0 \forall x\in\mathfrak{X}*$.\\
+V semi-définie positive si $V(x)\geq 0 \forall x\in\mathfrak{X}$.\\
+V semi-définie négative si $V(x)\leq 0 \forall x\in\mathfrak{X}$.\\}
+
+\Def{}{La dérivée de $V$ le long de $f$ est : 
+\begin{eqnarray*}
+	\frac{d}{dt} V(x(t))&=&\sum_{i=1}^n \frac{\partial V}{\partial x_i} \frac{d}{dt} x_i(t) \\
+			&=& \sum_{i=1}^n \frac{\partial V}{\partial x_i} (x(t)) f_i(t,x(t))\\
+			&=& \left( \frac{\partial V}{\partial x_1} \cdots \frac{\partial V}{\partial x_n}\right) \begin{pmatrix} f_1 \\ \vdots \\ f_n \end{pmatrix}
+\end{eqnarray*}
+$L_f V = \sum_{i=1}^n \frac{\partial V}{\partial x_i} f_i$ (dérivée orbitale)}
+
+\Theo{}{$\dot{x}=f(t,x),\ x_e=0$ point d'équilibre. \\
+Supposons que $f$ soit $\mathcal{C}^1$. 
+\[\exists V\in\mathcal{C}^1; V(0)=0, V>0, L_f V\leq 0 \Rightarrow x_e=0 \text{ stable.}\]}
+
+\begin{dem}
+	On veut :
+	\[\forall \varepsilon >0, \exists \delta>0; \|x_0-x_e\|<\delta \Rightarrow \|x(t,x_e)-x(t,x_e)\|<\varepsilon\]
+	\[\|x_0\|<\delta \Rightarrow \|x(t,x_0\|<\varepsilon\]
+	$\exists R$ tel que $\{x; \|x\|\leq R\}\subset \mathfrak{X}$ et que dans cet ensemble, $V(x)>0 et L_f V(x)\leq 0$
+
+	\bigskip
+	Fixons $\varepsilon>0;\ B:=\{x;\ \varepsilon\|x\|\leq R\}$. \\
+	Posons $m=\min_{x\in B} V(x)>0$ (m exists car $V$ est $\mathcal{C}^¹$ et B complet). \\
+	$\exists \delta; \forall x\in S=\{x;\ \|x\|<\delta\},\ V(x)<m$ (car $V(0)=0$).
+
+	\bigskip
+	On aimerait avoir $x_0\in S \Rightarrow \|x(t,x_0)\|\leq \varepsilon$. Supposons le contraire.\\
+	$\exists t_1$ (1er moment après $t_1$ tel que $\|x(t,x_e)\|=\varepsilon$. 
+	\begin{eqnarray*}
+		\int_{t_0}^{t_1} \frac{d}{dt} V(x(t)) dt &=& V(x(t-1))-V(x(t_0))\\
+							&=& \int_{t_0}^{t_1} L_f V(x(t)) dt \\
+		     					&\leq& 0
+	\end{eqnarray*}
+	
+	\[\Rightarrow V(x(t_1))\leq V(\underbrace{x(t_0)}_{\in S}) <m \Rightarrow \text{ Contradiction !}\]
+	Donc $\|x(t)\| < \varepsilon$
+\end{dem}
+
+\Theo{}{Sous les mêmes hypothèses, 
+\[\exists V\in \mathcal{C}^1(\mathfrak{X}); V>0, L_f V<0 \Rightarrow x_e=0 \text{ localement asymptotiquement stable}\]
+Si de plus, $\mathfrak{X}=\mathbb{R}^n$ et $V$ est radially unbounded ($V(x)\xrightarrow[\|x\|\to \infty]{} \infty$) alors ce point est globalement asymptotiquement stable.}
+
+\begin{dem}
+	Nous devons prouver que $X(t)\xrightarrow[t\to +infty]{} 0$. On observe que :
+	\[V(x(t))\xrightarrow[t\to +\infty]{} 0 \leftrightarrow x(t)\xrightarrow[t\to +\infty]{}0\]
+	(car V s'annule uniquement en 0)\\
+	\begin{eqnarray*}
+		\text{Or, } L_f V(x(t))<0  &\Rightarrow& V(x(t)) \text{ décroit avec le temps}\\
+					&\Rightarrow& V(x(t)) \geq b \geq 0
+	\end{eqnarray*}
+	Prouvons que $b=0$. Suppsons donc le contraire : $b>0$. 
+	\[\exists a>0;\ \|x(t\|\geq a \text{ (vu que }V(x(t))\geq b)\]
+
+	Notons $A=\{x;\ a\leq \|x\| \leq R\}$ et $-\mu = \max_{x\in A} L_f V(x) <0$.
+
+	\begin{eqnarray*}
+		\int_{t_0}^t \frac{d}{dt} V(x(s)) ds &=& V(x(t))-V(x(t_0)) \\
+						&=& \int_{t_0}^t \underbrace{L_f V(x(s))}_{leq \-\mu} ds
+	\end{eqnarray*}
+
+	\[\Rightarrow V(x(t))\leq V(x(t_0)) - \mu(-t_0))<0 \text{ pour t suffisament grand.}\]
+	Conradiction !
+\end{dem}

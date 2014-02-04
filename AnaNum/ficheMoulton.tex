@@ -1,0 +1,42 @@
+\documentclass{article}
+\input{../../preambule}
+
+\hypersetup{colorlinks=true, urlcolor=bleu, linkcolor=red}
+
+%Def = Definition
+%Theo = Théorème
+%Prop = Propriété
+%Coro = Corollaire
+%Lem = Lemme
+
+\begin{document}
+
+\begin{tabular}{c c c c c}
+	$f(x_{k-1})$ &            & & & \\
+	             & $\searrow$ & & & \\
+	             &            & $\frac{f(x_k)-f(x_{k-1})}{h}$ & & \\
+	             & $\nearrow$ &                               & $\searrow$ & \\
+	$f(x_k)$     &            &                               &            & $\frac{f(x_{k+1})-2f(x_k)+f(x_{k-1})}{2h^2}$\\
+	             & $\searrow$ &                               & $\nearrow$ &  \\
+	             &            & $\frac{f(x_{k+1})-f(x_k)}{h}$ &            &  \\
+
+	             & $\nearrow$ &                               & & \\
+	$f(x_{k+1})$& & & & 
+\end{tabular}\\
+
+D'où \:
+\[L_2(f)(x)=f(x_{k-1})+\frac{f(x_k)-f(x_{k-1})}{h}(x-x_{k-1})+\frac{f(x_{k+1})-2f(x_k)+f(x_{k-1})}{2h^2}(x-x_{k-1})(x-x_k)\]
+
+\[\int_{x_k}^{x_{k+1}} L_2(f)(t)dt = f(x_{k-1})h + \frac{f(x_{k-1})}{h}\left( (\underbrace{x_{k+1}-x_{k-1}}_{=2h})^2-(\underbrace{x_k-x_{k-1}}_{=h})^2\right)+\frac{f(x_{k+1})-2f(x_k)+f(x_{k-1})}{2h^2}\times (c)\]
+
+\begin{eqnarray*}
+	(c)=\int_{x_k}^{x_{k+1}}(x-x_{k-1})(x-x_k)dx &=& \int_0^h u(u+h) du \text{ en posant } u=x-x_k \\
+						    &=&\frac{1}{3}h^3 +\frac{1}{2}h^3 \\
+						    &=&\frac{5}{6} h^3
+\end{eqnarray*}
+
+\begin{eqnarray*}
+\Rightarrow \int_{x_k}^{x_{k+1}} L_2(f)(t)dt &=& f(x_{k-1})h + f(x_{k-1})\frac{3}{2}h+\frac{5}{12}h(f(x_{k+1})-2f(x_k)+f(x_{k-1})) \\
+					 &=& \frac{h}{12}(-f_{k-1}+8f_k +5f_{k+1})
+\end{eqnarray*}
+\end{document} 

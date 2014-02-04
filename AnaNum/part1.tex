@@ -1,0 +1,302 @@
+\part{Interpolation polynomiale}
+\section*{Introduction}
+
+A partir de $\{x_j,y_j\}_{j=0}^n$, on veut trouver un polynôme $L_n(x)$ tel que $L_n(x_j)=y_j$, pour j allant de 0 à n.
+
+\bigskip
+\begin{itemize}
+\item Le polynôme est-il bien posé ? (existence, unicité)
+\item Construction du polynôme
+\item Calculer l'erreur d'interpolation
+\item La suite $\{L_n(f,x)\}_n$ convergera-t-elle vers f ?
+\item Quelle sera la meilleure subdivision ?
+\end{itemize}
+
+\section{Existence et unicité}
+\Theo{Existence et unicité du polynôme d'interpolation}{Il existe un unique polynôme d'interpolation $L_n(x)$ tel que $L_n(x_j)=y_j$, j=0..n, si et seulement si $\{x_j\}_{j=0}^n$ sont tous distincts.}
+
+\begin{dem}
+\[L_n(x)=\sum_{j=0}^n a_j x^j\]
+
+En effet, $\text{deg}(L_n(x))\leq n$.\\
+On a de plus :
+\[L_n(x_k)=y_k, k=0..n\]
+A partir de cela, on peut construire un système de n+1 équations d'inconnues $a_0,a_1,...,a_n$ ainsi :
+\[\left\{
+\begin{array}{c c c}
+a_0 + a_1 x_0 + ... + a_n x_0^n &=& y_0 \\
+a_0 + a_1 x_1 + ... + a_n x_1^n &=& y_1 \\
+\vdots &\vdots& \vdots \\
+a_0 + a_1 x_n + ... + a_n x_n^n &=& y_n
+\end{array}
+\right.
+ \Leftrightarrow
+\begin{pmatrix}
+  1    &   x_0   &   \cdots   &   x_0^n  \\
+  1    &   x_1   &   \cdots   &   x_1^n  \\
+\vdots &  \vdots &   \ddots   &   \vdots \\
+  1    &   x_n   &   \cdots   &   x_n^n 
+\end{pmatrix}
+\begin{pmatrix}
+a_0 \\
+a_1 \\
+\vdots \\
+a_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+y_0 \\
+y_1 \\
+\vdots \\
+y_n
+\end{pmatrix}
+\]
+D'où : 
+\[
+\text{Le choix de } (a_0,...,a_n) \text{ est unique} \Leftrightarrow \begin{tabular}{|c c c c c|}
+1 & $x_0$ & $x_0^2$ & $\cdots$ & $x_0^n$\\
+\vdots & \vdots & \vdots & \vdots & \vdots\\
+\vdots & \vdots & \vdots & \vdots & \vdots\\
+1 & $x_n$ & $x_n^2$ & $\cdots$ & $x_n^n$ \\
+\end{tabular} \neq 0 \]
+
+On doit démontrer pour cela : \[\begin{vmatrix}
+1 & x_0 & \cdots & x_0^n \\
+1 & x_1 & \cdots & x_1^n \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & x_n & \cdots & x_n^n 
+\end{vmatrix}
+ = \prod_{0\leq j<i \leq n} (x_i - x_j)\]
+
+On le démontre par récurrence. Au rang n=1 : \[\begin{vmatrix} 1 & x_0 \\ 1 & x_1 \end{vmatrix} = x_1 - x_0\]
+On suppose l'égalité vraie au rang n.
+
+\begin{eqnarray*}
+\begin{vmatrix}
+1 & x_0 & \cdots & x_0^{n+1} \\
+1 & x_1 & \cdots & x_1^{n+1} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & x_{n+1} & \cdots & x_{n+1}^{n+1} 
+\end{vmatrix}
+&=& 
+\begin{vmatrix}
+1 & x_0-x_{n+1} & \cdots & x_0^{n+1}-x_{n+1}x_0^n \\
+1 & x_1-x_{n+1} & \cdots & x_1^{n+1}-x_{n+1}x_1^n \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & 0 & \cdots & 0 
+\end{vmatrix} \\
+&=&(-1)^{n+1} \begin{vmatrix}
+x_0-x_{n+1} & \cdots & x_0^{n+1}-x_{n+1}x_0^n \\
+x_1-x_{n+1} & \cdots & x_1^{n+1}-x_{n+1}x_1^n \\
+\vdots      & \ddots &         \vdots         \\
+x_n-x_{n+1} & \cdots & x_n^{n+1}-x_{n+1}x_n^n \\
+\end{vmatrix} \\
+&=&(-1)^{n+1} \begin{vmatrix}
+x_0-x_{n+1} & \cdots & (x_0-x_{n+1})x_0^n \\
+x_1-x_{n+1} & \cdots & (x_1-x_{n+1})x_1^n \\
+\vdots      & \ddots &         \vdots         \\
+x_n-x_{n+1} & \cdots & (x_n-x_{n+1})x_n^n \\
+\end{vmatrix}  \\ 
+&=& (-1)^{n+1} \prod_{j=0}^n (x_j - x_{n+1})  \prod_{0\leq j<i \leq n} (x_i - x_j) \\
+&=& ((-1)^{n+1})^2 \prod_{j=0}^n (x_{n+1} - x_j)  \prod_{0\leq j<i \leq n} (x_i - x_j) \\
+&=& \prod_{0\leq j<i \leq n+1} (x_i - x_j)
+\end{eqnarray*}
+D'où :
+\begin{eqnarray*}
+\text{Le choix de } (a_0,...,a_n) \text{ est unique} &\Leftrightarrow&  \prod_{0\leq j<i \leq n} (x_i - x_j) \neq 0\\
+&\Leftrightarrow& \forall i\neq j, x_i - x_j \neq 0 \\
+&\Leftrightarrow& (x_0,...,x_n) \text{ tous distincts}
+\end{eqnarray*}
+\end{dem}
+
+\section{Construction du polynôme d'interpolation}
+\subsection{Construction à partir de la base de Lagrange}
+\Propo{Base de Lagrange}{La famille de polynôme $\{l_i\}_{i=0}^n$ définie par :
+\[\forall j\neq i, l_i(x_i)=1,\ l_i(x_j)=0\]forment une base de $P_n$, espace vctoriel des polynômes de degré au plus n
+}
+
+\begin{dem}
+Prouvons tout d'abord que le système est libre. Soit $(\lambda_0,...,\lambda_n)\in\mathbb{R}^n$. On cherche :
+\[\forall x\in \mathbb{R}, \lambda_0l_0(x) + ... + \lambda_n l_n(x) = 0\]
+Or, pour $x=x_i$, on trouve directement $\lambda_i=0,\ \forall 1\leq i\leq n$.
+
+De plus :  \begin{eqnarray*}
+\text{card}(\{l_i\}_{i=0}^n) &=& n+1 \\
+\dim (P_n) &=& n+1
+\end{eqnarray*}
+La famille est donc une base de $P_n$
+\end{dem}
+
+\paragraph{Recherche du polynôme : \\}
+$l_i(x)$ admet n racines. D'où : \[\forall x\in \mathbb{R},\  l_i(x)=\alpha_i \prod_{\underset{j\neq i}{j=0}}^n (x-x_j)\]
+
+En posant $x=x_i$ : \[\alpha_i \prod_{\underset{j\neq i}{j=0}}^n (x_i-x_j)=1 \Leftrightarrow \alpha_i = \frac{1}{\prod_{\underset{j\neq i}{j=0}}^n (x-x_j)}\]
+D'où :
+\[l_i(x)=\prod_{\underset{j\neq i}{j=0}}^n \frac{x-x_j}{x_i-x_j}\]
+
+On cherche à présent $L_n(f,x)$. D'après ce qu'on vient de démontrer, on peut avoir : 
+\[\forall x\in \mathbb{R},\ L_n(x)=\sum_{i=0}^n a_i l_i(x)\]
+
+$x=x_j \Rightarrow f(x_j)=a_jl_j(x_j)=a_j$ d'où :
+
+\bigskip
+\Formu{Polynôme d'interpolation dans la base de Lagrange}{
+\[L_n(f,x) = \sum_{i=0}^n f(x_i) \prod_{\underset{j\neq i}{j=0}}^n \frac{x-x_j}{x_i-x_j}\]
+}
+
+\begin{rmq}
+Si on ajoute un point il devient difficile de l'intégrer au calcul
+\end{rmq}
+
+\subsection{Construction à partir de la base de Newton}
+\Propo{Base de Newton}{La famille $\{N_i\}_{i=0}^n$ de polynôme telle que : \[N_0(x)=1,\ \forall 1\leq i \leq n-1,\ N_{i+1}(x)= \prod_{j=0}^i (x-x_j)\]
+est une base de $P_n$}
+
+\begin{dem}
+De même que pour la base de Lagrange, il suffit de montrer que la famille est libre, que cardinal et dimension sont encore une fois égaux (et finis).
+Soit $(\lambda_0,...,\lambda_n)\in\mathbb{R}^n$. On cherche :
+\[\forall x\in \mathbb{R}, \lambda_0 +\lambda_1(x-x_0) +... + \lambda_n \prod_{j=0}^{n-1} (x-x_j) = 0\]
+\begin{eqnarray*}
+x=x_0 &\Rightarrow& \lambda_0 = 0 \\
+x=x_1 &\Rightarrow& \underbrace{\lambda_0}_{=0} + \lambda_1(x_1-x_0) + \lambda_1(x_1-x_0)\underbrace{(x_1-x_1)}_{=0}+... = \lambda_1\underbrace{(x_1-x_0)}_{\neq 0} = 0 \\
+      &\Rightarrow& \lambda_1 = 0 \\
+      &\vdots& \\
+x=x_n &\Rightarrow& \lambda_n = 0
+\end{eqnarray*}
+
+Donc la famille est bien une base de $P_n$
+\end{dem}
+
+\Formu{Polynôme d'interpolation dans la base de Newton}{Le polynôme d'interpolation dans la base de Newton est définie récursivement par la formule : 
+\[L_n(x)=L_{n-1}(x)+\left(f(x_n)-L_{n-1}(x_n)\right)\frac{\omega_{n-1}(x)}{\omega_{n-1}(x_n)}\]
+Avec $\omega_0(x)=x-x_0$ et $\omega_{n-1}(x)=\prod_{j=0}^{n-1} (x-x_j)$}
+
+\begin{dem}
+On va chercher les racines du polynôme $L_n(x)-L_{n-1}(x)$.
+\[L_n(x_n)-L_{n-1}(x_n) \neq 0\]
+\[\forall 0\leq i \leq n-1,\ L_n(x_i) - L_{n-1}(x_i) = f(x_i)-f(x_i) = 0\]
+D'où $x_0,...,x_{n-1}$ racines du polynôme. On a donc : 
+\[L_n(x) - L_{n-1}(x)=c_n \prod_{i=0}^{n-1} (x-x_i) = c_n \omega_{n-1}(x)\]
+Déterminons à présent $c_n$ à partir du point $x_n$ : 
+\begin{eqnarray*}
+L_n(x_n)-L_{n-1}(x_n) &=& f(x_n) - L_{n-1}(x_n) \\
+		      &=& c_n \underbrace{\omega_{n-1}(x_n)}_{\neq 0} \\
+\\
+\Rightarrow c_n = \frac{f(x_n)-L_{n-1}(x_n)}{\omega_{n-1}(x_n)}
+\end{eqnarray*}
+\end{dem}
+
+Intéressons-nous de plus près au calcul de $c_n$.
+\begin{eqnarray*}
+c_n &=& \frac{f(x_n)}{\omega_{n-1}(x_n)} - \sum_{i=0}^{n-1} f(x_i) \prod_{\underset{j\neq i}{j=0}}^{n-1} \frac{x_n-x_j}{(x_i-x_j)(x_n-x_j)(x_n-x_i)} \\
+    &=& \frac{f(x_n)}{\omega_{n-1}(x_n)} - \sum_{i=0}^{n-1} f(x_i) \prod_{\underset{j\neq i}{j=0}}^{n-1} \frac{1}{(x_i-x_j)(x_n-x_i)} \\
+    &=& \frac{f(x_n)}{\omega_{n-1}(x_n)} + \sum_{i=0}^{n-1} f(x_i) \prod_{\underset{j\neq i}{j=0}}^{n-1} \frac{1}{(x_i-x_j)(x_i-x_n)} \\
+    &=& \frac{f(x_n)}{\omega_{n-1}(x_n)} + \sum_{i=0}^{n-1} f(x_i) \prod_{\underset{j\neq i}{j=0}}^n \frac{1}{x_i-x_j} \\
+    &=& \sum_{i=0}^n f(x_i) \prod_{\underset{j\neq i}{j=0}}^n \frac{1}{x_i-x_j}
+\end{eqnarray*}
+
+On a donc \[L_n(x) - L_{n-1}(x) = \omega_{n-1}(x) \sum_{i=0}^n f(x_i) \prod_{\underset{j\neq i}{j=0}}^n \frac{1}{x_i-x_j}\]
+Pour faciliter le calcul de $\sum_{i=0}^n f(x_i) \prod_{\underset{j\neq i}{j=0}}^n \frac{1}{x_i-x_j}$, on introduit les différences divisées.
+
+\Def{Différence divisée de f}{\begin{itemize}
+\item Ordre 0 : $f[x_0]=f(x_0)$
+\item Ordre 1 : $\underset{x_i \neq x_j}{f[x_i,x_j]} = \frac{f(x_j)-f(x_i)}{x_j-x_i}$
+\item $\vdots$
+\item Ordre k : $f[x_i,...,x_{i+k}]  \frac{f[x_{i+k},...,x_{i+1}]-f[x_i,...,x_{i+k-1}}{x_{i+k}-x_i}$
+\end{itemize}}
+
+\Lem{Différence divisée et polynôme de Newton}{\[\sum_{i=0}^n \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^n (x_i-x_j)} = f[x_1,...,x_n]\]}
+\begin{dem}
+On démontre ce lemme par récurrence : \\
+$n=0 \Rightarrow f[x_0]=f(x_0)$\\
+Supposons à présent que \[f[x_0,...,x_n]=\sum_{i=0}^n \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^n (x_i-x_j)},\text{ pour } (x_0,...,x_n) \text{ tous distincts.}\]
+Prouvons le à présent au rang n+1 en utilisant la définition de la différence divisée :
+\[f[x_0,...,x_{n+1}]=\frac{f[x_1,...,x_{n+1}]-f[x_0,...,x_n]}{x_{n+1}-x_0}\]
+avec $x_{n+1}$ distinct des autres points. \\
+Par hypothèse de récurrence, on a :
+\[f[x_1,...,x_{n+1}]=\sum_{i=1}^{n+1} \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=1}}^{n+1} (x_i-x_j)}\]
+\begin{eqnarray*}
+f[x_0,...,x_{n+1}]&=&\frac{1}{x_{n+1}-x_0} \left[\sum_{i=1}^{n+1} \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=1}}^{n+1} (x_i-x_j)}-\sum_{i=0}^n \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^n (x_i-x_j)} \right]\\
+		&=& \frac{1}{x_{n+1}-x_0}\left[\frac{f(x_{n+1})}{\prod_{j=1}^{n}(x_{n+1}-x_j)} - \frac{f(x_{0})}{\prod_{j=1}^{n}(x_0-x_j)}+\sum_{i=1}^n\left(\frac{f(x_i)}{\prod_{\underset{j\neq i}{j=1}}^{n+1} (x_i-x_j)}-\frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^n (x_i-x_j)} \right) \right] \\
+		&=& \frac{f(x_{n+1})}{\prod_{j=0}^{n}(x_{n+1}-x_j)} + \frac{f(x_{0})}{\prod_{j=1}^{n+1}(x_0-x_j)} + \frac{1}{x_{n+1}-x_0} \sum_{i=1}^n\left(\frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^{n+1} (x_i-x_j)}(x_i-x_0-x_i+x_{n+1}) \right) \\
+		&=& \sum_{i=0}^{n+1} \frac{f(x_i)}{\prod_{\underset{j\neq i}{j=0}}^{n+1} (x_i-x_j)}
+\end{eqnarray*}
+\end{dem}
+
+\Formu{Interpolation dans la base de Newton}{\[L_n(x)=\sum_{j=0}^n f[x_0,...,x_j] \prod_{i=0}^{j-1}(x-x_i)\]}
+
+\section{Convergence, étude d'erreur}
+\Theo{}{Soient $x_0,...,x_n$ distincts, $f\in\mathcal{C}^{n+1}$ sur $[\min\{x_0,...,x_n\},\max\{x_0,...,x_n\}]$ et $L_n(f,x)$ son polynôme d'interpolation.
+\[\forall x\in\left[\min\{x_0,...,x_n\},\max\{x_0,...,x_n\}\right],\exists \zeta \in \left]\min\{x_0,...,x_n\},\max\{x_0,...,x_n\}\right[ \]
+\[f(x)-L_n(f,x)=\frac{f^{(n+1)}(\zeta)}{(n+1)!}\omega_n(x)\]}
+
+\begin{dem}
+	On définit une fonction \[g(s)=f(s)-L_n(f,s)-k\omega_n(s)\]
+	La constante k est choisie est telle que $g(x)=0$, c'est-à-dire :
+	\[k=\frac{f(x)-L_n(f,x)}{\omega_n(x)},\ x\neq x_i, i=0..n\]
+	
+	Donc g(s) s'annule aux points $x_1$,...,$x_n$,$x$ (car $\forall i$, $g(x_i)=\underbrace{f(x_i)-L_n(f,x_i)}_{=0}-K\underbrace{\omega_n(x_i)}_{=0}$)\\
+
+	Donc g(s) admet n+2 zéros, donc, par le théorème de Rolle, g' admet n+1 zéros.\\
+	On continue, et on obtient que $g^{(n+1)}$ a un zéro. 
+
+	\[\exists \zeta_x ; g^{(n+1)}(\zeta_x)=0\]
+	\[g^{(n+1)}(s)=f^{(n+1)}(s)-\underbrace{L_n^{(n+1)}(f,s)}_{=0 (deg n)}-k\omega_n^{(n+1)}(s)\]
+	Or $(\omega_n(s))^{(n+1)}=(X^{n+1}+...)^{(n+1)}=(n+1)!$. D'où : 
+	\[g^{(n+1)}(s)=f^{(n+1)}(s)-\frac{f(x)-L_n(f,x)}{\omega_n(x)}\omega_n(s)\]
+	\[\Rightarrow f^{(n+1)}(\zeta_x)-\frac{f(x)-L_n(f,x)}{\omega_n(x)}\omega_n(\zeta_x)=0\]
+	D'où le résultat.
+	
+\end{dem}
+
+\Coro{}{L'erreur dépend de la subdivision $\{x_i\}_{i=0}^n$ choisie.}
+
+\begin{rmq}
+\begin{enumerate}
+\item Divergence du polynôme d'interpolation (?)
+\item Une meilleure approche peut être obtenue par un changement de subdivision
+\item Vu qu'il n'existe pas de subdivision pour laquelle le polynôme d'interpolation converge pour toute les fonctions, on peut diviser l'intervalle en petits sous-intervalles et interpoler avec des polynômes de degré plus petit.
+\item On peut imposer les conditions de raccord : condition de régularité aux points communs de polynômes différents. Cela débouche sur la notion de splines : à partir de $\{x_i\}_{i=0}^n$ on construit une fonction cubique par morceaux qui interpole la fonction initiale. 
+\end{enumerate}
+\end{rmq}
+
+\Def{}{La méthode d'interpolation converge vers $f$ au point $x^*\in[a,b]$ si : \[\lim_{n\to+\infty} L_n(f,x^*)=f(x^*)\]}
+
+\Theo{}{Quelque soit la subdivision d'intervalle [a,b], il existe une fonction $f\in\mathcal{C}[a,b]$ tel que $L_n(f,x)\not\to f(x)$}
+\Theo{}{$\forall f\in\mathcal{C}[a,b]$, il existe une subdivision de [a,b] tel que la suite correspondante du polynôme d'interpolation converge vers f.}
+
+\section{Splines}
+\subsection{Généralités}
+$a=x_0<...<x_n=b$
+\Def{}{La fonction $S_m(x)$ est dite spline de degré m si :
+	\begin{enumerate}
+		\item Sur chaque $[x_i,x_{i+1}]$, i=0 à n+1, $S_m(x)$ est un polynôme de degré au plus n
+		\item $S_m(f,x)\in\mathcal{C}^{m-1}[a,b]$ (régularité)
+	\end{enumerate}}
+
+Le spline est un spline d'interpolation si $\forall i$ de 0 à n, $f(x_i)=S_m(f,x_i)$.\\
+Sinon, on parle de spline d'approximation.
+
+\subsection{Splines cubiques}
+Sur chaqu $[x_i,x_{i+1}]$, on interpole f par une fonction cubique $S_i(x)$. Avec les conditions de régularité : 
+\begin{enumerate}
+	\item $S_i(x_i)=S_{i-1}(x_i)$ (i=1 à n-1)
+	\item $S_i(x_i)=f(x_i)$ (i=0 à n)
+	\item $S_i'(x_i)=S_{i-1}'(x_i)$ (i=1 à n-1)
+	\item $S_i''(x_i)=S_{i-1}''(x_i)$ (i=1 à n-1)
+\end{enumerate}
+
+Cela nous fait $4n-2$ équations sur les $s_i(x)$, i=0 à n-1.
+
+Or, s$_i(x)=a_ix^3+b_ix^2+c_ix+d_i$, donc pour définir tous les $\{s_i\}_{i=0}^{n-1}$, il nous faut 4n conditions. Il nous manque 2 conditions manquantes.
+
+\bigskip
+\textbf{Possibilités}
+\begin{enumerate}
+	\item $S_0''(x_0)=0$ et $S_{n-1}''(x_n)=0$. (Spline naturel)
+	\item Si on connaît $f'(x_0)$ et $f'(x_n)$ alors $S_0'(x_0)=f'(x_0)$ et $S_{n-1}'(x_n)=f(x_n)$
+	\item \begin{itemize}
+			\item Interpoler f aux points $x_0,x_1,x_2$ par $L_2(f,x)$ puis $S_0''(x_0)=L_2(f,x_0)''$
+			\item Interpoler f aux points $x_{n-2},x_{n-1},x_n$ par $\bar{L}_2(f,x)$ puis imposer $S_{n-1}''(x_n)=L_2(f,x_n)''$
+		\end{itemize}		
+\end{enumerate}

@@ -1,0 +1,33 @@
+\begin{minted}[frame=single]{java}
+public class GenerateurDrapeaux{
+	private ListeDeDrapeaux listeDrap;
+	private Drapeau drapeauCourant;
+	private String[] listeNom={
+"Afghanistan",
+"Afrique du sud",
+"Argentine",
+...
+};
+	private String[] listeChemin={
+"afghanistan.png",
+"afrique_du_sud.png",
+"argentine.png",
+...
+        };
+
+	private GenerateurNbAleatoire generAlea=new GenerateurNbAleatoire(0,listeNom.length);
+
+	public GenerateurDrapeaux(){
+		listeDrap=new ListeDeDrapeaux(listeNom, listeChemin);
+		drapeauCourant=listeDrap.getDrapeau(generAlea.genererNb());
+	}
+
+	public Drapeau getDrapeauCourant(){
+		return drapeauCourant;
+	}
+
+	public void changerDrapeau(){
+		drapeauCourant=listeDrap.getDrapeau(generAlea.genererNb());
+	}
+}
+\end{minted}

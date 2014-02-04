@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=m
+comment0.target=ControlerJQD(ModelJQD)
+comment0.text=-------------------------------------------------------------------------------\n\t\t\tConstructeurs\n-------------------------------------------------------------------------------
+comment1.params=f
+comment1.target=void\ addFenetre(VueJQD)
+comment1.text=-------------------------------------------------------------------------------\n\t\t\t\tM\u00E9thodes\n-------------------------------------------------------------------------------
+comment2.params=
+comment2.target=void\ demarrer()
+comment3.params=saisie
+comment3.target=void\ verif(java.lang.String)
+comment4.params=
+comment4.target=void\ actualiser()
+numComments=5

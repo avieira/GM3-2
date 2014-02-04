@@ -1,0 +1,19 @@
+total 136
+-rw-r--r-- 1 avieira insa-etudiant   1 mars  25 19:12 bla.txt
+-rw-r--r-- 1 avieira insa-etudiant 347 mars  25 19:12 CdC2.bash
+-rw-r--r-- 1 avieira insa-etudiant 439 mars  25 19:12 CdC.bash
+-rw-r--r-- 1 avieira insa-etudiant  48 avril  6 13:29 FichierCon
+-rw-r--r-- 1 avieira insa-etudiant  71 mars  29 10:36 Fonctions.bash
+-rwxr-xr-x 1 avieira insa-etudiant  70 mars  25 19:12 GROSSEBLAGUE2.bash
+-rw-r--r-- 1 avieira insa-etudiant  67 mars  25 19:12 GROSSEBLAGUE.bash
+-rwxr-xr-x 1 avieira insa-etudiant  82 mars  25 19:12 GROSSEBLAGUE.ksh
+-rw-r--r-- 1 avieira insa-etudiant  52 mars  25 19:12 jourssemaine.txt
+-rwxr-xr-x 1 avieira insa-etudiant 244 avril  6 13:29 Liste.bash
+-rwxr-xr-x 1 avieira insa-etudiant 192 mars  25 19:12 ListeDesParam.bash
+-rwxr-xr-x 1 avieira insa-etudiant 199 avril  6 14:24 listeDoss.bash
+-rwxr-xr-x 1 avieira insa-etudiant 193 mars  25 19:12 ListeP.bash
+drwx------ 7 avieira insa-etudiant 238 avril  6 12:47 Photos
+-rw-r--r-- 1 avieira insa-etudiant  94 mars  25 19:12 premier.bash
+-rw-r--r-- 1 avieira insa-etudiant  72 mars  25 19:12 resultat.txt
+-rw-r--r-- 1 avieira insa-etudiant 210 avril  6 13:26 TD2.bash
+-rw-r--r-- 1 avieira insa-etudiant   0 avril  6 14:24 text
