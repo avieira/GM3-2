@@ -1,0 +1,179 @@
+
+
+
+/*-------------------------Configuration de la page -------------*/
+body
+{
+	width: 700px;
+	margin: auto;       												 /* Pour centrer notre page */
+	margin-top: 20px; 											    /* Pour ne pas coller en haut*/
+	margin-bottom: 20px;												 /* Pour ne pas coller en bas*/
+	background-image: url("images/beige4.jpg"); 
+}
+
+
+
+
+
+
+
+
+/*----------------Configuration du corps de la page -------------- */
+/*Des blocs */
+#news
+{
+	margin-bottom: 20px;
+	background-color: #dece97;
+	width : 700px;
+	height: 500px;
+	overflow: auto;
+	text-align: justify;
+        border:solid;
+        border-radius:5px;
+        box-shadow:1px 1px 3px gray;
+}
+#addnews
+{
+	margin-bottom: 20px;
+	background-color: #dece97;
+	width : 700px;
+	height: 110px;
+	overflow: hidden;
+	text-align: center;
+        border:solid;
+        border-radius:5px;
+        box-shadow:1px 1px 3px gray;
+}
+#formnews
+{
+	margin-bottom: 20px;
+	background-color: #dece97;
+	width : 700px;
+	height: 250px;
+	overflow: hidden;
+	text-align: center;
+        border:solid;
+        border-radius:5px;
+        box-shadow:1px 1px 3px gray;
+}
+/*Style des paragraphes */
+#news p
+{
+	color: #202020;
+	text-indent: 30px;
+}
+/*Style des titres h1 */
+#news h1
+{
+	color: #112e4b;
+	text-align: center;
+	font-variant: small-caps;
+	margin-bottom: 3px;
+}
+/*Style des titres h2 */
+#news h2 
+{
+	color: #a97633;
+	text-align: center;
+	margin-bottom: 1px;
+	text-decoration: none;
+	font-size:10px;
+}
+/*Style des titres h3 */
+#news h3
+{
+	color: #202070;
+	text-align: center;
+	text-decoration: none;
+}
+/*Style d'une news */
+.une_news
+{
+	width:600px;
+	background-color: #dece97; 
+	margin-bottom: 40px;
+        margin-top: 40px;
+        font-size: 10px;
+        margin: auto;
+}
+
+
+
+/*------------------------------------ Configuration de l'en-tete ------------------------------ */
+#en-tete
+{
+	height:150px;														/* Hauteur en-tete */
+	width:700px;														/* Largeur en-tete */
+	background-image: url("images/banniere6.jpg"); 	      /* La banniere */
+	margin:3em auto;
+	border:solid;
+	border-radius:5px;
+	box-shadow:1px 1px 3px gray;
+	text-align:center;
+	overflow:hidden;
+	white-space:nowrap;
+	margin-bottom:10px;
+}
+
+
+
+
+/*--------------------------------Configuration du menu ------------------*/
+/*le bloc*/
+#menu
+{
+	width: 700px;
+	height: 50px;
+	margin-bottom:30px;
+}
+/*element menu*/
+.element_menu
+{
+        width: 330px;
+	background-color: #112e4b; 
+	margin-bottom: 20px;
+	border:solid;
+   	border-radius:5px;
+   	box-shadow:1px 1px 3px gray;
+   	font-size: 13px;
+}
+/*Style des titres dans le menu */
+.element_menu h3 , .element_menu h3 a
+{
+	color: #f3a600 ;
+	text-align: center;
+	font-variant: small-caps;
+}
+/*Style des liens dans le menu au passage de la souris */
+.element_menu h3 a:hover 
+{
+	background-color: #ffffff;
+	color: #f3a600;
+	font-weight: bold;
+}
+
+
+
+
+/*------------------------Configuration pied de page-------------*/
+/*le bloc*/
+#pied-de-page
+{
+	height:30px;
+	width:700px;
+	margin:3em auto;
+	border:solid;
+	border-radius:5px;
+	box-shadow:1px 1px 3px gray;
+	text-align:center;
+	position:relative;
+	white-space:nowrap;
+	overflow:hidden;
+	background-color:#112e4b;
+}
+/*les paragraphes*/
+.piedDePage 
+{
+	font-size: 10px;
+	font-variant: small-caps;
+}

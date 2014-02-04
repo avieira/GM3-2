@@ -1,0 +1,9 @@
+Trois trucs à installer : (tu as peut-être déjà le premier, mais vaut mieux être prudent)
+sudo apt-get install texlive-latex-extra
+sudo apt-get install python-setuptools
+sudo easy_install Pygments
+
+Pour compiler le latex, c'est un peu différent :
+pdflatex -shell-escape mydocument.tex
+
+(on rajoute une option quoi)

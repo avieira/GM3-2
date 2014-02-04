@@ -1,0 +1,27 @@
+\frametitle {Différentes instructions SQL}
+
+\begin{block}{Ajouter des données à une table}
+\begin{minted}[startinline,fontsize=\scriptsize]{php}
+$bdd->exec('INSERT INTO NomTable(NomDesChamps)
+VALUES(ValeurAAffecterAuxChamps)');
+\end{minted}
+\end{block}
+
+\begin{block}{Ajouter des données variables}
+\begin{minted}[startinline,fontsize=\scriptsize]{php}
+$req = $bdd->prepare('INSERT INTO NomTable(NomDesChamps)
+VALUES(:identifiants)');
+$req->execute(array('identifiant' => $ValeurVariable,));
+\end{minted}
+\end{block}
+
+\begin{exampleblock}{Exemple sur le site}
+\begin{minted}[startinline,fontsize=\scriptsize]{php}
+$sauv = $bdd->prepare('INSERT INTO articles(titre, contenu,
+date_ecriture) VALUES(:titre, :contenu, NOW())');
+$sauv->execute(array(
+'titre'=>$_POST['titre'],
+'contenu'=>$_POST['message'],
+));
+\end{minted}
+\end{exampleblock}
