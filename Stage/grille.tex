@@ -1,0 +1,44 @@
+\appendix
+\section{Grille de déroulement du stage}
+\begin{longtable}{|p{\textwidth}|}
+\hline
+\textbf{Première semaine}\\
+\hline
+Approfondissement des connaissances, découverte des SVM (Machines à Vecteur Support en français). Début de programmation de ces méthodes, différents scripts et fonctions écrites sous Octave pour permettre le calcul de la fonction de décision et de la visualisation des points ainsi que de la fonction. Développement dans différents cas (Points linéairement séparables puis non séparables, donc sans noyau dans un premier temps, puis début avec noyau).
+
+Sujet : Keystroke Dynamics, reconnaissance du genre d'une personne à partir de différents paramètres enregistrés en tapant sur un clavier. Pour cela, grand fichier contant grand nombre de données. Je devais chercher à comprendre à quoi correspondait ces données. \\
+Premier contact avec un doctorant de l'ENSICAEN, Syed Zulkarnain Syed Idrus. Explications par rapport aux données (très sympa !).
+\\
+\hline
+\textbf{Deuxième semaine}\\
+\hline
+Suite de l'apprentissage des SVM, rapidement terminé, car découverte d'une bibliothèque qui simplifie drolement la vie. Je commence alors à me lancer sur les données. Ecriture de quelques scripts pour récupérer d'une meilleure façon les données, écriture du programme sous Matlab pour calculer les erreurs commises. Le problème principal vient des paramètres à fixer. Je ne sais pas trop comment me rapprocher des bons paramètres, je tatonne et je finis ma semaine sans trop savoir. Je demande à Syed les paramètres qu'il avait utilisé, mais ça ne marche pas exactement comme je l'aurais voulu.\\
+\hline
+\textbf{Troisième semaine}\\
+\hline
+Il y a définitivement un décalage entre le papier que j'utilise et les données à ma disposition. Je fais donc un e-mail à Syed qui me donne le bon papier en rapport avec les données. Mon but est pour l'instant de voir si j'ai les mêmes résultats que lui de mon côté.\\
+Je fais cela en deux temps : tout d'abord, je fais un test d'apprentissage et de test où chacun des sets contient au moins un exemplaire de chaque personne. En gros, j'essaye de reconnaître les personnes sur lesquels j'ai déjà cherché. Là, les résultats ne sont pas mauvais du tout.\\
+Deuxième partie : apprendre avec certaines personnes, et voir si je reconnais des personnes inconnus. Et là, le résultat est tout sauf convaincant. Le hasard ferait mieux que ma prédicition. Je me lance donc sur un cross validation test : je prend plusieurs valeurs de mes deux paramètres, et j'essaye de voir dans quelle région de l'espace je devrais creuser un peu plus pour voir si je trouve les paramètres optimums. Les calculs sont longs...\\
+Je fais un dernier algorithme pour estimer les paramètres $(C,\gamma)$ pour pouvoir les utiliser pour autre chose par la suite. Cependant, je sais d'avance que les calculs seront extrêmement longs, je le lance avant de partir en week-end, en espérant que tout marche.\\
+\hline
+\textbf{Quatrième semaine}\\
+\hline
+C'était prévisible : les calculs ont rapidement planté et se sont arrêtés rapidement. Résultat : je dois relancer l'algorithme en surveillant comment avancent les choses. \\
+J'ai également fait en parallèle la recherche avec une ou deux mains pour voir si les résultats sont un peu mieux, mais ils de suite décevants. Je laisse donc rapidement l'idée de côté en fin de compte.\\
+La semaine n'a pas été beaucoup plus productive. J'ai dû attendre que les calculs se terminent, sachant qu'ils ont planté une fois sans moyen de récupérer les données. J'ai aussi lancé la régression linéaire, dont les calculs se termineront pendant les vacances. On verra ce que ça donnera après.\\
+\hline
+\textbf{Cinquième semaine}\\
+\hline
+La regression telle qu'on me l'avait proposé n'est pas du tout convaincante : les points ne semblent pas allignés de base, et la regression ne marche pas vraiment. Alors à part si mes calculs de paramètres sont vraiment mauvais, la regression linéaire ne donnera rien.\\
+Et en fait, les calculs de paramètres ne semblent pas concluants. Il doit y avoir un problème avec l'aléatoire que j'ai utilisé. A chaque fois que je relance les calculs, les paramètres que j'obtiens sont totalement différents. Il faut donc recommencer la recherche, en y pensant de manière différente. (En gros, une semaine et demie qui n'a servi à rien...)\\
+Deuxième manière testée : pas plus concluante. Je me lance donc à la recherche d'une troisième méthode que j'ai eu en tête : le leave-one-out. Je vais le faire par veceur pour l'instant, je laisserai les calculs tourner ce week-end.\\
+\hline
+\textbf{Sixième semaine}\\
+\hline
+Calculs pour le leave-one-out beaucoup trop long. Je recommence en laissant cette fois une personne (soit vingt vecteurs) plutôt qu'un seul vecteur de côté. Résultats non convaincants. \\
+\hline
+\textbf{Septième semaine}\\
+\hline
+Essai des SVDD. Début prometteurs, mais l'exemple était en fait mal choisi. La suite s'avère beaucoup plus décevant. Mais ça valait le coup d'essayer.\\
+\hline
+\end{longtable}

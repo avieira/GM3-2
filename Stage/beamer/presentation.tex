@@ -1,0 +1,198 @@
+\documentclass{beamer}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{minted}
+ 
+\usetheme{Berkeley}
+\usecolortheme{seahorse}
+\useinnertheme{rounded}
+
+\title[Soutenance de stage]{Soutenance de stage : \\Travail sur les algorithmes de recommandation permettant de convertir les données disponibles en un conseil personnalisé utile}
+\author{Alexandre \bsc{Vieira}}
+\institute{INSA de Rouen}
+\date{15 octobre 2013}
+
+
+\AtBeginSection[]
+{
+	\begin{frame}
+		\frametitle{Sommaire}
+		\tableofcontents[currentsection, hideothersubsections]
+	\end{frame}
+}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sommaire}
+	\tableofcontents
+\end{frame}
+
+\section[Laboratoire]{Présentation du laboratoire}
+ 
+\begin{frame}
+	\frametitle{LITIS}
+	\begin{itemize}
+		\item Présentation générale du laboratoire
+		\item Axes de recherche
+		\item Équipe "Document et Apprentissage"
+		\item Partenaires nombreux et variés
+	\end{itemize}
+\end{frame}
+
+\section[Théorique]{Explications théoriques}
+\subsection{SVM linéaire}
+\begin{frame}
+	\frametitle{Les SVM linéaires : le cas séparable}
+	\includegraphics[scale=0.5]{../graph/graphSep.png}
+\end{frame}
+
+\subsection[Noyaux]{Introduction des noyaux}
+\begin{frame}
+	\frametitle{Les noyaux : transformation de l'espace}
+	\begin{center}\includegraphics[scale=0.65]{../graph/graphNoyau.png}\end{center}
+\end{frame}
+
+\subsection[CV]{Validation croisée}
+\begin{frame}
+	\frametitle{Recherche des hyperparamètres}
+	\begin{center}\includegraphics[scale=0.65]{../graph/regionParam.png}\end{center}
+\end{frame}
+
+\section[Travail effectué]{Travail effectué : Exploitation de données}
+\subsection[Cadre]{Explication du cadre de recherche}
+\begin{frame}
+	\frametitle{Explication du cadre de recherche}
+	\begin{itemize}
+		\item En relation avec un doctorant de l'ENSICAEN
+		\item Type de données
+		\item But de cette recherche
+	\end{itemize}
+\end{frame}
+
+\subsection[Dvlppmt]{Développement des solutions mises en place}
+\begin{frame}
+	\frametitle{Séparation directe}
+Reconnaissance du sexe :
+	\begin{tabular}{|*{6}{c|}}
+	\hline
+	 & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ \\
+	\hline
+	Mêmes personnes & 69\% & 75\% & 69\% & 69\% & 73\% \\
+	\hline
+	Séparation personnes & 46\% & 52\% & 40\% & 55\% & 53\% \\
+	\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Séparation des cas 1 ou 2 mains}
+Reconnaissance du sexe pour une main :
+	\begin{tabular}{|*{6}{c|}}
+	\hline
+	 & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ \\
+	\hline
+	Mêmes personnes & 65\% & 75\% & 68\% & 74\% & 75\% \\
+	\hline
+	Séparation personnes & 53\% & 60\% & 44\% & 55\% & 56\% \\
+	\hline
+	\end{tabular}
+
+\bigskip
+Reconnaissance du sexe pour deux mains :
+	\begin{tabular}{|*{6}{c|}}
+	\hline
+	 & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ \\
+	\hline
+	Mêmes personnes & 70\% & 75\% & 75\% & 81\% & 79\% \\
+	\hline
+	Séparation personnes & 41\% & 51\% & 49\% & 53\% & 51\% \\
+	\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Élimination des variables}
+Reconnaissance du sexe pour une main :
+	\begin{tabular}{|*{6}{c|}}
+	\hline
+	 & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ \\
+	\hline
+	Mêmes personnes & 71\% & 74\% & 67\% & 68\% & 75\% \\
+	\hline
+	Séparation personnes & 55\% & 57\% & 39\% & 60\% & 58\% \\
+	\hline
+	\end{tabular}
+
+\bigskip
+Reconnaissance du sexe pour deux mains :
+	\begin{tabular}{|*{6}{c|}}
+	\hline
+	 & $P_1$ & $P_2$ & $P_3$ & $P_4$ & $P_5$ \\
+	\hline
+	Mêmes personnes & 76\% & 77\% & 72\% & 78\% & 72\% \\
+	\hline
+	Séparation personnes & 39\% & 50\% & 47\% & 57\% & 53\% \\
+	\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Majority Vote}
+	\begin{itemize}
+		\item Méthode de boosting
+		\item Résultats prometteurs
+	\end{itemize}
+	\begin{center}\begin{tabular}{|c|c|}
+	\hline
+	Nombre de mains & 99\% \\
+	\hline
+	Genre & 48\% \\
+	\hline
+	\end{tabular}\end{center}
+\end{frame}
+
+\section[Conclusion]{Perspectives et conclusion}
+\begin{frame}
+	\frametitle{Perspectives}
+	\begin{itemize}
+		\item Vérifier le boosting avec le genre
+		\item Choix différent des classifieurs dans le boosting %Voir par rapport aux 10 vecteurs pour une personne pour faire vote majoritaire
+		\item Utilisation d'autres méthodes de boosting
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusion}
+	\begin{itemize}
+		\item Stage m'ayant appris énormément
+		\item Approche du monde de la recherche
+		\item Utile pour mon projet professionnel
+	\end{itemize}
+\end{frame}
+
+\appendix
+\section{Formulation du problème primal et dual}
+\begin{frame}
+	\frametitle{Cas linéaire}
+	Primal SVM :
+	\[\left\{\begin{array}{c c c}
+	\min_{\omega, b, \xi} & \frac{1}{2} \|\omega\|^2 +\frac{C}{d} \sum_{i=1}^n \xi_i^d &\\
+	\text{avec } & y_i(\omega^Tx_i+b)\geq 1-\xi_i & i=1,n\\
+		& \xi_i\geq 0 & i=1,n
+	\end{array}\right.\]
+	Dual SVM :
+	\[\left\{\begin{array}{l l}
+	\min_\alpha & \frac{1}{2} \alpha^TG\alpha -e^T\alpha\\
+	\text{avec } & y^T\alpha=0\\
+		& \alpha_i\geq 0, \hspace{0.5cm} i=1,n
+	\end{array}\right.\]
+
+\end{frame}
+\end{document}

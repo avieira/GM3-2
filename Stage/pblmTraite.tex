@@ -1,0 +1,405 @@
+\section{Développement du problème traité}
+La majeur partie du travail fait pendant ce stage aura tourné autour des Support Vector Machine, traduit litérallement par Machine à vecteur support, ou souvent appelé Séparateur à Vaste Marge (SVM). Le but de ces programmes est d'arriver à donner un hyperplan séparant les données. Ainsi, on peut, à partir de différentes mesures, donner une prévision d'une mesure qualitative (binaire) d'une variable à partir de mesures quantitatives.
+
+\bigskip
+L'hyperplan dont on parlait juste avant revient en fait à chercher une fonction de décision. En effet, on peut représenter chacun des caractères qualitatifs par 1 ou -1. On construit donc une fonction qui, à partir de vecteurs, nous renverra un certain réel, dont on regardera le signe. En clair, la fonction de décision sera la fonction $f$ qu'on utilise ainsi :
+\[D(x)=\text{sign}(f(x))\]
+
+\bigskip
+Le stage a commencé par une étude de différents cas des SVM :
+\subsection{Généralités sur les SVM}
+\subsubsection{Les SVM linéaires dans un cas séparable}
+\paragraph{Formulation primale\\}
+
+Le but est ici relativement simple à comprendre : on a deux groupes de points (ici dans le plan), qui sont parfaitement séparés. On cherche un hyperplan (ou ici plus simplement une droite) qui pourrait séparer notre espace en deux. D'un côté, on aurait toutes les données qui représenteraient un premier caractère, et de l'autre l'autre caractère. Dans le plan, cela donne quelque chose comme cela :
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.6]{graph/graphSep.png}
+\caption{Cas linéairement séparable : quelle courbe choisir ?}
+\label{linSep}
+\end{figure}
+
+\bigskip
+Comment choisir au mieux l'hyperplan qui sépare l'espace en deux ?
+
+\bigskip
+La fonction de décision, dont nous avons parlé plus haut, doit être de la forme :
+\[f(x)=\omega^Tx+b\]
+Il peut, dans l'absolu, en exister une infinité. On va donc essayer de maximiser la distance entre la frontière de décision et l'ensemble des points à notre disposition, en admettant que maximiser cette distance, c'est minimiser le risque d'erreur pour notre classification. On doit, en fin de compte, résoudre le problème suivant :
+\begin{center}
+	Soit $\{(x_i,y_i),\ i=1..n\}$ l'ensemble de nos données, avec $x_i\in\mathbb{R}^p$ et $y_i\in\{-1,1\}$. Un séparateur à vaste marge (SVM) est un discriminateur de la forme $D(x)=\text{signe}(\omega^Tx+b)$ où $\omega\in\mathbb{R}^p$ et $b\in\mathbb{R}$ sont donnés par la résolution du problème suivant :
+	\[\left\{\begin{array}{l c}
+	\min_{\omega,b} & \frac{1}{2} \|\omega\|^2\\
+	\text{avec } & y_i(\omega^Tx_i+b)\geq 1
+	\end{array}\right.\]
+\end{center}
+
+C'est un problème d'optimisation sous contrainte qui revient à résoudre un problème du type suivant :
+
+	\[\left\{\begin{array}{l c}
+	\min_z & \frac{1}{2} z^TAz\\
+	\text{avec } & Bz\leq e
+	\end{array}\right.\]
+où $z=(\omega,b)^T\in\mathbb{R}^{p+1}$, $A=\begin{pmatrix} I & 0 \\ 0 & 0 \end{pmatrix}$ où $I$ est la matrice identité de taille $p$, $e=-(1,...,1)^T\in\mathbb{R}^n$, et \\$B=-[diag(y)X,y]$ où $y\in\mathbb{R}^n$ est le vecteur des signes des observations et $X$ la matrice $n\times d$ des observations dont la ligne $i$ est le vecteur $x_i^T$
+
+\paragraph{Formulation duale\\}
+Il existe également une formulation duale de ce problème, obtenu en exprimant le lagrangien du problème et en utilisant les conditions d'optimalité de Karush, Kuhn et Tucker. Cela nous permet de caractériser la solution du problème primal exposé plus haut, ainsi que les multiplicateurs $\alpha$ de Lagrange. On peut ainsi définir un ensemble, l'ensemble des contraintes actives à l'optimum, exprimé ainsi :
+	\[\mathcal{A}=\{i\in\{1,..,n\};\ y_i(\omega^Tx_i+b)=1\}\]
+Les multiplicateurs $\alpha_i$ dont l'indice sont dans cet ensemble seront strictement positifs. Les autres seront tous nuls. \\
+On a ainsi une expression de $\omega$ :
+\[\omega=\sum_{i\in\mathcal{A}} \alpha_i y_ix_i\]
+Pour caractériser la chose, $\omega$ est une combinaison linéaire des vecteurs $x_i$ liés aux contraintes actives. On les appelle tout logiquement les \textit{vecteurs supports}.\\
+Quant au biais $b$, il est donné par le multiplicateur de Lagrange associé à la condition d'égalité $y^T\alpha=0$
+
+\bigskip
+Reste donc à voir comment trouver l'ensemble des multiplicateurs de Lagrange. Il s'agit encore une fois de la résolution d'un problème d'optimisation sous contrainte de la forme :
+	\[\left\{\begin{array}{l l}
+	\min_\alpha & \frac{1}{2} \alpha^TG\alpha -e^T\alpha\\
+	\text{avec } & y^T\alpha=0\\
+		& \alpha_i\geq 0, \hspace{2cm} i=1,n
+	\end{array}\right.\]
+
+\paragraph{Codage sous Octave\\}
+Le logiciel Octave nous donne accès à une fonction permettant de résoudre les problèmes d'optimisation sous contraintes de ce genre via la fonction \textit{qp}. Voici le code permettant de résoudre le problème pour un vecteur $x1$ du premier caractère et $x2$ du deuxième. 
+
+\inputminted{octave}{fonctions/svmLineaire.m}
+
+\subsubsection{Le cas non linéairement séparable}
+\paragraph{Formulation du problème\\}
+Jusque là, trouver la frontière de décision était clairement faisable. Mais les données ne sont pas toujours aussi facilement classifiable. Pour cela, on introduit des variables d'écart $\xi_i$ associées à chacune des observations $(x_i,y_i)$, ce qui modélise l'erreur potentielle de la manière suivante :
+
+\begin{itemize}
+	\item Soit on ne commet par d'erreur, et dans ce cas, on a $y_i(\omega^Tx_i+b)\geq 1$. On met donc la variable d'écart $\xi_i$ associée à 0
+	\item Soit on commet une erreur, et dans ce cas, $y_i(\omega^Tx_i+b)<1$. On pose donc $\xi_i=1-y_i(\omega^Tx_i+b)>0$
+\end{itemize} 
+
+Le problème revient donc à maximiser la marge et à minimiser les variables d'écart, mis à la puissance d (en général, d=1 ou 2). Le problème devient donc :
+	\[\left\{\begin{array}{c c c}
+	\min_{\omega, b, \xi} & \frac{1}{2} \|\omega\|^2 +\frac{C}{d} \sum_{i=1}^n \xi_i^d &\\
+	\text{avec } & y_i(\omega^Tx_i+b)\geq 1-\xi_i & i=1,n\\
+		& \xi_i\geq 0 & i=1,n
+	\end{array}\right.\]
+
+avec $C>0$ un terme d'équilibrage fixé.
+
+\bigskip
+On peut réécrire le problème matriciellement suivant que d vaille 1 ou 2. En effet, en posant $z=(\omega,b,\xi)^T$ :
+\begin{itemize}
+	\item Si $d=1$, on a :
+		\[\left\{\begin{array}{l l}
+		\min_\alpha & \frac{1}{2} z^THz +z^Tq\\
+		\text{avec } & A_l z\leq e\\
+			& l_b \leq z
+		\end{array}\right.\]
+
+	\renewcommand\labelitemii{\textbullet}
+	avec \begin{itemize}
+		\item $H=\begin{pmatrix} I_p & 0 \\ 0 & 0 \end{pmatrix}$ où $I_p$ est la matrice identité de taille $p$
+		\item $q=(0,...,0,0,C,...,C)\in\mathbb{R}^{n+p+1}$ (on a $p+1$ zéros et $n$ C)
+		\item $e=-(1,...,1)^T \in\mathbb{R}^{n}$
+		\item $A_l=-[diag(y)X,y,I_n]$ où $I_n$ est l'identité de taille $n$
+		\item $l_b=[-inf,...,-inf,0,...,0]\in\mathbb{R}^{n+p+1}$ (avec $p+1$ inf et $n$ zéro)
+	     \end{itemize}
+		
+	\item Si $d=2$, on a :
+		\[\left\{\begin{array}{l l}
+		\min_\alpha & \frac{1}{2} z^THz +z^Tq\\
+		\text{avec } & A_l z\leq e\\
+			& l_b \leq z
+		\end{array}\right.\]
+	avec \begin{itemize}
+		\item $H=\begin{pmatrix} I_p & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & C*I_n \end{pmatrix}$ où $I_p$ est la matrice identité de taille $p$ et $I_n$ la matrice identité de taille $n$
+		\item $q=(0,...,0)\in\mathbb{R}^{n+p+1}$
+		\item $e=-(1,...,1)^T \in\mathbb{R}^{n}$
+		\item $A_l=-[diag(y)X,y,I_n]$ où $I_n$ est l'identité de taille $n$
+		\item $l_b=[-inf,...,-inf,0,...,0]\in\mathbb{R}^{n+p+1}$ (avec $p+1$ inf et $n$ zéro)
+	     \end{itemize}
+\end{itemize}
+
+\bigskip
+De même, on arrive à une formulation duale du problème. 
+\begin{itemize}
+	\item Si on prend $d=1$, on doit résoudre le problème :
+		\[\left\{\begin{array}{l l}
+		\min_{\alpha\in\mathbb{R}^n} & \frac{1}{2} \alpha^TG\alpha -e^T\alpha\\
+		\text{avec } & y^T\alpha=0\\
+			& 0\leq \alpha_i\leq C, \hspace{2cm} i=1,n
+		\end{array}\right.\]
+
+	avec $G$ la matrice symétrique $n\times n$ de terme général $G_{ij}=y_iy_jx_j^Tx_i$
+
+	\item Si on prend $d=2$, on doit résoudre :
+		\[\left\{\begin{array}{l l}
+		\min_{\alpha\in\mathbb{R}^n} & \frac{1}{2} \alpha^T(G+\frac{1}{C}I)\alpha -e^T\alpha\\
+		\text{avec } & y^T\alpha=0\\
+			& 0\leq \alpha_i, \hspace{2cm} i=1,n
+		\end{array}\right.\]
+\end{itemize}
+
+\paragraph{Codage Octave\\}
+De même, on résoud ces deux problèmes sous Octave avec la fonction \textit{qp}. Les codes sont disponibles en annexe ~\ref{codeOctave}
+
+\subsubsection{Les cas non linéaires}
+Les cas où les données sont linéairement séparables ne sont pas très nombreux. Pour cela, on introduit ce qu'on appelle des noyaux. 
+Les noyaux sont des fonctions de deux variables dans $\mathbb{R}$ permettant de caractériser l'influence réciproque entre deux observations.
+
+\bigskip
+Si on note le noyau : 
+\begin{eqnarray*}
+	k:\chi,\chi &\to& \mathbb{R}\\
+		(x,x') &\mapsto& k(x,x')
+\end{eqnarray*}
+où $\chi$ est le domaine des observations, la fonction de décision s'écrit $D(x)=\text{signe}(f(x)+b)$ où :
+\[f(x)=\sum_{i\in\mathcal{A}} \alpha_i y_i k(x_i,x)\]
+
+Il existe de nombreux noyaux, dont voici deux exemples, avec $s$ et $t\in\mathbb{R}^p$ :
+\begin{itemize}
+	\item le noyau gaussien : \[k(s,t)=\exp\left( -\frac{\|s-t\|^2}{\sigma}\right)\]
+	\item le noyau polynomial : \[k(s,t)=(s^Tt)^p\]
+\end{itemize}
+
+Comme précédement, pour trouver $f$, on va résoudre un problème d'optimisation. Il est par ailleurs tout trouvé, car il est pratiquement le même que dans le cas linéaire ! Il nous suffit en effet, via la formule pour $f$ donnée plus haut, de trouver tous les multiplicateurs de Lagrange $\alpha$, qu'on trouve via le système (déjà vu) suivant :
+	\[\left\{\begin{array}{l l}
+	\min_{\alpha\in\mathbb{R}^n} & \frac{1}{2} \alpha^TG\alpha -e^T\alpha\\
+	\text{avec } & y^T\alpha=0\\
+		& 0\leq \alpha_i\leq C \hspace{2cm} i=1,n
+	\end{array}\right.\]
+où G est une matrice de taille $n\times n$ de terme général $G_{ij}=y_iy_jk(x_i,x_j)$
+
+Voici un exemple de ce qu'on peut obtenir via cette méthode :
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.8]{graph/graphNoyau.eps}
+\caption{Cas non linéairement séparable, utilisation d'un noyau gaussien}
+\label{figNoy}
+\end{figure}
+
+\bigskip
+
+\subsection{Exploitation des données}
+\subsubsection{Présentation des données}
+Dans un premier temps, il m'a été demandé d'utiliser les méthodes présentées ci-dessus sur des données qu'on m'a fourni. Il s'agit de mesures effectuées à l'ENSICAEN, dans le cadre d'une recherche sur la reconnaissance du sexe d'une personne suivant la manière dont elle tape sur un clavier d'ordinateur. On a pour cela plusieurs mesures, qui sont différents temps de latence mesurés lorsqu'une personne tapait un certain mot de passe sur un ordinateur :
+\begin{itemize}
+	\item \textit{RR} qui est le temps entre chaque relachement de touche (R pour Release)
+	\item \textit{RP} qui est le temps entre le relachement d'une touche et la pression de la deuxième (P pour Pressure)
+	\item \textit{PP} qui est le temps entre deux pressions sur deux touches
+	\item \textit{PR} qui est le temps entre la pression d'une touche et son relachement
+\end{itemize}
+
+Cela nous donne plusieurs vecteurs de données, à partir duquel on en crée un cinquième, le vecteur \textit{V}, qui est la concaténation des quatre mesures précédentes. 
+
+\bigskip
+Chacun de ces vecteurs a été enregistré en tapant un mot de passe. La phase de test préalable a demandé à 110 personnes (32 femmes et 78 hommes) de taper 5 mots de passe différents, de longueur variable :
+\begin{center}\begin{tabular}{|c|c|}
+\hline
+P1 & leonardo dicaprio\\
+\hline
+P2 & the rolling stones \\
+\hline
+P3 & michael schumacher \\
+\hline
+P4 & red hot chili peppers \\
+\hline
+P5 & united states of america \\
+\hline
+\end{tabular}\end{center}
+
+\bigskip
+Le premier travail aura été de récupérer les données d'une façon plus exploitable. En effet, le tout avait été envoyé dans un fichier Excel, qui présentait les quatres temps présentés plus haut pour différentes personnes qui avaient passé ce test. Le test était effectué en tout 20 fois, dont 10 fois avec une seule main, et 10 fois avec les deux mains. Tous les temps pour chaque passage étaient enregistrés dans une seule celulle, ce qui n'est pas vraiment exploitable en l'état.\\
+J'ai donc écrit un premier script en AWK qui m'a permis de récupérer les données pour chaque personne, en ajoutant également une dernière colonne si la personne était un homme ou une femme. Ce script est disponible en annexe ~\ref{scriptAwk}
+
+
+\subsubsection{Première approche}
+Une fois les données récupérées, il fallait les exploiter. Dans le cadre des SVM, on traite souvent les données de la manière suivante :
+\begin{itemize}
+	\item Une partie des données est utilisé comme "set d'apprentissage" : on définit une fonction de décision à partir d'une partie des vecteurs.
+	\item Le reste est défini comme "set de test" : on vérifie le taux de bonne prédiction de la fonction de décision sur des vecteurs qui n'ont pas servi à l'apprentissage.
+\end{itemize}
+
+Dans un premier temps, on sélectionnait aléatoirement 50\% des vecteurs comme set d'apprentissage, et ce pour chaque personne ayant passé le test. Ainsi, toutes les personnes sont utilisées pour définir la fonction de décision, et on vérifie pour chacune d'elle si avec d'autres enregistrements, on peut les reconnaître ou non.
+
+\bigskip
+Le code écrit pour chaque mot de passe est disponible en annexe ~\ref{code1}
+
+\bigskip
+La séléction aléatoire a été répétée dix fois. Voici la moyenne en pourcentage des résultats obtenus pour chaque mot de passe :
+\begin{center}\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & P1 & P2 & P3 & P4 & P5 \\
+\hline
+32\mars 32\female & 68 & 75 & 68 & 74 & 76 \\
+\hline
+78\mars 32\female & 76 & 80 & 75 & 80 & 81\\
+\hline
+\end{tabular}\end{center}
+
+Le noyau utilisé était le noyau gaussien. Les deux hyper paramètres utilisés étaient les suivants :
+\begin{itemize}
+	\item $C=128$
+	\item $\gamma=\frac{1}{\sqrt{0.125}}$
+\end{itemize}
+
+\subsubsection{Deuxième approche}
+Le problème avec la méthode précédente est qu'on connaît déjà la personne qui tape pour ensuite la reconnaître. L'idéal serait plutôt qu'à partir d'un set connu, on arrive à reconnaître de manière la plus fidèle possible un set totalement inconnu. Un second problème est que les paramètres utilisés sont ceux qui ont été donnés par le dossier sur lequel repose cette étude, sans savoir si on ne peut trouver de meilleurs paramètres.\\
+Avec ces paramètres (donnés à la fin du paragraphe précédent), nous obtenions, en pourcentage, les résultats suivant :
+
+\begin{center}\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & P1 & P2 & P3 & P4 & P5 \\
+\hline
+32\mars 32\female & 46 & 57 & 49 & 53 & 53 \\
+\hline
+\end{tabular}\end{center}
+
+Nous ne faisons donc pas mieux que le hasard pour déterminer le sexe des personnes. La recherche de meilleurs paramètres peut donc paraître être une bonne solution pour améliorer ces résultats. \\
+Pour cela, on doit donc déterminer deux paramètres optimums, $(C,\gamma)$, utilisés dans les SVM (C étant le paramètre de pénalisation vu plus haut, et $\gamma$ le paramètre de largeur de bande, utilisé dans le noyau gaussien). \\
+On utilise pour cela les méthodes de validation croisée : on prend plusieurs valeurs de $C$ et de $\gamma$, et on lance les SVM avec une partie des données et en changeant les paramètres à tour de rôle. On regarde le taux d'erreur commis, et on essaye de choisir les paramètres ayant eu le taux d'echec le plus faible. On affine alors notre recherche pour être le plus proche possible des paramètres optimaux.\\
+Voici un exemple obtenu lors d'un calcul, en figure ~\ref{figParam}:
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.8]{graph/regionParam.png}
+\caption{Taux de bonnes réponses selon la valeur des paramètres choisis (blanc pour un taux fort, noir pour un taux faible)}
+\label{figParam}
+\end{figure}
+
+\newpage
+Les nouvelles recherches se feront ensuite dans la région blanche dessinnée dans la figure ~\ref{figParam}. \\
+Il reste cependant un problème, et de taille : les calculs pour une seule fonction de décision sont longs. On les multiplie en plus par le nombre de paramètres qu'on teste à chaque fois, ce qui fait que les calculs finissent par être très longs. On prend donc un set d'apprentissage plus petit, ce qui réduit le temps de calcul de la fonction de décision. Et plus on affine la recherche des paramètres, plus on aggrandit le set d'apprentissage.
+
+\bigskip
+Il y a plusieurs points de vue pour faire la validation croisée. J'ai choisi de prendre au hasard mes vecteurs pour faire mon set d'apprentissage et de test, et ce huit fois. Je fais la moyenne des résultats obtenus sur les huit tests différents pour avoir une idée de la précision de ma fonction de décision pour un couple de paramètres donné. Une fois que le meilleur couple parmis tous mes couples possibles est trouvé, je regarde dans la région entourant ce point si je ne peux pas en trouver un meilleur. Je fais cela ainsi une dizaine de fois.\\
+Les calculs auront en tout duré 3 jours (alors que le nombre de séléction aléatoire était déjà fortement réduit !). On obtient pour chaque mot de passe les paramètres suivants :
+\begin{center}\begin{tabular}{|c|c|c|}
+\hline
+Nombre de personnes utilisées par sexe & C & $\gamma$ \\
+\hline
+4 & 45.043 & 0.20887 \\
+\hline
+8 & 3.7803 & 0.33852 \\
+\hline
+12 & 3.0027 & 0.28291 \\
+\hline
+16 & 83.030 & 0.16010 \\
+\hline
+\end{tabular}\end{center}
+
+Cependant, après avoir refait de nouveau tests, il s'est avéré que la séléction aléatoire rendaient les calculs plus qu'incertains. En effet, après avoir relancé les calculs une seconde fois, les paramètres optimums trouvés étaient les suivants :
+\begin{center}\begin{tabular}{|c|c|c|}
+\hline
+Nombre de personnes utilisées par sexe & C & $\gamma$ \\
+\hline
+4 & 21.19 & 0.3807 \\
+\hline
+\end{tabular}\end{center}
+
+\bigskip
+En espérant avoir plus de stabilité, une deuxième méthode a été essayée : plutôt que de prendre les vecteurs au hasard, nous avons plutôt essayé de prendre les personnes au hasard pour le set de test et d'apprentissage. Voici les résultats obtenus lors du premier essai (qui a d'ailleurs mis tout autant de temps que précédemment) :
+\begin{center}\begin{tabular}{|c|c|c|}
+\hline
+Nombre de personnes utilisées par sexe & C & $\gamma$ \\
+\hline
+4 & 76.4796 & 0.58957 \\
+\hline
+8 & 63.4913 & 2.3549 \\
+\hline
+12 & 73.7288 & 0.5062 \\
+\hline
+16 & 70.2240 & 0.4087 \\
+\hline
+\end{tabular}\end{center}
+
+Le deuxième essai montre encore une fois la non-persistance des paramètres optimaux :
+\begin{center}\begin{tabular}{|c|c|c|}
+\hline
+Nombre de personnes utilisées par sexe & C & $\gamma$ \\
+\hline
+4 & 56.13 & 1.0255\\
+\hline
+\end{tabular}\end{center}
+
+Le fait de calculer les paramètres optimaux suivant le nombre de personnes utilisé était motivé par une idée : il est possible que le logarithme népérien des différents $\gamma$ forment une droite suivant le nombre de personnes choisi en set d'apprentissage. On aurait ainsi les paramètres optimaux pour un grand nombre de personnes prises dans le set d'apprentissage juste en ayant pris un petit nombre de personnes au début, et donc avec des calculs beaucoup plus rapides. \\
+Via une méthode des moindres carrés, nous avons donc cherché une droite qui passe le mieux par ces points. Cependant, le résultat n'est clairement pas convaincant, les points ne semblant pas du tout alignés, comme on le voit figure ~\ref{figRegress}. Mais comme les paramètres ne sont clairement pas sûrs, la question reste pour le moment en suspens.
+\begin{figure}[!h]
+\centering
+\includegraphics{graph/graphRegress.eps}
+\caption{Graphique de $log(\gamma)$ suivant le nombre de personnes utilisées par sexe dans le set d'apprentissage, avec le résultat des moindres carrés}
+\label{figRegress}
+\end{figure}
+
+\newpage
+\subsubsection{Troisième approche : leave-one-out}
+Devant le manque de résultat, la recherche des paramètres a été repensée : plutôt que de prendre les personnes au hasard pour essayer chaque couple de paramètres, on va prendre une moitié des vecteurs disponibles en set d'apprentissage et l'autre moitié en test. Dans le set d'apprentissage, on va à chaque fois laisser une personne de côté, et construire la fonction de décision avec le reste. La fonction de décision est enfin testée avec la personne laissée de côté, et on fait cela pour chaque personne dans le test d'apprentissage (d'où le nom de leave-one-out). Chaque couple de paramètres est ainsi testé, pour choisir les meilleurs avec le set d'apprentissage. Une fois le meilleur couple trouvé, on regarde comment la fonction de décision se débrouille avec le set de test défini au début.
+
+\bigskip
+La recherche a donné le couple suivant, avec les erreurs lors de la recherche des paramètres optimaux et sur le set de test :
+\begin{center}\begin{tabular}{|c|c|c|c|c|}
+\hline
+ & C & $\gamma$ & \% de bonnes réponses sur & \% de bonnes réponses sur \\
+ &   &          &  le set d'apprentissage   &      le set de test \\
+\hline
+32 \mars 32 \female & 12.0975 & 0.20262 & 0.5578 & 0.5 \\
+\hline
+\end{tabular}\end{center}
+Ces tests ont été effectués sur le premier mot de passe, en prenant la première moitié des hommes et des femmes comme set d'apprentissage et la deuxième moitié comme set de test.\\
+Les résultats ne s'améliorent pas grandement et restent assez décevants, ne faisant toujours pas clairement mieux que le hasard. \\
+Les codes utilisés pour cette partie sont disponible en annexe ~\ref{code3}.
+
+\bigskip
+\subsubsection{Quatrième approche : Séparer le cas avec une ou deux mains}
+Une troisième approche a été essayée : vu le type des données, on peut se dire qu'il serait plus facile de déterminer si la personne derrière son ordinateur a tapé avec seulement une main ou avec deux mains. En effet, on mesure la vitesse à laquelle l'utilisateur tape sur le clavier, donc l'utilisation d'une ou deux mains influe directement sur ce résultat.\\
+Une fois qu'on a reconnu cela, on peut toujours voir si la reconnaissance du sexe est plus facile en séparant ces deux cas. Le premier travail aura donc été de récupérer les données correctement. Le script AWK précédent a donc été repris pour qu'il colle avec ce qui était recherché, et est disponible en annexe ~\ref{scriptMain}.\\
+
+Les résultats n'étaient pas convaincants. La recherche s'est d'abord concentrée sur les paramètres optimaux pour la détermination du nombre de mains avec un quart des données en set d'apprentissage. Les données étaient prises de façon non aléatoire. On obtenait, pour autant d'hommes que de femmes et avec les paramètres optimaux, les taux de bonnes réponses suivants (en pourcentage) :
+
+\begin{center}\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & P1 & P2 & P3 & P4 & P5 \\
+\hline
+Taux de bonnes réponses (en \%) & 94 & 92 & 93 & 93 & 91 \\
+\hline
+\end{tabular}\end{center}
+
+Devant le manque d'extrême précision de la fonction de décision dans le cas d'une ou deux mains, il fallait vraiment que les résultats soient excellents pour deviner s'il s'agissait d'un homme ou d'une femme pour avoir des résultats un peu meilleurs. Malheureusement, les résultats furent extrêmement décevant, comme on peut le voir dans le tableau suivant :
+\begin{center}\begin{tabular}{|c|c|c|}
+\hline
+ & 1 main & 2 mains \\
+\hline
+Taux de bonnes réponses (en \%) &  50 & 48 \\
+\hline
+\end{tabular}\end{center}
+Ces résultats ont été obtenus sur le premier mot de passe, avec autant d'hommes que de femmes, après recherche de paramètres optimaux. Devant le manque de résultat, les autres mots de passe n'ont pas été testés, ainsi que l'augmentation du nombre d'hommes sur les résultats. 
+
+\subsubsection{Cinquième approche : les SVDD}
+\paragraph{Explication rapide des SVDD\\}
+Les SVDD (pour Support Vector Data Description) fonctionne grossièrement sur le même modèle que les SVM : on cherche ici une frontière séparant deux ensembles de points sous la forme d'une boule qui sera la plus petite possible. On englobe ainsi une partie des points ayant une certaine étiquette, et on exclut les autres points. Bien sûr, l'utilisation de noyau est toujours possible, rendant ainsi possible le passage d'un problème linéaire au non-linéaire, comme pour les SVM.\\
+La résolution de ce problème se fait en général avec son dual, et s'exprime sous la forme d'une fonction à optimiser sous contrainte :
+\[\left\{\begin{array}{l l}
+\min_{\alpha\in\mathbb{R}^n} & \frac{1}{2} \alpha^TK\alpha -\frac{1}{2}\alpha^T \text{diag}(K)\\
+\text{avec } & e^T\alpha=1\\
+& 0\leq \alpha_i\leq C, \hspace{2cm} i=1,n
+\end{array}\right.\]
+où $K$ est la matrice de Gram $n\times n$ de terme général $K_{ij}=k(x_i,x_j)$.\\
+
+La figure ~\ref{figSVDD} montre un exemple d'utilisation des SVDD et des SVM dans le cas linéaire. 
+
+\begin{figure}[!h]
+\centering
+\includegraphics{graph/graphSVDD.eps}
+\caption{Exemple d'un SVDD et d'un SVM linéaire}
+\label{figSVDD}
+\end{figure}
+
+\paragraph{Essai sur les données\\}
+La première difficulté (outre les petites erreurs de code) aura été de trouver les bons hyperparamètres à utiliser. Le réglage a été ici particulièrement critique. En effet, les premiers essais n'identifiaient qu'une seule étiquette à chaque fois - autrement dit, pour ce programme, toutes les personnes étaient des hommes (ou des femmes). Une fois ce problème résolu et que la machine pouvait prévoir correctement quelque chose, différents tests ont été lancés suivant différents paramètres. Il s'est averé que le C optimal était infini (les coefficients de Lagrange n'avaient donc pas de borne supérieure). Voici les résultats obtenus suivant différentes valeurs de $\gamma$ :
+\begin{center}\begin{tabular}{|c|c|c|}
+	\hline
+	                  &        $\gamma$        & \% de bonnes réponses \\
+	\hline
+	24\mars 24\female & $\frac{1}{\sqrt{500}}$ &           50.52       \\
+	\hline
+	24\mars 24\female & $\frac{1}{\sqrt{450}}$ &           50.31       \\
+	\hline
+\end{tabular}\end{center}
+
+Ces résultats ont été obtenus en prenant les trois quart des données (soit 480 vecteurs pour chaque sexe, soit 24 hommes et 24 femmes), et en apprenant sur un set qui laisait un homme et une femme de côté en test, chaque personne ayant été laissée de côté au moins une fois. \\ 
+Une fois encore, nous faisons difficilement mieux que le hasard. Les données semblent donc être difficilement séparables, même avec les SVDD.
