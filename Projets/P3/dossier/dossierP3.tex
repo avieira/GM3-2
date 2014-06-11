@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{lmodern}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{verbatim}
+\usepackage{moreverb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\hypersetup{colorlinks=true, linkcolor=red}
+
+\author{Conrad \bsc{Hillairet} et Alexandre \bsc{Vieira}}
+\title{Projet P3 : Analyse Numérique \\ \Large{Méthode d'Adams-Bashforth-2}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\newpage
+
+\section*{Introduction}
+Les équations différentielles sont utiles dans de nombreux domaines scientifiques. On les utilise bien souvent en physique, en chimie ou même dans la finance. \\
+Bien qu'on sache comment résoudre des équations différentielles, toutes ne sont pas forcément résolvable avec les connaissances actuelles. Pour cela, on cherche à avoir une solution approchée de ces équations via des méthodes itératives. Il en existe plusieurs sortes :\\
+\begin{itemize}
+	\item Les méthodes à un pas, où chaque itération ne dépend que de la précédente. On peut citer comme exemple la méthode d'Euler
+	\item Les méthodes à pas liés, dont les suites récurrentes sont au moins d'ordre deux.
+\end{itemize}
+
+\bigskip
+La méthode d'Adams-Bashforth-2, développée dans ce rapport, est une méthode à pas liés. Elle est définie ainsi :
+\[
+	\left\{
+		\begin{array}{c c c}
+			y_{t+1}&=&y_t + \frac{h}{2}(3f_t-f_{t-1})\\
+			y(x_0)&=&y_0
+		\end{array}
+	\right.
+\]
+
+où :
+\[f_t=f(x_t,y_t)\]
+\[y_t=y(x_t)\]
+
+Ce rapport se partagera ainsi :
+\begin{itemize}
+	\item Nous commencerons par présenter la méthode d'Euler et la méthode d'Adams-Bashforth-2, ainsi que différents théorèmes
+	\item Nous présenterons ensuite différentes implémentations en C
+	\item Nous testerons enfin nos codes sur des exemples que nous commenterons.
+\end{itemize}
+
+\include{presentation}
+\input{codeC}
+\input{exemples}
+
+\newpage
+\section*{Conclusion}
+Ce projet nous aura permis d'implémenter une méthode explicite plus précise que la méthode d'Euler qui est d'ordre 1. On remarque cependant qu'il reste des cas critique (comme l'exemple quatre) ou que pour certains systèmes chaotiques comme l'attracteur de Lorenz, d'autres méthodes peuvent être plus adaptées.\\
+Les résultats obtenus restent tout de même très satisfaisants et auront fini de nous convaincre de l'utilité de cette méthode du fait de son implémentation relativement simple. 
+
+\newpage
+\appendix
+\input{annexe}
+\end{document}

@@ -1,0 +1,40 @@
+\subsection{Quatrième exemple}
+
+Nous avions un système d'équation de la forme :
+\[\left\{ \begin{array}{c c c}
+y_1' &=& -2y_1 - 998 y_2\\
+y_2' &=& -1000y_2\\
+y_1(0) &=& 2\\
+y_2(0) &=& 1
+\end{array}\right.\]
+
+On peut facilement calculer la solution de ce système.
+Directement, on voit que :
+\[y_2(t)=e^{-1000t}\]
+Il nous reste donc à résoudre :
+\[y_1'(t)=-2y_1(t)-998e^{-1000t}\]
+Solution de l'équation homogène :
+\[y_{1_H}(t)=Ce^{-2t}\]
+
+Solution particulière à l'équation :
+\[y_{1_P}(t)=e^{-1000t}\]
+
+D'où :
+\[y_1(t)=e^{-2t}+e^{-1000t}=e^{-2t}+y_2(t)\]
+
+Lors de nos tests, on a directement remarqué un problème dû à la stabilité de la méthode. En effet, avec un pas trop grand, nos solutions explosaient. Nous avons dû prendre un pas de l'ordre du dix millième pour avoir une solution correcte. Voici deux tracés des solutions obtenues : le premier avec un pas de 0.1, le deuxième avec un pas de 0.0000001 :
+
+\begin{center}
+\includegraphics{../exemple4/0-1.eps}
+\end{center}
+
+\begin{center}
+\includegraphics{../exemple4/1.eps}
+\end{center}
+
+\begin{itemize}
+	\item La méthode ne paraît donc pas trop adaptée pour cette équation.
+	\item Quand on obtient des points qui semblent corrects, la courbe n'est pas très exploitable. Cela est dû au fait que les abscisses diminuent beaucoup plus lentement que les ordonnées (vu la solution de l'équation), comme on peut le voir sur les deux graphiques suivants :\\
+		\includegraphics{../exemple4/2.eps}\\
+		\includegraphics{../exemple4/3.eps}
+\end{itemize}

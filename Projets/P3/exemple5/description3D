@@ -1,0 +1,4 @@
+Systèmes d'équations non linéaires :
+x'=-3(x-y)
+y'=-x*z+21x-y
+z'=xy-z

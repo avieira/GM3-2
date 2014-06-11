@@ -1,0 +1,53 @@
+\subsection{Troisième exemple}
+
+Nous avions un système d'équation de la forme :
+\[\left\{ \begin{array}{c c c}
+y_1' &=& y_2\\
+y_2' &=& -5\sin(y_1)\\
+y_1(0) &=& \theta_0 \\
+y_2(0) &=& 0
+\end{array}\right.\]
+
+On a pris pour cela deux valeurs de $\theta_0$ : 0.5 et 1.\\
+Nous avons décidé sur cet exemple de comparer les résultats obtenus par la méthode d'Adams-Bashforth et par la méthode d'Euler. 
+
+\subsubsection{Résultats avec $\theta_0=1$}
+\bigskip
+En commençant avec la méthode d'Adams-Bashforth-2, on voit que la métode semble converger, en réduisant le pas, vers une certaine solution. Avec un pas de 0.1, on semble quand même s'éloigner assez rapidement de la solution :
+\begin{center}
+\includegraphics{../exemple3/theta1/image.eps}\\
+\includegraphics{../exemple3/theta1/imageAB.eps}
+\end{center}
+
+En comparaison, la méthode d'Euler semble bien moins puissante : elle ne donne pas une bonne solution approchée avec un pas de 0.1 :
+\begin{center}
+\includegraphics{../exemple3/theta1/imageEul.eps}
+\end{center}
+
+Si on compare à présent dirrectement la méthode d'Euler et la méthode d'Adams-Bashforth-2, la méthode d'Adams-Bashforth semble bien plus sûre que la méthode d'Euler, comme on peut le voir sur ces graphiques :
+
+\begin{center}
+\includegraphics{../exemple3/theta1/imageAB-Eul0-01.eps}\\
+\includegraphics{../exemple3/theta1/imageAB-Eul0-001.eps}
+\end{center}
+
+\subsubsection{Résultats avec $\theta_0=0.5$}
+Les résultats ne changent pas vraiment ici :
+\begin{itemize}
+	\item La convergence est toujours la même avec la méthode d'Adams-Bashforth-2 :
+\begin{center}
+\includegraphics{../exemple3/theta0/image.eps}\\
+\includegraphics{../exemple3/theta0/imageAB.eps}
+\end{center}
+
+	\item La méthode d'Euler semble toujours moins puissante et n'est toujours pas digne de confiance avec un pas de 0.1 :
+\begin{center}
+\includegraphics{../exemple3/theta0/imageEul.eps}
+\end{center}
+
+	\item Si on compare les deux méthodes, la méthode d'Adams est toujours plus sûre que la méthode d'Euler :
+\begin{center}
+\includegraphics{../exemple3/theta0/imageAB-Eul0-01.eps}\\
+\includegraphics{../exemple3/theta0/imageAB-Eul0-001.eps}
+\end{center}
+\end{itemize}

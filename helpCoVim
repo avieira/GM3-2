@@ -1,0 +1,14 @@
+De mon côté, cd ~/.vim/bundle/CoVim/plugin/
+Faire sudo ./server.py 23 (ou un autre port)
+Lancer vim, puis :CoVim start 23 Alex 
+
+Lancer ifconfig, récupérer l'IP pour la transmettre aux gens
+
+Deux solutions :
+Ici : sudo start ssh
+Leur dire de se connecter via ssh ici, sur le port 22.
+Aux autres connectés par ssh : :CoVim connect 127.0.0.1 23 Nom
+
+Ou : :CoVim connect IP-Récupéré 23 Nom
+
+A la fin : :CoVim disconnect

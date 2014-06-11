@@ -1,0 +1,26 @@
+\subsection{Deuxième exemple}
+L'équation était :
+\[xdx - ydy = yx^2dy - xy^2dx\]
+\[y(1)=1\]
+
+On transforme l'équation pour avoir :
+\[\frac{dy}{dx}=\frac{x(1+y^2)}{y(1+x^2)}\]
+
+Essayons de résoudre l'équation :
+\begin{eqnarray*}
+	\frac{y}{1+y^2}dy &=& \frac{x}{1+x^2} dx \\
+	\frac{1}{2} \ln(1+y^2) &=& \frac{1}{2} \ln(1+x^2) + k \\
+	y^2&=&C(1+x^2)-1
+\end{eqnarray*}
+
+Or, on veut $y(1)=1$, d'où $1=2C-1 \Rightarrow C=1$\\
+On a donc $y^2=x^2$
+
+\begin{center}
+\includegraphics{../exemple2/image.eps}
+\end{center}
+
+\begin{itemize}
+	\item La courbe ressemble beaucoup à ce qu'on doit obtenir (une droite affine). La convergence semble donc assurée.
+	\item Avec des pas différents (0.1, 0.01 et 0.0001), la courbe était exactement la même.
+\end{itemize}

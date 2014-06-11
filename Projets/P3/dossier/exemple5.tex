@@ -1,0 +1,19 @@
+\subsection{Cinquième exemple : l'attracteur de Lorenz}
+
+Nous avions un système d'équation de la forme :
+\[\left\{ \begin{array}{c c c}
+x' &=& -3(x-y)\\
+y' &=& -xz + 21x - y\\
+z' &=& xy - z
+\end{array}\right.\]
+
+\begin{center}
+\includegraphics{../exemple5/image.eps}
+\includegraphics{../exemple5/image2.eps}
+
+\begin{itemize}
+	\item On retrouve bien l'attracteur de Lorenz.
+	\item Un premier intérêt est de voir que la méthode d'Adams-Bashforth-2 marche encore très bien pour des systèmes non linéaires.
+	\item Le fait qu'on change le pas ne fait pas passer la courbe par les mêmes régions. Le côté chaotique du système explique ces variations. On peut donc soupçonner qu'il existe des méthodes plus adaptées pour les systèmes chaotiques.
+\end{itemize}
+\end{center}

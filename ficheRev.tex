@@ -1,0 +1,335 @@
+\documentclass{article}
+\input{../preambule}
+%\usepackage[8pt]{extsizes}
+
+\hypersetup{colorlinks=true, urlcolor=bleu, linkcolor=red}
+
+%Def = Definition
+%Theo = Théorème
+%Prop = Propriété
+%Coro = Corollaire
+%Lem = Lemme
+
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
+
+\begin{document}
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\newpage
+
+\part{Analyse Numerique}
+\section{Interpolation polynomiale}
+\begin{enumerate}
+\item \textbf{Existence et unicité du polynôme d'interpolation}
+\item \textbf{Base de Lagrange}
+\item Formule du polynôme dans la base de Lagrange
+\item \textbf{Base de Newton}
+\item Formule du polynôme dans la base de Newton
+\item Différence divisée
+\item \textbf{Redéfnition du polynôme dans la base de Newton avec les différences divisées}
+\item \textbf{Expression de l'erreur entre f et le polynôme d'interpolation}
+\item Définition convergence méthode d'interpolation en un point
+\item Lien entre subdivision et convergence
+\item Définition d'un spline
+
+\section{Intégration numérique}
+\item Formule de Newton-Cotes
+\item Définition degré d'exactitude
+\item \textbf{Degré d'exactitude d'une formule de N-C}
+\item Approximation avec méthode du point milieu
+\item Théorème de la moyenne
+\item \textbf{Calcul de l'erreur d'interpolation de la méthode du point milieu}
+\item Formule de quadrature de la méthode du trapèze
+\item \textbf{Erreur de la méthode}
+\item Méthode de quadrature et erreur méthode de Simpson
+\item Théorème si ordre n pair ou impair
+\item Définition de convergence et de stabilité
+\item \textbf{Équivalence à stabilité}
+\item Reprise des méthodes précédentes en composite
+\item Méthode de Runge
+\item \textbf{Degré maximal de degré d'exactitude}
+\item Définition polynômes orthogonaux, polynôme unitaire
+\item Nombre de racines d'un polynôme orthogonal de degré n
+\item Méthode de quadrature de Gauss
+
+\section{Equations différentielles}
+\item Définition erreur de quadrature
+\item Définition consistance
+\item Équivalence à consistance
+\item Définition de stabilité
+\item Condition nécessaire pour que la méthode soit stable
+\item Définition de convergence
+\item Condition nécessaire pour la convergence
+\item Définition de l'ordre d'une méthode
+\item Lien consistance et ordre
+\item Méthode de Runge-Kutta : définition de la méthode, présentation sous forme d'un tableau
+\item Condition pour consistance de Runge-Kutta
+\item Théorème sur calcul des $y_k$ de Runge-Kutta et sur sa stabilité
+\item Condition sur la méthode d'ordre 2
+\item Méthodes à pas liés : expression des méthodes, condition sur $\alpha_0$
+\item Méthodes d'Adams : ordre de Bashforth ? Moulton ?
+\item Principe de Prédiction-Correction ?
+\item Définition de consistance. Equivalence à consistance.
+\item Définition de stabilité. Equivalence à stabilité.
+\item Définition de convergence. Equivalence à convergence. 
+\end{enumerate}
+
+\newpage
+\part{Analyse Fonctionnelle}
+\section{Espaces normés}
+\begin{enumerate}
+	\item Définition norme, espace normé
+	\item Normes en dimension finie
+	\item Définition de continue
+	\item Définition de limite dans un espace normé
+	\item Définition d'application borné
+	\item \textbf{Théorème équivalence pour application linéaire}
+	\item Norme pour ensemble des applications linéaires
+	\item \textbf{3 propriétés de cette norme}
+	\item \textbf{Si A linéaire, alors $A^{-1}$ ?}
+	\item Condition pour $A^{-1}$ continue
+\section{Espaces compacts}
+	\item Définition espace compact
+	\item Théorème de Bolzano-Weierstrass
+	\item \textbf{Citer un compact de $\mathbb{R}^n$ ?}
+	\item \textbf{Si X est compact ?}
+	\item \textbf{Si X compact, $f: X\to \mathbb{R}$, alors ?} (x2)
+\section{Espaces de Banach}
+	\item Définition espace complet
+	\item Définition espace de Banach
+	\item Espaces vectoriels de dimension finie ?
+	\item Définition de convergence normale d'une série
+	\item \textbf{Lien entre convergence normale et convergence dans un espace de Banach}
+	\item $\mathcal{C}_{\infty}^b(X,E)$, $L^p(X,\mathcal{B},\mu),\ 1\leq p\leq\infty$
+	\item \textbf{Suite d'applications linéaires continues entre deux espaces de Banach, que dire sur la norme des $T_n$ ?}
+	\item \textbf{Corollaire avec convergence des $T_i$}
+	\item \textbf{Corollaire : $L_C(L,E)$ ?}
+	\item \textbf{Corollaire sur l'interpolation}
+\section{Espaces de Hilbert}
+	\item Définition du produit scalaire et espace hermitien/pré-hilbertien
+	\item \textbf{Inégalité de Cauchy-Schwartz}
+	\item \textbf{Inégalité de Minkowsky}
+	\item Définition d'espace de Hilbert
+	\item Produit scalaire sur $L_2(X,\mathcal{B},\mu)$
+	\item Définition d'espace convexe
+	\item \textbf{Théorème de projection}
+	\item \textbf{Corollaire sur norme des projections}
+	\item \textbf{Projection sur un sous-espace fermé}
+	\item Corollaire sev supplémentaires
+	\item Définition dense (avec définition adhérence)
+	\item Définition famille totale
+	\item Équivalence totale
+	\item Définition d'un dual
+	\item \textbf{Théorème de Riesz-Fréchet}
+	\item Définition de base hilbertienne
+	\item Théorème sur décomposition dans un espace de Hilbert
+	\item Définition de l'adjoint
+	\item \textbf{Unicité}
+	\item Définition de auto-adjoint
+	\item Définition de vecteur propre, ensemble résolvant, spectre
+	\item Valeurs propres dans les cas finis ou infinis
+	\item Définition de relativement compact, opérateur relativement compact
+	\item Théorème sur base hibertienne et vecteurs propres
+\section{TD}
+	\item Equivalence espace préhilbertien
+\end{enumerate}
+
+\newpage
+\part{Distributions}
+\section{Théorie générale}
+\begin{enumerate}
+\item Ensemble et convergence sur $\mathcal{D}$
+\item Ensemble et convergence sur $\mathcal{D}'$
+\item Ensemble des fonctions localement intégrables
+\item Égalité des distributions
+\item Dérivée d'une distribution
+\item Dérivée d'une suite de distribution et convergence
+\item Application aux séries
+\item Dérivées généralisées
+\item Définition d'absolument convergent
+\item Conséquence sur la dérivée
+\item CNS sur la convergence d'une suite/série de distributions
+\end{enumerate}
+
+\section{Équations différentielles et intégrales - Produit de convolution - Calcul symbolique}
+\begin{enumerate}
+\item Dérivée nulle
+\item Défintion de f et g convolables. CS d'existence et $\in L^1$
+\item Produit tensoriel de 2 distributions
+\item Support d'une fonction / Support d'une ditribution
+\item Théorème de prolongement
+\item Élément neutre de la convolution. Lien avec la dérivation.
+\item Définition de $\mathcal{D}'_g$. Lien avec la convolution.
+\item Formulaire pour le calcul symbolique
+\end{enumerate}
+
+\section{Transformation de Fourier}
+\begin{enumerate}
+\item Définition Transformation de Fourier
+\item 4 propriétés de la transformée de Fourier
+\item Transformée de la fonction dérivée
+\item Ensemble de espace topologique de $\mathcal{S}$
+\item Stabilité par la transformation de Fourier
+\item Espace des distributions tempérées
+\item TF des distributions tempérées
+\item Continuité de la TF
+\item Définition ditribution produit
+\item Définition : Translation d'une distribution
+\item Transformée d'une distribution translatée
+\item Définition $f_{\alpha}$ et transformée. Cas particulier.
+\item Transformée de la Dirac et de 1
+\item Formule de réciprocité
+\item Définition $T_{\lambda x}$
+\item Théorème si S distribution à support compact
+\item Théorème sur la transformée d'une convoluée de distributions
+\end{enumerate}
+
+\section{Distributions périodiques - Série de Fourier}
+\begin{enumerate}
+\item Définition distribution périodique
+\item Définition peigne de Dirac
+\item Théorème sur distributions périodiques
+\end{enumerate}
+
+\newpage
+\part{Gleyse}
+\begin{enumerate}
+	\item Problème bien posé, stabilité
+	\item Deix définition d'approché, entier maximal, sur combien de bits sont codés les entiers ? 
+	\item Passer de binaire à hexa et à entier, et inversement. Passer d'un réel à son codage en binaire.
+	\item Passer d'un entier positif à négatif et inversement, opération sur les entiers.
+	\item Nombre de bits mantisse et exposant SP et DP, limite pour M et E, calcul de l'exposant. \\
+		Nombres flottants caractéristiques, ordre de grandeur. \\
+		Erreur relative d'affectation, Hypothèse de Vignes et de Hamming, \\
+		Erreur sur opérations flottantes.
+	\item Comment mettre en place CESTAC ? Utilité ? Avec arrondi ou troncature ? Sur quoi on agit ? Gaussien ?
+	\item Définition norme vectorielle induite, conditionnement, démonstration sur variations sur premier ou second membre.
+	\item Définition de l'ordre de convergence, rapport avec les dérivées. Si r=1, vitesses linéaires et logarithmiques.
+	\item 
+\end{enumerate}
+
+\newpage
+\part{Probabilités}
+\section{Convergences}
+\begin{enumerate}
+\item Convergence en probabilité et presque sûr
+\item Lien série convergence presque sûr
+\item Définition covariance
+\item Inégalité de Cauchy-Schwarz - équivalence sur égalité ce $cov^2$
+\item Loi faible et forte des grands nombres
+\item Convergence en loi
+\item Lien entre différentes convergences
+\item Théorème central limit
+\end{enumerate}
+\section{Vecteurs aléatoires}
+\begin{enumerate}
+\item Définition espérance vecteur aléatoire
+\item Matrice de variance - covariance
+\item Définition des vecteurs aléatoires gaussiens
+\item Loi de $Z=X+Y$, $X$ indépendant de $Y$
+\end{enumerate}
+\section{Fonctions caractéristiques}
+\begin{enumerate}
+\item Définition de la fonction caractéristique
+\item Si $X\hookrightarrow \mathcal{N}(0,1)$
+\item 5 propriétés (linéarité, de même avec des vecteurs, rapport avec complémentaire, si X var intégrable, et X et Y indépendantes)
+\item Transformée de Laplace
+\end{enumerate}
+\section{Conditionnement - Espérance conditionnelle}
+\begin{enumerate}
+\item Théorème de Doob - Loi conditionnelle
+\item 3 cas où q identifiable : si $\mu_X$ discrète, si (X,Y) admet une densité, si X et Y sont indépendantes.
+\item Espérance conditionnelle si admet une loi conditionnelle
+\end{enumerate}
+
+\part{Statistiques}
+\begin{enumerate}
+\section{Introduction}
+	\item Définition : Espace des observations, échantillon d'une loi P
+	\item Définition densité jointe
+	\item Définition modèle statistique
+	\item Définition statistique
+	\item Moyenne et variance emprique. \textbf{Espérance et variance de la première, esperance de la deuxième}.
+	\item Définition d'une fonction génératrice des moments
+	\item Définition famille exponentielle
+	\item Théorème sur somme des composantes de échantillon de famille exponentielle
+	\item Théorème de Slutsky
+\section{Exhaustivité}
+	\item 
+\end{enumerate}
+
+
+\newpage
+\part{Equations Différentielles}
+\section{Existence, unicité, régularité}
+\begin{enumerate}
+\item Problème de Cauchy
+\item \textbf{Réécriture du problème de Cauchy}
+\item Lipschitzienne
+\item \textbf{Lemme : CS de lpschitzienne}
+\item \textbf{Théorème de Cauchy-Lipschitz}
+\item Solution maximale, globale
+\item Définition de $z(t,x_0)$
+\item \textbf{Théorème sur équation satisfaite par z}
+\section{Transformations}
+\item Définition de $\gamma_t(x_0)$
+\section{Équations linéaires}
+\item \textbf{Solution de $\dot{x}=Ax$}
+\item \textbf{Si $\tilde{A}=TAT^{-1}$, alors $e^{\tilde{A}t}=?$}
+\section{Resolution des systèmes}
+\item \textbf{Si $y\in\mathbb{C}^n$ solution d'un système, que dire des parties réelles et imaginaires ?}
+\item Forme des solutions ?
+\section{Stabilité}
+\item Equivalence à la stabilité asymptotique
+\item Définition d'un point déquilibre
+\item Solution passant par un point d'équilibre
+\item Définition de stabilité
+\item Définition d'asymptotiquement stable
+\item Théorème de Liapounov
+\item De même pour la non stabilité
+\item Définition de (semi-)positive/négative
+\item Définition de dérivée orbitale
+\item Théorème sur fonction de Liapounov et stabilité puis localement asymptotiquement stable
+\section{Systèmes hamiltoniens}
+\item Définition d'un système hamiltonien et de l'hamiltonien
+\item Définition d'intégrale première
+\item Equivalence intégrale première
+\item Rapport avec l'hamiltonien ?
+\item Stabilité et hamiltonien positif/négatif
+\item $H=\frac{1}{2}p^2+\phi(q)$ : Equivalence à point d'équilibre? Stabilité ?
+\item Deux derniers résultats
+\end{enumerate}
+
+\newpage
+\part{Programmation objet}
+\begin{enumerate}
+\item Définition de classe, attributs, opérations, message, objet, réïfication.
+\item Représentation UML de classes, public, protected, private.
+\item Relation de composition. Représentation UML.
+\item Relation de visibilité. Représentation UML.
+\item Relation d'héritage. Représentation UML. Héritage simple et multiple.
+\item Diagramme de séquence
+\item Contexte
+\item Cycle de vie en cascade, en V, en spirale, itératif
+\item 3 principes du génie logiciel, lien avec la programmation par objets
+\item Sous-systèmes, BPM, user case, diagramme d'activité, paquetage
+\end{enumerate}
+
+\newpage
+\part{Java}
+\section{Notations}
+\begin{enumerate}
+\item Créer un objet avec sa classe
+\item Accéder à une variable d'instance d'un objet
+\item Envoi d'un message à <o>
+\end{enumerate}
+\section{Java}
+\begin{enumerate}
+\item Définir une classe
+\item Création d'un objet
+\item Compilation
+\end{enumerate}
+\end{document}

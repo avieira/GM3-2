@@ -1,0 +1,4 @@
+Systèmes d'équations non linéaires :
+x'=1/sqrt(z+1) * cos(z)
+y'=1/sqrt(z+1) * sin(z)
+z'=1
