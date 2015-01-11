@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
 import os,subprocess,pynotify,pyinotify
 from gobject import GError
 
@@ -9,10 +9,12 @@ def auto_compile(path):
 	notifier.loop()
 	
 def onSave(event):
-	if event.name == "ficheRev.tex":
+	if ".tex" in event.name:
 		pynotify.init("Mon appli python")
 		try:
-			subprocess.check_call(['pdflatex', '-halt-on-error' ,'ficheRev.tex'])
+			subprocess.check_call(['mkdir', '-p', 'tmp'])
+			subprocess.check_call(['latexmk', '-pdf', '-output-directory=tmp', '-shell-escape' ,'-halt-on-error' ,'ficheRev.tex'])
+			subprocess.check_call(['mv', 'tmp/ficheRev.pdf', '.'])
 		except subprocess.CalledProcessError:
 			message = pynotify.Notification("Build failed.")
 		else:
@@ -22,9 +24,8 @@ def onSave(event):
 		except GError:
 			print('Gerror')
 
-
 def main():
-	auto_compile(os.getcwd())
+	auto_compile([x[0] for x in os.walk(os.getcwd())])
 
 if __name__ == '__main__':
     main()
