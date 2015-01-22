@@ -1,0 +1,45 @@
+\part{Complements Master 2}
+\section{Équations différentielles matricielles}
+
+$\dot{X}=AX$, $X\in \mathcal{M}_{n\times n}(\mathbb{R})$
+
+Soit $M$ un espace topologique.
+\Def{Variété}{$M$ est une variété de dimension $n$ si :
+\begin{enumerate}
+	\item $\forall p\in M$, $\exists U$, voisinage ouvert de $p$, $\exists \phi : U\to\mathbb{R}^n$ un homéomorphisme
+	\item $\forall p\in U$, $\phi:U\to \mathbb{R}^n$, $p\in V$, $\psi : V\to\mathbb{R}^n$, $\psi\circ\phi^{-1} : \phi(U\cap V)\to \psi(U\cap V)$ doit être de classe $\mathcal{C}^k$, $\mathcal{C}^{\infty}$ ou $\mathcal{C}^{\omega}$ (analytique).
+\end{enumerate}
+On parle alors de variété de classe $\mathcal{C}^k$, $\mathcal{C}^{\infty}$ ou $\mathcal{C}^{\omega}$}
+
+\Theo{de Whitney}{Chaque variété $M$ de dimension $n$ est une sous-variété de $\mathbb{R}^{2n+1}$.}
+
+\Def{Groupe de Lie}{$(G,\mu)$ est un groupe de Lie si : \begin{enumerate}
+	\item $(G,\mu)$ est un groupe
+	\item $G$ est une variété
+	\item $\mu : G\times G\to G$ et $g\mapsto g^{-1}$ sont $\mathcal{C}^{\infty}$
+\end{enumerate}}
+
+Revoir Groupes pour les matrices, avec espaces tangents
+
+\section{Bordel}
+\Theo{Flow Box Theorem}{Considérons $\dot{x}=f(x)$, $x\in X$ et supposons que $f(x_0)\neq 0$. Alors $\exists V_{x_0}$, $W_0$, 2 voisinages ouverts, et $\phi:V_{x_0}\to W_0$ tel que \[\phi_*f=\begin{pmatrix} 1\\0\\ \vdots\\ 0 \end{pmatrix}\]}
+
+\section{Trajectoires périodiques}
+\Def{}{$x(t,x_0)$ est une solution périodiue pour $\dot{x}=f(x)$, $x\in X$ si : \[\exists T>0 \text{ minimal}; x(t,x_0)=x(t+T,x_0)\]
+On note \[\Gamma=\bigcup_{t\in\mathbb{R}}\{x(t,x_0)\}\] l'orbite, qui est fermée si $x(t,x_0)$ périodique.}
+
+\Propo{}{Si $\Gamma$ fermée, alors toutes les solutions $x(t,x_0)$, $x_0\in\Gamma$ sont périodiques.}
+
+\Theo{Bendixon}{Considérons $\dot{z}=f(z)$, $z\in D\subset\mathbb{R}^2$. Supposons :
+\begin{enumerate}
+	\item $D$ simplement convexe
+	\item div $f=\derPar{f_1}{x}+\derPar{f_2}{y}\geq 0$ ou $\leq 0$ partout dans D.\\
+		De plus, $\mu(\{z; \text{ div}f(z)=0\})=0$
+\end{enumerate}
+Alors il n'y a aucune orbite fermée dans D.}
+
+\Theo{Poincaré-Bendixon}{Soit $D$ un ensemble compact et positivement invariant pour $\dot{z}=f(z)$, $z\in D$, ie : \[\forall t>0,\ z_0\in D\Rightarrow \gamma_t^f(z_0)\in D\]
+Si $f(z)\neq 0$, $\forall z\in D$, alors $w(z)$ est une orbite périodique $\forall z\in D$.}
+
+\section{Bifurcation}
+Revoir TD.
